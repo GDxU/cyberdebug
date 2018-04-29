@@ -4,13 +4,13 @@ let os = require('os');
 let uuid = require('uuid/v4');
 let webSocket = require('ws');
 
-// настройка
+// config
 
 let ip = '';
 let httpPort = 80;
 let wsPort = 81;
 
-// если не указан ip адрес
+// if ip empty
 
 if (!ip) {
 

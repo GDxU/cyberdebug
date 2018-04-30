@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "npm": "^6.0.0",
+    "pixi.js": "^4.7.3",
     "uuid": "^3.2.1",
     "ws": "^5.1.1"
   },

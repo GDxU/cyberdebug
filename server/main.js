@@ -69,11 +69,13 @@ wss.on('connection', (ws) => {
 
     console.log('WS connection');
 
-    ws.id = uuid();
+    // ws.id = uuid();
+    ws.id = id++;
     users.push({
         id: ws.id,
-        x: 0,
-        y: 0
+        name: getName(),
+        x: 1000 + getRandomInt(-100, 100),
+        y: 1000 + getRandomInt(-100, 100)
     });
 
     ws.on('message', (message) => {
@@ -96,16 +98,93 @@ wss.on('connection', (ws) => {
     });
 });
 
+// tools
+
+let getRandomInt = (min, max) => {
+    if (!max) {
+        max = min;
+        min = 0;
+    }
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+let getName = () => {
+    let n = [
+        'Эдвард',
+        'Хэйтем',
+        'Дункан',
+        'Бартоломью',
+        'Вудс',
+        'Джек',
+        'Бенджамин',
+        'Джон',
+        'Чарльз',
+        'Стид'
+    ];
+    let s = [
+        'Кенуэй',
+        'Рид',
+        'Скотт',
+        'Уолпол',
+        'Робертс',
+        'Роджерс',
+        'Тэтч',
+        'Рэкхем',
+        'Хорниголд',
+        'Вэйн',
+        'Боннет'
+    ];
+    return n[getRandomInt(n.length - 1)] + ' ' + s[getRandomInt(n.length - 1)];
+};
+
 // users
 
 let users = [];
 
+// bots
+
+let id = 0;
+
+let bots = [];
+
+for (let i = 0; i < 100; i++) {
+
+    bots.push({
+        // id: uuid(),
+        id: id++,
+        name: getName(),
+        x: getRandomInt(2000),
+        y: getRandomInt(2000)
+    })
+
+}
+
 // broadcast
 
+let t = 0;
+
 setInterval(() => {
+
+    t += 0.02;
+
+    bots.forEach((bot, i) => {
+
+        let s = Math.round(Math.sin(t));
+
+        i % 2 ? bot.x += s : bot.y += s;
+
+    });
+
     wss.clients.forEach((ws) => {
+
         if (ws.readyState === webSocket.OPEN) {
-            ws.send(JSON.stringify(users));
+
+            ws.send(JSON.stringify({
+                id: ws.id,
+                targets: bots.concat(users)
+            }));
+
         }
     });
+
 }, 25);

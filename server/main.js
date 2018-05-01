@@ -16,8 +16,8 @@ if (!ip) {
 
     let faces = os.networkInterfaces();
 
-    Object.keys(faces).forEach((name) => {
-        faces[name].forEach((face) => {
+    Object.keys(faces).forEach(name => {
+        faces[name].forEach(face => {
             if (face.family === 'IPv4' && face.internal === false) ip = face.address;
         });
     });
@@ -65,26 +65,30 @@ let wss = new webSocket.Server({
     console.log('WS running at ws://' + ip + ':' + wsPort + '/');
 });
 
-wss.on('connection', (ws) => {
+wss.on('connection', ws => {
 
     console.log('WS connection');
 
     // ws.id = uuid();
-    ws.id = id++;
-    users.push({
-        id: ws.id,
-        name: getName(),
-        x: 1000 + getRandomInt(-100, 100),
-        y: 1000 + getRandomInt(-100, 100)
-    });
 
-    ws.on('message', (message) => {
+    let user = {
+        id: id++,
+        name: getName(),
+        x: 10000 + getRandomInt(-100, 100),
+        y: 10000 + getRandomInt(-100, 100)
+    };
+
+    ws.id = user.id;
+    ws.user = user;
+    users.push(user);
+
+    ws.on('message', message => {
         // console.log('WS ' + message);
     });
 
     ws.on('close', () => {
         console.log('WS close');
-        users = users.filter((user) => {
+        users = users.filter(user => {
             return user.id !== ws.id;
         });
     });
@@ -147,14 +151,14 @@ let id = 0;
 
 let bots = [];
 
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 100000; i++) {
 
     bots.push({
         // id: uuid(),
         id: id++,
         name: getName(),
-        x: getRandomInt(2000),
-        y: getRandomInt(2000)
+        x: getRandomInt(10000 * 2),
+        y: getRandomInt(10000 * 2)
     })
 
 }
@@ -175,13 +179,23 @@ setInterval(() => {
 
     });
 
-    wss.clients.forEach((ws) => {
+    wss.clients.forEach(ws => {
 
         if (ws.readyState === webSocket.OPEN) {
 
+            let targets = bots.concat(users);
+            let r = 500;
+            let x1 = ws.user.x - r;
+            let x2 = ws.user.x + r;
+            let y1 = ws.user.y - r;
+            let y2 = ws.user.y + r;
+
             ws.send(JSON.stringify({
                 id: ws.id,
-                targets: bots.concat(users)
+                users: users.length,
+                bots: bots.length,
+                radius: r,
+                targets: targets.filter(t => x1 < t.x && t.x < x2 && y1 < t.y && t.y < y2)
             }));
 
         }

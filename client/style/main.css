@@ -2,5 +2,6 @@ body {
     margin: 0;
     overflow: hidden;
     font-family: monospace;
+    color: #fff;
     background: #202225 url("/client/image/background.png");
 }

@@ -20,16 +20,43 @@ init.view = () => {
 
     window.world = new PIXI.Container();
     world.interactive = true;
-    world.on('click', e => {
+    world.on('pointerdown', e => {
+
+        let x = e.data.global.x - world.x;
+        let y = e.data.global.y - world.y;
 
         ws.send(JSON.stringify({
             action: {
                 type: 'go',
-                x: e.data.global.x - world.x,
-                y: e.data.global.y - world.y
+                x: x,
+                y: y
             }
         }));
-        
+
+        if (window.go) {
+
+            go.x = x;
+            go.y = y;
+
+        } else {
+
+            let graphics = new PIXI.Graphics();
+
+            graphics.lineStyle(1,0xff0000);
+            graphics.moveTo(0, 10);
+            graphics.lineTo(10, 0);
+            graphics.moveTo(0, 0);
+            graphics.lineTo(10, 10);
+
+            graphics.x = x;
+            graphics.y = y;
+
+            window.go = graphics;
+
+            world.addChild(go);
+
+        }
+
     });
 
     app.stage.addChild(world);

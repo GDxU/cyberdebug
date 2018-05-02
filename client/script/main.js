@@ -19,6 +19,19 @@ init.view = () => {
     document.body.appendChild(app.view);
 
     window.world = new PIXI.Container();
+    world.interactive = true;
+    world.on('click', e => {
+
+        ws.send(JSON.stringify({
+            action: {
+                type: 'go',
+                x: e.data.global.x - world.x,
+                y: e.data.global.y - world.y
+            }
+        }));
+        
+    });
+
     app.stage.addChild(world);
 
     app.ticker.add(delta => {

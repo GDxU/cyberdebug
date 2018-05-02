@@ -67,6 +67,28 @@ init.view = () => {
 
 };
 
+window.action = {
+
+    sync: () => {
+
+        if (window.go && go.x === camera.target.sprite.x && go.y === camera.target.sprite.y) {
+
+            world.removeChild(go);
+
+            go.destroy({
+                children: true,
+                texture: true,
+                baseTexture: true
+            });
+
+            window.go = undefined;
+
+        }
+
+    }
+
+};
+
 
 init.menu = () => {
 
@@ -181,6 +203,7 @@ init.ws = () => {
 
         camera.sync(data.id);
         target.sync(data.targets);
+        action.sync();
         debug.sync(data);
 
     });

@@ -97,6 +97,40 @@ wss.on('connection', ws => {
                     w: w,
                     h: h
                 };
+
+            }
+
+            if (data.action) {
+
+                if (data.action.type === 'go') {
+
+                    let x = parseInt(data.action.x);
+                    let y = parseInt(data.action.y);
+
+                    if (!isNaN(x) && !isNaN(y)) {
+
+                        let action = actions.filter(action => action.user.id === ws.id)[0];
+
+                        if (action) {
+
+                            action.x = x;
+                            action.y = y;
+
+                        } else {
+
+                            actions.push({
+                                type: 'go',
+                                user: ws.user,
+                                x: x,
+                                y: y
+                            });
+
+                        }
+
+                    }
+
+                }
+
             }
 
         } catch (error) {
@@ -189,6 +223,29 @@ for (let i = 0; i < 10000; i++) {
     })
 
 }
+
+// actions
+
+let actions = [];
+
+setInterval(() => {
+
+    actions.forEach(action => {
+
+        if (action.type === 'go') {
+
+            if (action.user.x < action.x) action.user.x++;
+            if (action.user.x > action.x) action.user.x--;
+            if (action.user.y < action.y) action.user.y++;
+            if (action.user.y > action.y) action.user.y--;
+
+            if (action.user.x === action.x && action.user.y === action.y) actions.splice(actions.indexOf(action), 1);
+
+        }
+
+    });
+
+}, 25);
 
 // broadcast
 

@@ -1,37 +1,19 @@
-## Welcome to GitHub Pages
+## Добро
 
-You can use the [editor on GitHub](https://github.com/Nanak1/pixel/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Игра представляет собой адаптацию мультиплеера из Assassin's Creed. Да, мне очень нравится идея мультиплеера в Assassin's Creed, но Ubisoft к сожалению больше не занимается его развитием. Работает всё на JavaScript, а значит поддержка большого количества платформ, где возможно использовать браузер. Серверная часть реализована на Node.js. Да, я люблю JavaScript.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Так как я на 70% состою не из воды, а из игр, то хочу добавить в игру всё то что люблю из разных вселенных, таких как Assassin'c Creed, Witcher, Cyberpunk, Final Fantasy, GTA и так далее. Что из этого получится, надеюсь когда нибудь увижу, так как останавливаться не собираюсь.
 
-### Markdown
+## Проект
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Найти сам проект для прошаринных думаю будет не сложно, а вот сылку пощупать думаю стоит оставить.
 
-```markdown
-Syntax highlighted code block
+- Пощупать: [http://188.32.187.230](http://188.32.187.230)
+- Проект: [https://github.com/Nanak1/pixel](https://github.com/Nanak1/pixel)
 
-# Header 1
-## Header 2
-### Header 3
+## Контакты
 
-- Bulleted
-- List
+Если Вам вдруг интересно со мной связаться, то оставлю часть своих контактов.
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Nanak1/pixel/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+- VK: [https://vk.com/nanaki](https://vk.com/nanaki)
+- Email: [nanaki.god@gmail.com](mailto:nanaki.god@gmail.com)

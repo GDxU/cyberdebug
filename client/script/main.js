@@ -35,6 +35,7 @@ init.menu = () => {
         app.stage.removeChild(graphics);
         app.stage.removeChild(text);
 
+        init.background();
         init.ws();
 
     };
@@ -59,7 +60,7 @@ init.menu = () => {
     let graphics = new PIXI.Graphics();
 
     graphics.lineStyle(1, 0xffffff, 0.8);
-    graphics.beginFill(0x000000, 0.8);
+    graphics.beginFill(0x35373b, 0.8);
     graphics.drawRect(0, 0, text.width * 2, text.height * 2);
 
     graphics.x = Math.floor(window.innerWidth / 2) - text.width;
@@ -81,6 +82,29 @@ init.menu = () => {
 
 };
 
+init.background = () => {
+
+    let graphics = new PIXI.Graphics();
+
+    graphics.beginFill(0x272d37, 1);
+    graphics.drawRect(0, 0, 100, 100);
+    graphics.endFill();
+
+    graphics.lineStyle(1, 0xffffff, 0.2);
+    graphics.moveTo(99, 0);
+    graphics.lineTo(0, 0);
+    graphics.lineTo(0, 99);
+
+    let background = new PIXI.extras.TilingSprite(
+        graphics.generateCanvasTexture(1, 1),
+        20000,
+        20000
+    );
+
+    world.addChild(background);
+
+};
+
 init.ws = () => {
 
     window.data = {};
@@ -89,7 +113,16 @@ init.ws = () => {
     window.ws = new WebSocket('ws://' + window.location.host + ':81');
 
     ws.addEventListener('open', () => {
-        console.log('WS open');
+
+        // console.log('WS open');
+
+        ws.send(JSON.stringify({
+            camera: {
+                w: window.innerWidth,
+                h: window.innerHeight
+            }
+        }));
+
     });
 
     ws.addEventListener('close', () => {
@@ -100,19 +133,11 @@ init.ws = () => {
         console.log('WS error');
     });
 
-    // let last = Date.now();
-
     ws.addEventListener('message', message => {
-
-        // let current = Date.now();
-
-        // console.log(current - last);
-
-        // last = current;
 
         // console.log('WS message', message);
 
-        data = JSON.parse(message.data);
+        let data = JSON.parse(message.data);
 
         camera.sync(data.id);
         target.sync(data.targets);
@@ -314,7 +339,7 @@ window.debug = {
         d.style.left = '10px';
         d.style.top = '10px';
         d.style.padding = '10px';
-        d.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        d.style.backgroundColor = 'rgba(53, 55, 59, 0.8)';
         d.style.border = '1px solid rgba(255, 255, 255, 0.8)';
 
         debug.dom = {
@@ -323,12 +348,14 @@ window.debug = {
             name: d.appendChild(document.createElement('div')),
             position: d.appendChild(document.createElement('div')),
             boundary: d.appendChild(document.createElement('div')),
-            camera: d.appendChild(document.createElement('div')),
+            window: d.appendChild(document.createElement('div')),
             world: d.appendChild(document.createElement('div')),
             users: d.appendChild(document.createElement('div')),
             bots: d.appendChild(document.createElement('div')),
             here: d.appendChild(document.createElement('div')),
-            radius: d.appendChild(document.createElement('div')),
+            camera: d.appendChild(document.createElement('div')),
+            buffer: d.appendChild(document.createElement('div')),
+            range: d.appendChild(document.createElement('div')),
             keyboard: d.appendChild(document.createElement('div')),
             ms: d.appendChild(document.createElement('div')),
             tr: d.appendChild(document.createElement('div'))
@@ -344,11 +371,13 @@ window.debug = {
         if (!debug.dom) debug.init();
 
         debug.dom.keyboard.innerText = 'keyboard: ' + keyboard.cmd.join(', ');
-        debug.dom.camera.innerText = 'camera: ' + window.innerWidth + ', ' + window.innerHeight;
+        debug.dom.window.innerText = 'window: ' + window.innerWidth + ', ' + window.innerHeight;
         debug.dom.users.innerText = 'users: ' + data.users;
         debug.dom.bots.innerText = 'bots: ' + data.bots;
         debug.dom.here.innerText = 'here: ' + data.targets.length;
-        debug.dom.radius.innerText = 'radius: ' + data.radius;
+        debug.dom.camera.innerText = 'camera: ' + data.camera.join(', ');
+        debug.dom.buffer.innerText = 'buffer: ' + data.buffer.join(', ');
+        debug.dom.range.innerText = 'range: ' + data.range.join(', ');
 
         if (camera.target) {
 

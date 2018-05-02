@@ -3,5 +3,5 @@ body {
     overflow: hidden;
     font-family: monospace;
     color: #fff;
-    background: #202225 url("/client/image/background.png");
+    background-color: #2a2b2f;
 }

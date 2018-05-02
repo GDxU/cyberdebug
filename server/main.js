@@ -83,7 +83,28 @@ wss.on('connection', ws => {
     users.push(user);
 
     ws.on('message', message => {
-        // console.log('WS ' + message);
+
+        try {
+
+            let data = JSON.parse(message);
+
+            if (data.camera) {
+
+                let w = parseInt(data.camera.w);
+                let h = parseInt(data.camera.h);
+
+                if (!isNaN(w) && !isNaN(h)) ws.camera = {
+                    w: w,
+                    h: h
+                };
+            }
+
+        } catch (error) {
+
+            console.log(error);
+
+        }
+
     });
 
     ws.on('close', () => {
@@ -151,7 +172,7 @@ let id = 0;
 
 let bots = [];
 
-for (let i = 0; i < 100000; i++) {
+for (let i = 0; i < 10000; i++) {
 
     bots.push({
         // id: uuid(),
@@ -184,17 +205,25 @@ setInterval(() => {
         if (ws.readyState === webSocket.OPEN) {
 
             let targets = bots.concat(users);
-            let r = 500;
-            let x1 = ws.user.x - r;
-            let x2 = ws.user.x + r;
-            let y1 = ws.user.y - r;
-            let y2 = ws.user.y + r;
+
+            let camera = ws.camera || {w: 100, h: 100};
+            let bx = 100;
+            let by = 100;
+            let x = Math.round(camera.w / 2) + bx;
+            let y = Math.round(camera.h / 2) + by;
+
+            let x1 = ws.user.x - x;
+            let x2 = ws.user.x + x;
+            let y1 = ws.user.y - y;
+            let y2 = ws.user.y + y;
 
             ws.send(JSON.stringify({
                 id: ws.id,
                 users: users.length,
                 bots: bots.length,
-                radius: r,
+                camera: [camera.w, camera.h],
+                buffer: [bx, by],
+                range: [x * 2, y * 2],
                 targets: targets.filter(t => x1 < t.x && t.x < x2 && y1 < t.y && t.y < y2)
             }));
 

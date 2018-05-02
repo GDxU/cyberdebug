@@ -1,7 +1,6 @@
 let fs = require('fs');
 let http = require('http');
 let os = require('os');
-let uuid = require('uuid/v4');
 let webSocket = require('ws');
 
 // config
@@ -68,8 +67,6 @@ let wss = new webSocket.Server({
 wss.on('connection', ws => {
 
     console.log('WS connection');
-
-    // ws.id = uuid();
 
     let user = {
         id: id++,
@@ -175,7 +172,6 @@ let bots = [];
 for (let i = 0; i < 10000; i++) {
 
     bots.push({
-        // id: uuid(),
         id: id++,
         name: getName(),
         x: getRandomInt(10000 * 2),

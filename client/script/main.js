@@ -43,10 +43,10 @@ init.view = () => {
             let graphics = new PIXI.Graphics();
 
             graphics.lineStyle(1,0xff0000);
-            graphics.moveTo(0, 10);
-            graphics.lineTo(10, 0);
+            graphics.moveTo(0, 11);
+            graphics.lineTo(11, 0);
             graphics.moveTo(0, 0);
-            graphics.lineTo(10, 10);
+            graphics.lineTo(11, 11);
 
             graphics.x = x;
             graphics.y = y;

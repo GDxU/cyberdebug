@@ -137,7 +137,7 @@ init.ws = () => {
 
         // console.log('WS message', message);
 
-        let data = JSON.parse(message.data);
+        window.data = JSON.parse(message.data);
 
         camera.sync(data.id);
         target.sync(data.targets);
@@ -155,7 +155,7 @@ window.target = {
 
     append: data => {
 
-        let color = getColor();
+        let color = getColor(data.type);
 
         let graphics = new PIXI.Graphics();
 
@@ -178,6 +178,7 @@ window.target = {
         let t = {
             id: data.id,
             name: data.name,
+            type: data.type,
             sprite: graphics,
             text: text
         };
@@ -197,6 +198,40 @@ window.target = {
         t.text.x = data.x + 5;
         t.text.y = data.y + 20;
 
+        if (t.type !== data.type) {
+
+            t.type = data.type;
+
+            // remove
+
+            world.removeChild(t.sprite);
+            t.sprite.destroy({
+                children: true,
+                texture: true,
+                baseTexture: true
+            });
+
+            // create
+
+            let color = getColor(data.type);
+
+            let graphics = new PIXI.Graphics();
+
+            graphics.lineStyle(1, color);
+            graphics.beginFill(color, 0.2);
+            graphics.drawRect(0, 0, 10, 10);
+
+            graphics.x = data.x;
+            graphics.y = data.y;
+
+            // append
+
+            t.sprite = graphics;
+
+            world.addChild(graphics);
+
+        }
+
     },
 
     remove: id => {
@@ -206,7 +241,17 @@ window.target = {
         if (t) {
 
             world.removeChild(t.sprite);
+            t.sprite.destroy({
+                children: true,
+                texture: true,
+                baseTexture: true
+            });
+
             world.removeChild(t.text);
+            t.text.destroy({
+                destroyBase: true
+            });
+
             target.store.splice(target.store.indexOf(t), 1);
 
         }
@@ -269,11 +314,9 @@ window.T = {
     start: 'START'
 };
 
-window.getColor = () => {
+window.getColor = (index) => {
 
-    if (!window.colorI) window.colorI = 0;
-
-    return [
+    let colors = [
         0x000000,
         0x0000ff,
         0x00ff00,
@@ -282,7 +325,9 @@ window.getColor = () => {
         0xff00ff,
         0xffff00,
         0xffffff
-    ][colorI++ % 8];
+    ];
+
+    return colors[index % colors.length];
 
 };
 

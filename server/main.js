@@ -71,6 +71,7 @@ wss.on('connection', ws => {
     let user = {
         id: id++,
         name: getName(),
+        type: usersType++,
         x: 10000 + getRandomInt(-100, 100),
         y: 10000 + getRandomInt(-100, 100)
     };
@@ -78,6 +79,8 @@ wss.on('connection', ws => {
     ws.id = user.id;
     ws.user = user;
     users.push(user);
+
+    updateBots();
 
     ws.on('message', message => {
 
@@ -106,9 +109,8 @@ wss.on('connection', ws => {
 
     ws.on('close', () => {
         console.log('WS close');
-        users = users.filter(user => {
-            return user.id !== ws.id;
-        });
+        users = users.filter(user =>  user.id !== ws.id);
+        updateBots();
     });
 
     ws.on('error', () => {
@@ -161,11 +163,18 @@ let getName = () => {
 
 // users
 
+let usersType = 1;
 let users = [];
+
+let updateBots = () => {
+    let s = [];
+    users.forEach(user => s.push(user.type));
+    bots.forEach((bot, i) => bot.type = s[i % s.length] || 0);
+};
 
 // bots
 
-let id = 0;
+let id = 1;
 
 let bots = [];
 
@@ -174,6 +183,7 @@ for (let i = 0; i < 10000; i++) {
     bots.push({
         id: id++,
         name: getName(),
+        type: 0,
         x: getRandomInt(10000 * 2),
         y: getRandomInt(10000 * 2)
     })
@@ -200,8 +210,6 @@ setInterval(() => {
 
         if (ws.readyState === webSocket.OPEN) {
 
-            let targets = bots.concat(users);
-
             let camera = ws.camera || {w: 100, h: 100};
             let bx = 100;
             let by = 100;
@@ -220,7 +228,7 @@ setInterval(() => {
                 camera: [camera.w, camera.h],
                 buffer: [bx, by],
                 range: [x * 2, y * 2],
-                targets: targets.filter(t => x1 < t.x && t.x < x2 && y1 < t.y && t.y < y2)
+                targets: bots.concat(users).filter(t => x1 < t.x && t.x < x2 && y1 < t.y && t.y < y2)
             }));
 
         }

@@ -22,8 +22,8 @@ init.view = () => {
     world.interactive = true;
     world.on('pointerdown', e => {
 
-        let x = e.data.global.x - world.x;
-        let y = e.data.global.y - world.y;
+        let x = e.data.global.x - world.x - 5;
+        let y = e.data.global.y - world.y - 5;
 
         ws.send(JSON.stringify({
             action: {

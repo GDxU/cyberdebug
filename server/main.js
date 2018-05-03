@@ -72,8 +72,8 @@ wss.on('connection', ws => {
         id: id++,
         name: getName(),
         type: usersType++,
-        x: 10000 + getRandomInt(-100, 100),
-        y: 10000 + getRandomInt(-100, 100)
+        x: 10000 + getRandomInt(-400, 400),
+        y: 10000 + getRandomInt(-400, 400)
     };
 
     ws.id = user.id;
@@ -212,20 +212,21 @@ let id = 1;
 
 let bots = [];
 
-for (let i = 0; i < 10000; i++) {
+for (let i = 0; i < 100; i++) {
 
     bots.push({
         id: id++,
         name: getName(),
         type: 0,
-        x: getRandomInt(10000 * 2),
-        y: getRandomInt(10000 * 2)
+        x: 10000 + getRandomInt(-400, 400),
+        y: 10000 + getRandomInt(-400, 400)
     })
 
 }
 
 // actions
 
+let speed = 5;
 let actions = [];
 
 setInterval(() => {
@@ -234,10 +235,13 @@ setInterval(() => {
 
         if (action.type === 'go') {
 
-            if (action.user.x < action.x) action.user.x++;
-            if (action.user.x > action.x) action.user.x--;
-            if (action.user.y < action.y) action.user.y++;
-            if (action.user.y > action.y) action.user.y--;
+            if (action.user.x < action.x) action.user.x += speed;
+            if (action.user.x > action.x) action.user.x -= speed;
+            if (action.user.y < action.y) action.user.y += speed;
+            if (action.user.y > action.y) action.user.y -= speed;
+
+            if (Math.abs(action.user.x - action.x) < speed) action.user.x = action.x;
+            if (Math.abs(action.user.y - action.y) < speed) action.user.y = action.y;
 
             if (action.user.x === action.x && action.user.y === action.y) actions.splice(actions.indexOf(action), 1);
 
@@ -280,6 +284,7 @@ setInterval(() => {
 
             ws.send(JSON.stringify({
                 id: ws.id,
+                speed: speed,
                 users: users.length,
                 bots: bots.length,
                 camera: [camera.w, camera.h],

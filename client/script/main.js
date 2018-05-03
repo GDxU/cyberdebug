@@ -149,13 +149,18 @@ init.background = () => {
     let graphics = new PIXI.Graphics();
 
     graphics.beginFill(0x272d37, 1);
-    graphics.drawRect(0, 0, 100, 100);
+    graphics.drawRect(0, 0, 99, 99);
     graphics.endFill();
 
     graphics.lineStyle(1, 0xffffff, 0.2);
-    graphics.moveTo(99, 0);
+    graphics.moveTo(98, 0);
     graphics.lineTo(0, 0);
-    graphics.lineTo(0, 99);
+    graphics.lineTo(0, 98);
+
+    graphics.lineStyle(1, 0x000000, 0.2);
+    graphics.moveTo(99, 1);
+    graphics.lineTo(99, 99);
+    graphics.lineTo(1, 99);
 
     let background = new PIXI.extras.TilingSprite(
         graphics.generateCanvasTexture(1, 1),
@@ -164,6 +169,16 @@ init.background = () => {
     );
 
     world.addChild(background);
+
+    let b = new PIXI.Graphics();
+
+    b.lineStyle(1, 0xff0000, 0.8);
+    b.drawRect(0, 0, 900, 900);
+
+    b.x = 10000 - 450;
+    b.y = 10000 - 450;
+
+    world.addChild(b);
 
 };
 
@@ -454,6 +469,7 @@ window.debug = {
             panel: document.body.appendChild(d),
             id: d.appendChild(document.createElement('div')),
             name: d.appendChild(document.createElement('div')),
+            speed: d.appendChild(document.createElement('div')),
             position: d.appendChild(document.createElement('div')),
             boundary: d.appendChild(document.createElement('div')),
             window: d.appendChild(document.createElement('div')),
@@ -478,7 +494,7 @@ window.debug = {
 
         if (!debug.dom) debug.init();
 
-        debug.dom.keyboard.innerText = 'keyboard: ' + keyboard.cmd.join(', ');
+        debug.dom.speed.innerText = 'speed: ' + data.speed;
         debug.dom.window.innerText = 'window: ' + window.innerWidth + ', ' + window.innerHeight;
         debug.dom.users.innerText = 'users: ' + data.users;
         debug.dom.bots.innerText = 'bots: ' + data.bots;
@@ -486,6 +502,7 @@ window.debug = {
         debug.dom.camera.innerText = 'camera: ' + data.camera.join(', ');
         debug.dom.buffer.innerText = 'buffer: ' + data.buffer.join(', ');
         debug.dom.range.innerText = 'range: ' + data.range.join(', ');
+        debug.dom.keyboard.innerText = 'keyboard: ' + keyboard.cmd.join(', ');
 
         if (camera.target) {
 

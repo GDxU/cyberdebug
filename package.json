@@ -4,6 +4,7 @@
   "description": "pixel",
   "main": "index.js",
   "dependencies": {
+    "js-cookie": "^2.2.0",
     "npm": "^6.0.0",
     "pixi.js": "^4.7.3",
     "ws": "^5.1.1"

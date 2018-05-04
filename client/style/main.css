@@ -1,7 +1,111 @@
+@font-face{
+    font-family: new_zelek;
+    font-style: normal;
+    font-weight: 400;
+    src: local('New_Zelek'),
+    local('New_Zelek-Normal'),
+    url('/client/font/new_zelek/new_zelek.ttf') format('woff'),
+    url('/client/font/new_zelek/new_zelek.ttf') format('truetype')
+}
+
+@font-face{
+    font-family: europeext normal;
+    font-style: normal;
+    font-weight: 400;
+    src: local('EuropeExt Normal'),
+    local('EuropeExt-Normal'),
+    url('/client/font/europeext-normal/europeext-normal.woff') format('woff'),
+    url('/client/font/europeext-normal/europeext-normal.ttf') format('truetype')
+}
+
 body {
+    background-color: rgba(32, 34, 37, 1);
+    color: rgba(255, 255, 255, 1);
     margin: 0;
     overflow: hidden;
-    font-family: monospace;
-    color: #fff;
-    background-color: #2a2b2f;
+}
+
+canvas {
+    z-index: 0;
+}
+
+div {
+    user-select: none;
+    z-index: 1;
+}
+
+.panel {
+    border: 1px dotted rgba(255, 255, 255, 0.4);
+    background-color: rgba(47, 49, 54, 0.8);
+    left: -9999px;
+    top: -9999px;
+    padding: 19px;
+    position: fixed;
+}
+
+.header {
+    font-family: new_zelek, monospace;
+    font-size: 40px;
+    line-height: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.text {
+    font-family: 'europeext normal', monospace;
+    font-size: 20px;
+    line-height: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.text span {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+input {
+    background-color: rgba(54, 57, 62, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 1);
+    font-family: 'europeext normal', monospace;
+    font-size: 20px;
+    line-height: 20px;
+    margin-bottom: 20px;
+    padding: 13px;
+    text-align: center;
+}
+
+input:hover, input:focus {
+    background-color: rgba(66, 70, 77, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.button {
+    background-color: rgba(54, 57, 62, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    font-family: new_zelek, monospace;
+    font-size: 30px;
+    line-height: 30px;
+    padding: 9px;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.button:hover {
+    background-color: rgba(66, 70, 77, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.button-input {
+    float: right;
+    margin-left: 5px;
+}
+
+.center {
+    text-align: center;
+}
+
+.no-margin {
+    margin: 0;
 }

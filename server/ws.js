@@ -21,28 +21,33 @@ WS.server = new WebSocket.Server({
 
 WS.server.on('connection', ws => {
 
+    // После установки соединения создаём объект игрока
+
     console.log('WS connection');
 
     ws.user = TARGET.appendUser();
+    ws.need = true;
+
+    // Посылаем в клиент идентификатор игрока
+
+    ws.on('open', () => {
+
+        console.log('WS open');
+
+    });
+
+    // Принимаем от клиента команды
 
     ws.on('message', message => {
+
+        console.log('WS message', message);
 
         try {
 
             let data = JSON.parse(message);
 
-            if (data.camera) {
-
-                let w = parseInt(data.camera.w);
-                let h = parseInt(data.camera.h);
-
-                if (!isNaN(w) && !isNaN(h)) ws.camera = {
-                    w: w,
-                    h: h
-                };
-
-            }
-
+            if (data.camera) WS.setCamera(ws, data.camera);
+            if (data.name) WS.setName(ws, data.name);
             if (data.action) ACTION.sync(ws, data.action);
 
         } catch (error) {
@@ -67,13 +72,25 @@ WS.server.on('connection', ws => {
 
     });
 
-    ws.on('open', () => {
-
-        console.log('WS open');
-
-    });
-
 });
+
+WS.setCamera = (ws, camera) => {
+
+    let w = parseInt(camera.w);
+    let h = parseInt(camera.h);
+
+    if (!isNaN(w) && !isNaN(h)) ws.camera = {
+        w: w,
+        h: h
+    };
+
+};
+
+WS.setName = (ws, name) => {
+
+    ws.user.name = name;
+
+};
 
 WS.tr = 40;
 WS.ms = 1000 / WS.tr;
@@ -86,12 +103,20 @@ setInterval(() => {
 
         if (ws.readyState === WebSocket.OPEN) {
 
-            ws.send(JSON.stringify({
-                id: ws.user.id,
+            let message = {
                 users: TARGET.users.length,
                 bots: TARGET.bots.length,
                 targets: TARGET.getTargets(ws)
-            }));
+            };
+
+            if (ws.need) {
+
+                message.id = ws.user.id;
+                delete ws.need;
+
+            }
+
+            ws.send(JSON.stringify(message));
 
         }
     });

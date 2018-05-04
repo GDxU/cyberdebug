@@ -1,9 +1,9 @@
 let WebSocket = require('ws');
 
 let TOOL = require('./tool');
+let ACTION = require('./action');
 let TARGET = require('./target');
 let AI = require('./ai');
-let ACTION = require('./action');
 
 let WS = {};
 

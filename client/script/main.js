@@ -8,6 +8,10 @@ window.addEventListener('load', () => {
 
 });
 
+window.info = {
+    name: 'Test'
+};
+
 window.init = {};
 
 init.view = () => {
@@ -185,15 +189,17 @@ init.background = () => {
 init.ws = () => {
 
     window.data = {};
-    window.sprites = [];
 
     window.ws = new WebSocket('ws://' + window.location.host + ':81');
 
     ws.addEventListener('open', () => {
 
-        // console.log('WS open');
+        console.log('WS open');
 
         ws.send(JSON.stringify({
+            user: {
+                name: info.name
+            },
             camera: {
                 w: window.innerWidth,
                 h: window.innerHeight
@@ -203,11 +209,15 @@ init.ws = () => {
     });
 
     ws.addEventListener('close', () => {
+
         console.log('WS close');
+
     });
 
     ws.addEventListener('error', () => {
+
         console.log('WS error');
+
     });
 
     ws.addEventListener('message', message => {
@@ -233,7 +243,7 @@ window.target = {
 
     append: data => {
 
-        let color = getColor(data.type);
+        let color = getColor(data.model);
 
         let graphics = new PIXI.Graphics();
 
@@ -244,26 +254,14 @@ window.target = {
         graphics.x = data.x;
         graphics.y = data.y;
 
-        let text = new PIXI.Text(data.name, {
-            fill: 'white',
-            fontSize: 13
-        });
-
-        text.anchor.set(0.5);
-        text.x = data.x + 5;
-        text.y = data.y + 20;
-
         let t = {
             id: data.id,
-            name: data.name,
-            type: data.type,
-            sprite: graphics,
-            text: text
+            model: data.model,
+            sprite: graphics
         };
 
         target.store.push(t);
         world.addChild(graphics);
-        world.addChild(text);
 
     },
 
@@ -273,12 +271,10 @@ window.target = {
 
         t.sprite.x = data.x;
         t.sprite.y = data.y;
-        t.text.x = data.x + 5;
-        t.text.y = data.y + 20;
 
-        if (t.type !== data.type) {
+        if (t.model !== data.model) {
 
-            t.type = data.type;
+            t.model = data.model;
 
             // remove
 
@@ -291,7 +287,7 @@ window.target = {
 
             // create
 
-            let color = getColor(data.type);
+            let color = getColor(data.model);
 
             let graphics = new PIXI.Graphics();
 
@@ -323,11 +319,6 @@ window.target = {
                 children: true,
                 texture: true,
                 baseTexture: true
-            });
-
-            world.removeChild(t.text);
-            t.text.destroy({
-                destroyBase: true
             });
 
             target.store.splice(target.store.indexOf(t), 1);
@@ -394,15 +385,29 @@ window.T = {
 
 window.getColor = (index) => {
 
+    index = index || 0;
+
     let colors = [
-        0x000000,
-        0x0000ff,
-        0x00ff00,
-        0x00ffff,
-        0xff0000,
-        0xff00ff,
-        0xffff00,
-        0xffffff
+        0xF44336,
+        0xE91E63,
+        0x9C27B0,
+        0x673AB7,
+        0x3F51B5,
+        0x2196F3,
+        0x03A9F4,
+        0x00BCD4,
+        0x009688,
+        0x4CAF50,
+        0x4CAF50,
+        0x8BC34A,
+        0xCDDC39,
+        0xFFEB3B,
+        0xFFC107,
+        0xFF9800,
+        0xFF5722,
+        0x795548,
+        0x9E9E9E,
+        0x607D8B
     ];
 
     return colors[index % colors.length];
@@ -485,6 +490,7 @@ window.debug = {
             tr: d.appendChild(document.createElement('div'))
         };
 
+        debug.dom.name.innerText = 'name: ' + info.name;
         debug.dom.ms.innerText = 'ms: 0';
         debug.dom.tr.innerText = 'tr: 0';
 
@@ -494,23 +500,16 @@ window.debug = {
 
         if (!debug.dom) debug.init();
 
-        debug.dom.speed.innerText = 'speed: ' + data.speed;
         debug.dom.window.innerText = 'window: ' + window.innerWidth + ', ' + window.innerHeight;
         debug.dom.users.innerText = 'users: ' + data.users;
         debug.dom.bots.innerText = 'bots: ' + data.bots;
         debug.dom.here.innerText = 'here: ' + data.targets.length;
-        debug.dom.camera.innerText = 'camera: ' + data.camera.join(', ');
-        debug.dom.buffer.innerText = 'buffer: ' + data.buffer.join(', ');
-        debug.dom.range.innerText = 'range: ' + data.range.join(', ');
         debug.dom.keyboard.innerText = 'keyboard: ' + keyboard.cmd.join(', ');
 
         if (camera.target) {
 
             debug.dom.id.innerText = 'id: ' + camera.target.id;
-            debug.dom.name.innerText = 'name: ' + camera.target.name;
             debug.dom.position.innerText = 'position: ' + camera.target.sprite.x + ', ' + camera.target.sprite.y;
-            if (camera.boundary) debug.dom.boundary.innerText = 'boundary: ' + camera.boundary.join(', ');
-            debug.dom.world.innerText = 'world: ' + world.x + ' ' + world.y;
 
         }
 

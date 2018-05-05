@@ -99,6 +99,8 @@ setInterval(() => {
 
     AI.move();
 
+    let totals = TARGET.getTotals();
+
     WS.server.clients.forEach(ws => {
 
         if (ws.readyState === WebSocket.OPEN) {
@@ -106,6 +108,7 @@ setInterval(() => {
             let message = {
                 users: TARGET.users.length,
                 bots: TARGET.bots.length,
+                totals: totals,
                 targets: TARGET.getTargets(ws)
             };
 

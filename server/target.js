@@ -39,11 +39,31 @@ TARGET.getTargets = ws => {
 
 };
 
+TARGET.getTotals = () => {
+
+    let totals = [];
+
+    TARGET.users.forEach(user => totals.push({
+        name: user.name,
+        kill: user.kill,
+        stun: user.stun,
+        die: user.die,
+        score: user.score
+    }));
+
+    return totals.sort((a, b) => b.score - a.score).splice(0, 10);
+
+};
+
 TARGET.appendUser = () => {
 
     let user = {
         id: TARGET.id++,
         model: TARGET.model++,
+        kill: 0,
+        stun: 0,
+        die: 0,
+        score: 0,
         x: 10000 + TOOL.getRandomInt(-400, 400),
         y: 10000 + TOOL.getRandomInt(-400, 400)
     };

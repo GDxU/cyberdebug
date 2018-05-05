@@ -39,6 +39,10 @@ div {
     z-index: 1;
 }
 
+td:not(:first-child), th:not(:first-child) {
+    text-align: right;
+}
+
 .panel {
     background-color: rgba(47, 49, 54, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.4);

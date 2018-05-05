@@ -3,6 +3,7 @@ window.GUI = {
     init: () => {
 
         GUI.menu.init();
+        GUI.total.init();
         GUI.debug.init();
 
     },
@@ -14,15 +15,15 @@ window.GUI = {
             GUI.menu.panel = document.getElementById('menu');
             GUI.menu.header = document.getElementById('menu_header');
             GUI.menu.text = document.getElementById('menu_text');
-            GUI.menu.nickname = document.getElementById('menu_nickname');
+            GUI.menu.name = document.getElementById('menu_name');
             GUI.menu.random = document.getElementById('menu_random');
             GUI.menu.start = document.getElementById('menu_start');
 
             GUI.menu.header.innerText = 'PIXEL';
-            GUI.menu.text.innerText = 'Введите ваш Никнейм';
-            GUI.menu.nickname.value = Cookies.get('nickname') || TOOL.getNickname();
+            GUI.menu.text.innerText = 'Enter your Name';
+            GUI.menu.name.value = Cookies.get('name') || TOOL.getName();
             GUI.menu.random.innerText = '?!';
-            GUI.menu.start.innerText = 'СТАРТ';
+            GUI.menu.start.innerText = 'Start';
 
             let left = Math.floor(window.innerWidth / 2) - Math.floor(GUI.menu.panel.offsetWidth / 2);
             let top = Math.floor(window.innerHeight / 2) - Math.floor(GUI.menu.panel.offsetHeight / 2);
@@ -34,17 +35,18 @@ window.GUI = {
             GUI.menu.panel.style.bottom = 'auto';
             GUI.menu.panel.style.left = left + 'px';
 
-            GUI.menu.random.addEventListener('click', () => GUI.menu.nickname.value = TOOL.getNickname());
+            GUI.menu.random.addEventListener('click', () => GUI.menu.name.value = TOOL.getName());
             GUI.menu.start.addEventListener('click', () => {
 
-                USER.name = GUI.menu.nickname.value;
-                Cookies.set('nickname', USER.name, {expires: 365});
+                USER.name = GUI.menu.name.value;
+                Cookies.set('name', USER.name, {expires: 365});
 
                 GUI.menu.hide();
 
                 GAME.init();
                 WS.init();
 
+                GUI.total.show();
                 GUI.debug.show();
 
             });
@@ -60,6 +62,36 @@ window.GUI = {
         hide: () => {
 
             GUI.menu.panel.style.display = 'none';
+
+        }
+
+    },
+
+    total: {
+
+        init: () => {
+
+            GUI.total.panel = document.getElementById('total');
+            GUI.total.table = document.getElementById('total_table');
+
+            GUI.total.hide();
+
+            GUI.total.panel.style.top = 'auto';
+            GUI.total.panel.style.right = '10px';
+            GUI.total.panel.style.bottom = '10px';
+            GUI.total.panel.style.left = 'auto';
+
+        },
+
+        show: () => {
+
+            GUI.total.panel.style.display = 'block';
+
+        },
+
+        hide: () => {
+
+            GUI.total.panel.style.display = 'none';
 
         }
 

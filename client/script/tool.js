@@ -30,7 +30,7 @@ window.TOOL = {
 
     },
 
-    getNickname: () => {
+    getName: () => {
 
         let n = [
             'Эдвард',

@@ -35,27 +35,27 @@ div {
 }
 
 .panel {
-    border: 1px dotted rgba(255, 255, 255, 0.4);
     background-color: rgba(47, 49, 54, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     left: -9999px;
-    top: -9999px;
-    padding: 19px;
+    padding: 16px 16px 0 16px;
     position: fixed;
+    top: -9999px;
 }
 
 .header {
     font-family: new_zelek, monospace;
-    font-size: 40px;
-    line-height: 40px;
-    margin-bottom: 20px;
+    font-size: 32px;
+    line-height: 32px;
+    margin-bottom: 16px;
     text-align: center;
 }
 
 .text {
     font-family: 'europeext normal', monospace;
-    font-size: 20px;
-    line-height: 20px;
-    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 16px;
+    margin-bottom: 16px;
     text-align: left;
 }
 
@@ -68,10 +68,11 @@ input {
     border: 1px solid rgba(255, 255, 255, 0.4);
     color: rgba(255, 255, 255, 1);
     font-family: 'europeext normal', monospace;
-    font-size: 20px;
-    line-height: 20px;
-    margin-bottom: 20px;
-    padding: 13px;
+    font-size: 16px;
+    line-height: 16px;
+    margin-bottom: 16px;
+    height: 24px;
+    padding: 10px;
     text-align: center;
 }
 
@@ -85,9 +86,10 @@ input:hover, input:focus {
     border: 1px solid rgba(255, 255, 255, 0.4);
     cursor: pointer;
     font-family: new_zelek, monospace;
-    font-size: 30px;
-    line-height: 30px;
-    padding: 9px;
+    font-size: 24px;
+    line-height: 24px;
+    margin-bottom: 16px;
+    padding: 10px;
     text-align: center;
     transition: all 0.2s;
 }
@@ -99,13 +101,9 @@ input:hover, input:focus {
 
 .button-input {
     float: right;
-    margin-left: 5px;
+    margin-left: 16px;
 }
 
 .center {
     text-align: center;
-}
-
-.no-margin {
-    margin: 0;
 }

@@ -20,8 +20,12 @@ window.GAME = {
         });
 
         GAME.application.renderer.roundPixels = true;
+        GAME.application.renderer.autoResize = true;
 
         document.body.appendChild(GAME.application.view);
+        window.addEventListener('resize', function () {
+            GAME.application.renderer.resize(window.innerWidth, window.innerHeight);
+        });
 
     },
 

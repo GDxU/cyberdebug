@@ -23,7 +23,8 @@ html {
 }
 
 body {
-    background-color: rgba(32, 34, 37, 1);
+    background: url('/client/image/tile.png');
+    /*background-color: rgba(32, 34, 37, 1);*/
     color: rgba(255, 255, 255, 1);
     margin: 0;
     overflow: hidden;

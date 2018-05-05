@@ -16,7 +16,7 @@ window.TARGET = {
         target.sprite.y = t.y;
 
         TARGET.store.push(target);
-        GAME.world.addChild(target.sprite);
+        GAME.target.addChild(target.sprite);
 
     },
 
@@ -30,11 +30,11 @@ window.TARGET = {
 
                 target.model = t.model;
 
-                GAME.world.removeChild(target.sprite);
+                GAME.target.removeChild(target.sprite);
                 target.sprite.destroy();
 
                 target.sprite = new PIXI.Sprite(TOOL.getModel(t.model));
-                GAME.world.addChild(target.sprite);
+                GAME.target.addChild(target.sprite);
 
             }
 
@@ -51,7 +51,7 @@ window.TARGET = {
 
         if (target) {
 
-            GAME.world.removeChild(target.sprite);
+            GAME.target.removeChild(target.sprite);
             target.sprite.destroy();
 
             TARGET.store.splice(TARGET.store.indexOf(target), 1);

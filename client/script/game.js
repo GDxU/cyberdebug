@@ -1,12 +1,22 @@
 window.GAME = {
 
     application: undefined,
+
     world: undefined,
+
+    background: undefined,
+    target: undefined,
+    marker: undefined,
 
     init: () => {
 
         GAME.initApplication();
+
         GAME.initWorld();
+
+        GAME.initBackground();
+        GAME.initTarget();
+        GAME.initMarker();
 
     },
 
@@ -57,6 +67,46 @@ window.GAME = {
         });
 
         GAME.application.stage.addChild(GAME.world);
+
+    },
+
+    initBackground: () => {
+
+        GAME.background = new PIXI.extras.TilingSprite(
+            LOADER.loader.resources.tile.texture,
+            20000,
+            20000
+        );
+
+        GAME.world.addChild(GAME.background);
+
+    },
+
+    initTarget: () => {
+
+        GAME.target = new PIXI.Container();
+        GAME.world.addChild(GAME.target);
+
+    },
+
+    initMarker: () => {
+
+        GAME.marker = new PIXI.Container();
+        GAME.world.addChild(GAME.marker);
+
+        // spawn
+
+        let spawn = new PIXI.Sprite(LOADER.loader.resources.spawn.texture);
+        spawn.x = 10000 - 400;
+        spawn.y = 10000 - 400;
+        GAME.marker.addChild(spawn);
+
+        // camera
+
+        let camera = new PIXI.Sprite(LOADER.loader.resources.camera.texture);
+        camera.x = Math.floor(window.innerWidth / 2) - 100;
+        camera.y = Math.floor(window.innerHeight / 2) - 100;
+        GAME.application.stage.addChild(camera);
 
     }
 

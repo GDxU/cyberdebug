@@ -43,7 +43,6 @@ window.GUI = {
                 GUI.menu.hide();
 
                 GAME.init();
-                BACKGROUND.init();
                 WS.init();
 
                 GUI.debug.show();

@@ -5,13 +5,8 @@ window.ACTION = {
     init: () => {
 
         ACTION.pin = new PIXI.Sprite(LOADER.loader.resources.pin.texture);
-
         ACTION.pin.visible = false;
-
-        ACTION.pin.x = 0;
-        ACTION.pin.y = 0;
-
-        GAME.world.addChild(ACTION.pin);
+        GAME.marker.addChild(ACTION.pin);
 
     },
 

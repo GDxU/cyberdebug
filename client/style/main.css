@@ -39,6 +39,11 @@ div {
     z-index: 1;
 }
 
+th {
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: normal;
+}
+
 td:not(:first-child), th:not(:first-child) {
     text-align: right;
 }

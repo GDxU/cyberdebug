@@ -8,12 +8,12 @@ window.DEBUG = {
 
         let html = '';
 
-        if (CAMERA.target) {
+        if (USER.target) {
 
-            html += '<span>id:</span> ' + CAMERA.target.id + '<br>';
+            html += '<span>id:</span> ' + USER.id + '<br>';
             html += '<span>name:</span> ' + USER.name + '<br>';
-            html += '<span>x:</span> ' + CAMERA.target.sprite.x + '<br>';
-            html += '<span>y:</span> ' + CAMERA.target.sprite.y + '<br>';
+            html += '<span>x:</span> ' + USER.target.sprite.x + '<br>';
+            html += '<span>y:</span> ' + USER.target.sprite.y + '<br>';
             html += '<span>w:</span> ' + GAME.application.renderer.width + '<br>';
             html += '<span>h:</span> ' + GAME.application.renderer.height + '<br>';
             html += '<span>users:</span> ' + WS.data.users + '<br>';

@@ -16,9 +16,9 @@ window.ACTION = {
 
         ACTION.pin.visible = !(
             ACTION.pin &&
-            CAMERA.target &&
-            ACTION.pin.x === CAMERA.target.sprite.x &&
-            ACTION.pin.y === CAMERA.target.sprite.y
+            USER.target &&
+            ACTION.pin.x === USER.target.sprite.x &&
+            ACTION.pin.y === USER.target.sprite.y
         );
 
     }

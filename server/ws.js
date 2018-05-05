@@ -26,7 +26,7 @@ WS.server.on('connection', ws => {
     console.log('WS connection');
 
     ws.user = TARGET.appendUser();
-    ws.need = true;
+    ws.synchronized = false;
 
     // Посылаем в клиент идентификатор игрока
 
@@ -112,10 +112,10 @@ setInterval(() => {
                 targets: TARGET.getTargets(ws)
             };
 
-            if (ws.need) {
+            if (!ws.synchronized) {
 
                 message.id = ws.user.id;
-                delete ws.need;
+                ws.synchronized = true;
 
             }
 

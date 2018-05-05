@@ -38,7 +38,6 @@ window.DEBUG = {
         }
 
         html += '<span>ms:</span> ' + DEBUG.ms.toFixed(2) + '<br>';
-        html += '<span>ms:</span> ' + DEBUG.ms.toFixed(2) + '<br>';
         html += '<span>tr:</span> ' + DEBUG.tr.toFixed(2);
 
         GUI.debug.info.innerHTML = html;

@@ -6,8 +6,8 @@ window.CAMERA = {
 
         if (CAMERA.target) {
 
-            GAME.world.x = Math.round(window.innerWidth / 2) - CAMERA.target.sprite.x;
-            GAME.world.y = Math.round(window.innerHeight / 2) - CAMERA.target.sprite.y;
+            GAME.world.x = Math.floor(window.innerWidth / 2) - CAMERA.target.sprite.x;
+            GAME.world.y = Math.floor(window.innerHeight / 2) - CAMERA.target.sprite.y;
 
         } else {
 

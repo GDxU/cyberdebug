@@ -1,6 +1,6 @@
 window.addEventListener('load', () => {
 
-    GAME.init();
+    LOADER.init();
     GUI.init();
 
 });

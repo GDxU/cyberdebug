@@ -1,42 +1,17 @@
 window.BACKGROUND = {
 
-    tile: undefined,
-    background: undefined,
-    box: undefined,
-
     init: () => {
 
         BACKGROUND.initBackground();
-        BACKGROUND.initBox();
-
-    },
-
-    initTile: () => {
-
-        BACKGROUND.tile = new PIXI.Graphics();
-
-        BACKGROUND.tile.beginFill(0x272d37, 1);
-        BACKGROUND.tile.drawRect(0, 0, 99, 99);
-        BACKGROUND.tile.endFill();
-
-        BACKGROUND.tile.lineStyle(1, 0xffffff, 0.2);
-        BACKGROUND.tile.moveTo(98, 0);
-        BACKGROUND.tile.lineTo(0, 0);
-        BACKGROUND.tile.lineTo(0, 98);
-
-        BACKGROUND.tile.lineStyle(1, 0x000000, 0.2);
-        BACKGROUND.tile.moveTo(99, 1);
-        BACKGROUND.tile.lineTo(99, 99);
-        BACKGROUND.tile.lineTo(1, 99);
+        BACKGROUND.initBoxSpawn();
+        BACKGROUND.initBoxCamera();
 
     },
 
     initBackground: () => {
 
-        BACKGROUND.initTile();
-
         BACKGROUND.background = new PIXI.extras.TilingSprite(
-            BACKGROUND.tile.generateCanvasTexture(1, 1),
+            LOADER.loader.resources.tile.texture,
             20000,
             20000
         );
@@ -45,17 +20,25 @@ window.BACKGROUND = {
 
     },
 
-    initBox: () => {
+    initBoxSpawn: () => {
 
-        BACKGROUND.box = new PIXI.Graphics();
+        BACKGROUND.spawn = new PIXI.Sprite(LOADER.loader.resources.spawn.texture);
 
-        BACKGROUND.box.lineStyle(1, 0xF44336, 0.8);
-        BACKGROUND.box.drawRect(0, 0, 900, 900);
+        BACKGROUND.spawn.x = 10000 - 400;
+        BACKGROUND.spawn.y = 10000 - 400;
 
-        BACKGROUND.box.x = 10000 - 450;
-        BACKGROUND.box.y = 10000 - 450;
+        GAME.world.addChild(BACKGROUND.spawn);
 
-        GAME.world.addChild(BACKGROUND.box);
+    },
+
+    initBoxCamera: () => {
+
+        BACKGROUND.camera = new PIXI.Sprite(LOADER.loader.resources.camera.texture);
+
+        BACKGROUND.camera.x = Math.floor(window.innerWidth / 2) - 100;
+        BACKGROUND.camera.y = Math.floor(window.innerHeight / 2) - 100;
+
+        GAME.application.stage.addChild(BACKGROUND.camera);
 
     }
 

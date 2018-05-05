@@ -24,35 +24,31 @@ window.GUI = {
             GUI.menu.random.innerText = '?!';
             GUI.menu.start.innerText = 'СТАРТ';
 
-            let left = Math.round(window.innerWidth / 2) - Math.round(GUI.menu.panel.offsetWidth / 2);
-            let top = Math.round(window.innerHeight / 2) - Math.round(GUI.menu.panel.offsetHeight / 2);
+            let left = Math.floor(window.innerWidth / 2) - Math.floor(GUI.menu.panel.offsetWidth / 2);
+            let top = Math.floor(window.innerHeight / 2) - Math.floor(GUI.menu.panel.offsetHeight / 2);
+
+            GUI.menu.hide();
 
             GUI.menu.panel.style.top = top + 'px';
             GUI.menu.panel.style.right = 'auto';
             GUI.menu.panel.style.bottom = 'auto';
             GUI.menu.panel.style.left = left + 'px';
 
-            GUI.menu.random.addEventListener('click', () => {
-
-                GUI.menu.nickname.value = TOOL.getNickname();
-
-            });
-
+            GUI.menu.random.addEventListener('click', () => GUI.menu.nickname.value = TOOL.getNickname());
             GUI.menu.start.addEventListener('click', () => {
-
-                GUI.menu.hide();
 
                 USER.name = GUI.menu.nickname.value;
                 Cookies.set('nickname', USER.name, {expires: 365});
 
+                GUI.menu.hide();
+
+                GAME.init();
                 BACKGROUND.init();
                 WS.init();
 
                 GUI.debug.show();
 
             });
-
-            GUI.menu.show();
 
         },
 

@@ -1,20 +1,19 @@
 window.TOOL = {
 
-    getColor: i => {
+    getModel: i => {
 
         i = i || 0;
 
-        let colors = [
-            0x0000ff,
-            0x00ff00,
-            0x00ffff,
-            0xff0000,
-            0xff00ff,
-            0xffff00,
-            0xffffff
+        let names = [
+            'white',
+            'cyan',
+            'magenta',
+            'yellow'
         ];
 
-        return colors[i % colors.length];
+        let name = names[i % names.length];
+
+        return LOADER.loader.resources[name].texture;
 
     },
 

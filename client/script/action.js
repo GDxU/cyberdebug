@@ -4,15 +4,9 @@ window.ACTION = {
 
     init: () => {
 
-        ACTION.pin = new PIXI.Graphics();
+        ACTION.pin = new PIXI.Sprite(LOADER.loader.resources.pin.texture);
 
         ACTION.pin.visible = false;
-
-        ACTION.pin.lineStyle(1,0xff0000);
-        ACTION.pin.moveTo(0, 11);
-        ACTION.pin.lineTo(11, 0);
-        ACTION.pin.moveTo(0, 0);
-        ACTION.pin.lineTo(11, 11);
 
         ACTION.pin.x = 0;
         ACTION.pin.y = 0;

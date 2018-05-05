@@ -18,6 +18,10 @@
     url('/client/font/europeext-normal/europeext-normal.ttf') format('truetype')
 }
 
+html {
+    cursor: url('/client/image/cursor/default.png'), auto;
+}
+
 body {
     background-color: rgba(32, 34, 37, 1);
     color: rgba(255, 255, 255, 1);
@@ -67,6 +71,7 @@ input {
     background-color: rgba(54, 57, 62, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.4);
     color: rgba(255, 255, 255, 1);
+    cursor: url('/client/image/cursor/text.png') 8 10, auto;
     font-family: 'europeext normal', monospace;
     font-size: 16px;
     line-height: 16px;
@@ -84,7 +89,7 @@ input:hover, input:focus {
 .button {
     background-color: rgba(54, 57, 62, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.4);
-    cursor: pointer;
+    cursor: url('/client/image/cursor/pointer.png') 4 0, auto;
     font-family: new_zelek, monospace;
     font-size: 24px;
     line-height: 24px;

@@ -37,20 +37,22 @@ window.GAME = {
 
         GAME.world.on('pointerdown', e => {
 
-            let x = Math.round(e.data.global.x - GAME.world.x - 5);
-            let y = Math.round(e.data.global.y - GAME.world.y - 5);
-            let message = {
+            let x = Math.floor(e.data.global.x - GAME.world.x);
+            let y = Math.floor(e.data.global.y - GAME.world.y);
+
+            let message = JSON.stringify({
                 action: {
                     x: x,
                     y: y
                 }
-            };
+            });
 
-            WS.client.send(JSON.stringify(message));
+            console.log('WS send ' + message);
+
+            WS.client.send(message);
 
             ACTION.pin.x = x;
             ACTION.pin.y = y;
-            ACTION.pin.visible = true;
 
         });
 

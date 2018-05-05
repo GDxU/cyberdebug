@@ -43,11 +43,12 @@ window.WS = {
 
             WS.data = JSON.parse(message.data);
 
-            USER.sync(WS.data);
-            TARGET.sync(WS.data);
+            USER.sync();
+            TARGET.sync();
+            TOTAL.sync();
             CAMERA.sync();
             ACTION.sync();
-            DEBUG.sync(WS.data);
+            DEBUG.sync();
 
         });
 

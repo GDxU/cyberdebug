@@ -60,41 +60,21 @@ window.TARGET = {
 
     },
 
-    sync: data => {
+    sync: () => {
 
-        if (data.targets) {
+        if (WS.data.targets) {
 
             let ids = [];
 
             TARGET.store.forEach(target => {
 
-                if (!data.targets.filter(t => t.id === target.id)[0]) ids.push(target.id);
+                if (!WS.data.targets.filter(t => t.id === target.id)[0]) ids.push(target.id);
 
             });
 
             ids.forEach(id => TARGET.remove(id));
 
-            data.targets.forEach(t => TARGET.get(t.id) ? TARGET.update(t) : TARGET.append(t));
-
-        }
-
-        if (data.totals) {
-
-            let html = '';
-
-            data.totals.forEach(total => {
-
-                html += '<tr>' +
-                    '<td>' + total.name + '</td>' +
-                    '<td>' + total.kill + '</td>' +
-                    '<td>' + total.stun + '</td>' +
-                    '<td>' + total.die + '</td>' +
-                    '<td>' + total.score + '</td>' +
-                    '</tr>';
-
-            });
-
-            GUI.total.table.innerHTML = html;
+            WS.data.targets.forEach(t => TARGET.get(t.id) ? TARGET.update(t) : TARGET.append(t));
 
         }
 

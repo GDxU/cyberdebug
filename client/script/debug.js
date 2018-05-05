@@ -4,7 +4,7 @@ window.DEBUG = {
     tr: 0,
     timestamps: [],
 
-    sync: (data) => {
+    sync: () => {
 
         let html = '';
 
@@ -16,9 +16,9 @@ window.DEBUG = {
             html += '<span>y:</span> ' + CAMERA.target.sprite.y + '<br>';
             html += '<span>w:</span> ' + GAME.application.renderer.width + '<br>';
             html += '<span>h:</span> ' + GAME.application.renderer.height + '<br>';
-            html += '<span>users:</span> ' + data.users + '<br>';
-            html += '<span>bots:</span> ' + data.bots + '<br>';
-            html += '<span>here:</span> ' + (data.targets ? data.targets.length : 0) + '<br>';
+            html += '<span>users:</span> ' + WS.data.users + '<br>';
+            html += '<span>bots:</span> ' + WS.data.bots + '<br>';
+            html += '<span>here:</span> ' + (WS.data.targets ? WS.data.targets.length : 0) + '<br>';
 
         }
 
@@ -37,6 +37,7 @@ window.DEBUG = {
 
         }
 
+        html += '<span>ms:</span> ' + DEBUG.ms.toFixed(2) + '<br>';
         html += '<span>ms:</span> ' + DEBUG.ms.toFixed(2) + '<br>';
         html += '<span>tr:</span> ' + DEBUG.tr.toFixed(2);
 

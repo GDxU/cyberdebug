@@ -3,10 +3,12 @@ window.USER = {
     id: undefined,
     name: undefined,
 
-    sync: data => {
+    sync: () => {
 
-        if (data.id) {
-            USER.id = data.id;
+        if (WS.data.id) {
+
+            USER.id = WS.data.id;
+
         }
 
     }

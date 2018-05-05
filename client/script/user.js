@@ -29,6 +29,9 @@ window.USER = {
 
                     USER.synchronized = true;
 
+                    GUI.user.name.innerText = USER.name;
+                    GUI.user.show();
+
                 }
 
             }

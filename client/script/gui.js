@@ -3,6 +3,7 @@ window.GUI = {
     init: () => {
 
         GUI.menu.init();
+        GUI.user.init();
         GUI.total.init();
         GUI.debug.init();
 
@@ -62,6 +63,36 @@ window.GUI = {
         hide: () => {
 
             GUI.menu.panel.style.display = 'none';
+
+        }
+
+    },
+
+    user: {
+
+        init: () => {
+
+            GUI.user.panel = document.getElementById('user');
+            GUI.user.name = document.getElementById('user_name');
+
+            GUI.user.hide();
+
+            GUI.user.panel.style.top = '10px';
+            GUI.user.panel.style.right = 'auto';
+            GUI.user.panel.style.bottom = 'auto';
+            GUI.user.panel.style.left = '10px';
+
+        },
+
+        show: () => {
+
+            GUI.user.panel.style.display = 'block';
+
+        },
+
+        hide: () => {
+
+            GUI.user.panel.style.display = 'none';
 
         }
 

@@ -99,14 +99,14 @@ window.GAME = {
         let spawn = new PIXI.Sprite(LOADER.loader.resources.spawn.texture);
         spawn.x = 10000 - 400;
         spawn.y = 10000 - 400;
-        GAME.marker.addChild(spawn);
+        // GAME.marker.addChild(spawn);
 
         // camera
 
         let camera = new PIXI.Sprite(LOADER.loader.resources.camera.texture);
         camera.x = Math.floor(window.innerWidth / 2) - 100;
         camera.y = Math.floor(window.innerHeight / 2) - 100;
-        GAME.application.stage.addChild(camera);
+        // GAME.application.stage.addChild(camera);
 
     }
 

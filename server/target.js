@@ -69,11 +69,11 @@ TARGET.getTargets = ws => {
 
     let camera = ws.camera || {w: 100, h: 100};
 
+    if (camera.x > 2000) camera.x = 2000;
+    if (camera.y > 2000) camera.y = 2000;
+
     let x = Math.floor(camera.w / 2) + 100;
     let y = Math.floor(camera.h / 2) + 100;
-
-    // let x = 100;
-    // let y = 100;
 
     let x1 = ws.user.x - x;
     let x2 = ws.user.x + x;

@@ -12,7 +12,9 @@ window.WS = {
             console.log('WS open');
 
             let message = {
-                name: USER.name,
+                user: {
+                    name: USER.name
+                },
                 camera: {
                     w: window.innerWidth,
                     h: window.innerHeight

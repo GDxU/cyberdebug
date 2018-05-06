@@ -5,27 +5,31 @@ ACTION.tr = 40;
 ACTION.ms = 1000 / ACTION.tr;
 ACTION.store = [];
 
-ACTION.sync = (ws, cmd) => {
+ACTION.sync = (ws, data) => {
 
-    let x = parseInt(cmd.x);
-    let y = parseInt(cmd.y);
+    if (data.action) {
 
-    if (!isNaN(x) && !isNaN(y)) {
+        let x = parseInt(data.action.x);
+        let y = parseInt(data.action.y);
 
-        let action = ACTION.store.filter(action => action.user.id === ws.user.id)[0];
+        if (!isNaN(x) && !isNaN(y)) {
 
-        if (action) {
+            let action = ACTION.store.filter(action => action.user.id === ws.user.id)[0];
 
-            action.x = x;
-            action.y = y;
+            if (action) {
 
-        } else {
+                action.x = x;
+                action.y = y;
 
-            ACTION.store.push({
-                user: ws.user,
-                x: x,
-                y: y
-            });
+            } else {
+
+                ACTION.store.push({
+                    user: ws.user,
+                    x: x,
+                    y: y
+                });
+
+            }
 
         }
 

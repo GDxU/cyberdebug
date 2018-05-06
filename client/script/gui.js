@@ -4,6 +4,7 @@ window.GUI = {
 
         GUI.menu.init();
         GUI.user.init();
+        GUI.contract.init();
         GUI.total.init();
         GUI.debug.init();
 
@@ -73,7 +74,8 @@ window.GUI = {
         init: () => {
 
             GUI.user.panel = document.getElementById('user');
-            GUI.user.name = document.getElementById('user_name');
+            GUI.user.model = document.getElementById('user_model');
+            GUI.user.info = document.getElementById('user_info');
 
             GUI.user.hide();
 
@@ -93,6 +95,77 @@ window.GUI = {
         hide: () => {
 
             GUI.user.panel.style.display = 'none';
+
+        },
+
+        sync: () => {
+
+            if (GUI.user.panel.style.display = 'block') {
+
+                if (USER.target) {
+
+                    let url = window.location.origin + TOOL.getModel(USER.target.model).baseTexture.imageUrl;
+                    if (GUI.user.model.src !== url) GUI.user.model.src = url;
+
+                    GUI.user.model.style.display = 'block';
+                }
+                GUI.user.info.innerHTML = '<span>Name:</span> ' + USER.name + '<br><span>Hunter:</span> ' + USER.hunter;
+
+            }
+
+        }
+
+    },
+
+    contract: {
+
+        init: () => {
+
+            GUI.contract.panel = document.getElementById('contract');
+            GUI.contract.model = document.getElementById('contract_model');
+            GUI.contract.info = document.getElementById('contract_info');
+
+            GUI.contract.hide();
+
+            GUI.contract.panel.style.top = '10px';
+            GUI.contract.panel.style.right = '10px';
+            GUI.contract.panel.style.bottom = 'auto';
+            GUI.contract.panel.style.left = 'auto';
+
+        },
+
+        show: () => {
+
+            GUI.contract.panel.style.display = 'block';
+
+        },
+
+        hide: () => {
+
+            GUI.contract.panel.style.display = 'none';
+
+        },
+
+        sync: () => {
+
+            if (GUI.contract.panel.style.display = 'block') {
+
+                if (USER.contract) {
+
+                    let url = window.location.origin + TOOL.getModel(USER.contract.model).baseTexture.imageUrl;
+                    if (GUI.contract.model.src !== url) GUI.contract.model.src = url;
+
+                    GUI.contract.model.style.display = 'block';
+                    GUI.contract.info.innerHTML = '<span>Name:</span> ' + USER.contract.name + '<br><span>Hunter:</span> ' + USER.contract.hunter;
+
+                } else {
+
+                    GUI.contract.model.style.display = 'none';
+                    GUI.contract.info.innerHTML = 'Поиск...';
+
+                }
+
+            }
 
         }
 

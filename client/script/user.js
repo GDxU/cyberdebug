@@ -2,39 +2,30 @@ window.USER = {
 
     id: undefined,
     name: undefined,
-    model: undefined,
+    contract: undefined,
+    hunter: undefined,
 
     target: undefined,
 
-    synchronized: false,
-
     sync: () => {
 
-        if (!USER.synchronized) {
+        if (WS.data.user) {
 
-            if (WS.data.id) {
+            USER.id =       WS.data.user.id;
+            USER.contract = WS.data.user.contract;
+            USER.hunter =   WS.data.user.hunter;
 
-                USER.id = WS.data.id;
+            if (!USER.target && USER.id) {
 
-            }
+                USER.target = TARGET.get(USER.id);
 
-            if (USER.id) {
-
-                let target = TARGET.get(USER.id);
-                if (target) {
-
-                    USER.target = target;
-
-                    USER.model = target.model;
-
-                    USER.synchronized = true;
-
-                    GUI.user.name.innerText = USER.name;
-                    GUI.user.show();
-
-                }
+                GUI.user.show();
+                GUI.contract.show();
 
             }
+
+            GUI.user.sync();
+            GUI.contract.sync();
 
         }
 

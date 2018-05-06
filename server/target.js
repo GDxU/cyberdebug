@@ -7,15 +7,73 @@ TARGET.model = 0;
 TARGET.users = [];
 TARGET.bots = [];
 
+TARGET.generateId = () => {
+
+    return TARGET.id++;
+
+};
+
+TARGET.getUser = ws => {
+
+    return {
+        id: ws.user.id,
+        contract: ws.user.contract ? {
+            name: ws.user.contract.name,
+            model: ws.user.contract.model,
+            hunter: ws.user.contract.hunter
+        } : undefined,
+        hunter: ws.user.hunter
+    };
+
+};
+
+TARGET.syncUser = (ws, data) => {
+
+    if (data.user) {
+
+        ws.user.name = data.user.name;
+
+    }
+
+};
+
+TARGET.appendUser = ws => {
+
+    ws.user = {
+        id: TARGET.generateId(),
+        name: '',
+        model: TARGET.model++,
+        x: 10000 + TOOL.getRandomInt(-400, 400),
+        y: 10000 + TOOL.getRandomInt(-400, 400),
+        kill: 0,
+        stun: 0,
+        die: 0,
+        score: 0,
+        contract: undefined,
+        hunter: 0
+    };
+
+    TARGET.users.push(ws.user);
+    TARGET.updateBots();
+
+};
+
+TARGET.removeUser = ws => {
+
+    TARGET.users = TARGET.users.filter(user => user.id !== ws.user.id);
+    TARGET.updateBots();
+
+};
+
 TARGET.getTargets = ws => {
 
     let camera = ws.camera || {w: 100, h: 100};
 
-    // let x = Math.floor(camera.w / 2) + 100;
-    // let y = Math.floor(camera.h / 2) + 100;
+    let x = Math.floor(camera.w / 2) + 100;
+    let y = Math.floor(camera.h / 2) + 100;
 
-    let x = 100;
-    let y = 100;
+    // let x = 100;
+    // let y = 100;
 
     let x1 = ws.user.x - x;
     let x2 = ws.user.x + x;
@@ -39,55 +97,12 @@ TARGET.getTargets = ws => {
 
 };
 
-TARGET.getTotals = () => {
-
-    let totals = [];
-
-    TARGET.users.forEach(user => totals.push({
-        name: user.name,
-        kill: user.kill,
-        stun: user.stun,
-        die: user.die,
-        score: user.score
-    }));
-
-    return totals.sort((a, b) => b.score - a.score).splice(0, 10);
-
-};
-
-TARGET.appendUser = () => {
-
-    let user = {
-        id: TARGET.id++,
-        model: TARGET.model++,
-        kill: 0,
-        stun: 0,
-        die: 0,
-        score: 0,
-        x: 10000 + TOOL.getRandomInt(-400, 400),
-        y: 10000 + TOOL.getRandomInt(-400, 400)
-    };
-
-    TARGET.users.push(user);
-    TARGET.updateBots();
-
-    return user;
-
-};
-
-TARGET.removeUser = ws => {
-
-    TARGET.users = TARGET.users.filter(user => user.id !== ws.user.id);
-    TARGET.updateBots();
-
-};
-
 TARGET.initBots = () => {
 
     for (let i = 0; i < 100; i++) {
 
         TARGET.bots.push({
-            id: TARGET.id++,
+            id: TARGET.generateId(),
             model: 0,
             x: 10000 + TOOL.getRandomInt(-400, 400),
             y: 10000 + TOOL.getRandomInt(-400, 400)

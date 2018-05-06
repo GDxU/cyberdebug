@@ -50,6 +50,7 @@ window.WS = {
             TOTAL.sync();
             CAMERA.sync();
             ACTION.sync();
+            HUD.sync();
             DEBUG.sync();
 
         });

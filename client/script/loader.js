@@ -12,8 +12,12 @@ window.LOADER = {
         loader.add('pin', '/client/image/pin.png');
 
         loader.add('tile',   '/client/image/tile.png');
-        loader.add('spawn',  '/client/image/spawn.png');
-        loader.add('camera', '/client/image/camera.png');
+
+        loader.add('hud0', '/client/image/hud/0.png');
+        loader.add('hud1', '/client/image/hud/1.png');
+        loader.add('hud2', '/client/image/hud/2.png');
+        loader.add('hud3', '/client/image/hud/3.png');
+        loader.add('hud4', '/client/image/hud/4.png');
 
         loader.load(() => {
 

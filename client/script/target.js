@@ -12,6 +12,7 @@ window.TARGET = {
             sprite: new PIXI.Sprite(TOOL.getModel(t.model))
         };
 
+        target.sprite.anchor.set(0.5, 0.5);
         target.sprite.x = t.x;
         target.sprite.y = t.y;
 

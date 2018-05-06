@@ -15,13 +15,28 @@ TARGET.generateId = () => {
 
 TARGET.getUser = ws => {
 
-    return {
-        id: ws.user.id,
-        contract: ws.user.contract ? {
+    let contract = undefined;
+
+    if (ws.user.contract) {
+
+        let hud = 0;
+        let distance = [200, 400, 600, 800];
+
+        for (; hud < distance.length; hud++) if (TOOL.getDistance(ws.user, ws.user.contract) < distance[hud]) break;
+
+        contract = {
             name: ws.user.contract.name,
             model: ws.user.contract.model,
-            hunter: ws.user.contract.hunter
-        } : undefined,
+            hunter: ws.user.contract.hunter,
+            hud: hud,
+            azimuth: TOOL.getAzimuth(ws.user, ws.user.contract)
+        };
+
+    }
+
+    return {
+        id: ws.user.id,
+        contract: contract,
         hunter: ws.user.hunter
     };
 

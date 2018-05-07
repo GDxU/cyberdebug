@@ -49,22 +49,36 @@ window.GAME = {
 
         GAME.world.on('pointerdown', e => {
 
-            let x = Math.floor(e.data.global.x - GAME.world.x);
-            let y = Math.floor(e.data.global.y - GAME.world.y);
+            let message = undefined;
 
-            let message = JSON.stringify({
-                action: {
-                    x: x,
-                    y: y
-                }
-            });
+            if (e.target.target) {
 
-            console.log('WS send ' + message);
+                message = JSON.stringify({
+                    action: {
+                        id: e.target.target.id
+                    }
+                });
+
+            } else {
+
+                let x = Math.floor(e.data.global.x - GAME.world.x);
+                let y = Math.floor(e.data.global.y - GAME.world.y);
+
+                message = JSON.stringify({
+                    action: {
+                        x: x,
+                        y: y
+                    }
+                });
+
+                ACTION.pin.x = x;
+                ACTION.pin.y = y;
+
+            }
 
             WS.client.send(message);
 
-            ACTION.pin.x = x;
-            ACTION.pin.y = y;
+            console.log('WS send ' + message);
 
         });
 

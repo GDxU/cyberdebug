@@ -78,15 +78,15 @@ setInterval(() => {
 
     AI.move();
 
-    let totals = TOTAL.get();
+    let totals = TOTAL.export();
 
     WS.server.clients.forEach(ws => {
 
         if (ws.readyState === WebSocket.OPEN) {
 
             let message = {
-                user: TARGET.getUser(ws),
-                targets: TARGET.getTargets(ws),
+                user: TARGET.exportUser(ws),
+                targets: TARGET.exportTargets(ws),
                 totals: totals,
                 users: TARGET.users.length,
                 bots: TARGET.bots.length

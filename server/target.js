@@ -13,7 +13,9 @@ TARGET.generateId = () => {
 
 };
 
-TARGET.getUser = ws => {
+TARGET.get = id => TARGET.bots.concat(TARGET.users).filter(target => target.id === id)[0];
+
+TARGET.exportUser = ws => {
 
     let contract = undefined;
 
@@ -80,7 +82,7 @@ TARGET.removeUser = ws => {
 
 };
 
-TARGET.getTargets = ws => {
+TARGET.exportTargets = ws => {
 
     let camera = ws.camera || {w: 100, h: 100};
 

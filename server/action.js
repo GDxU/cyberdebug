@@ -1,3 +1,5 @@
+let TARGET = require('./target');
+
 let ACTION = {};
 
 ACTION.speed = 5;
@@ -9,25 +11,47 @@ ACTION.sync = (ws, data) => {
 
     if (data.action) {
 
-        let x = parseInt(data.action.x);
-        let y = parseInt(data.action.y);
+        if (data.action.id) {
 
-        if (!isNaN(x) && !isNaN(y)) {
+            let target = TARGET.get(data.action.id);
 
-            let action = ACTION.store.filter(action => action.user.id === ws.user.id)[0];
+            if (target) {
 
-            if (action) {
+                if (typeof target.name === 'string') {
 
-                action.x = x;
-                action.y = y;
+                    console.log('ACTION target is user');
 
-            } else {
+                } else {
 
-                ACTION.store.push({
-                    user: ws.user,
-                    x: x,
-                    y: y
-                });
+                    console.log('ACTION target is bot');
+
+                }
+
+            } else console.log('ACTION target not found');
+
+        } else {
+
+            let x = parseInt(data.action.x);
+            let y = parseInt(data.action.y);
+
+            if (!isNaN(x) && !isNaN(y)) {
+
+                let action = ACTION.store.filter(action => action.user.id === ws.user.id)[0];
+
+                if (action) {
+
+                    action.x = x;
+                    action.y = y;
+
+                } else {
+
+                    ACTION.store.push({
+                        user: ws.user,
+                        x: x,
+                        y: y
+                    });
+
+                }
 
             }
 

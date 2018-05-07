@@ -2,7 +2,7 @@ let TARGET = require('./target');
 
 let TOTAL = {};
 
-TOTAL.get = () => {
+TOTAL.export = () => {
 
     let totals = [];
 

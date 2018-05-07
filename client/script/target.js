@@ -13,6 +13,7 @@ window.TARGET = {
         };
 
         target.sprite.anchor.set(0.5, 0.5);
+        target.sprite.target = target;
         target.sprite.x = t.x;
         target.sprite.y = t.y;
 
@@ -42,6 +43,7 @@ window.TARGET = {
                 target.sprite.destroy();
 
                 target.sprite = new PIXI.Sprite(TOOL.getModel(t.model));
+                target.sprite.target = target;
                 GAME.target.addChild(target.sprite);
 
                 if (USER.id !== target.id) {

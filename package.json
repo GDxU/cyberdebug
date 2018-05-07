@@ -1,7 +1,7 @@
 {
   "name": "pixel",
-  "version": "1.0.0",
-  "description": "pixel",
+  "version": "0.0.1",
+  "description": "pixel art multiplayer game",
   "main": "index.js",
   "dependencies": {
     "js-cookie": "^2.2.0",
@@ -20,6 +20,9 @@
   },
   "keywords": [
     "pixel",
+    "game",
+    "javascript",
+    "nodejs",
     "nanaki"
   ],
   "author": "Nanaki",
@@ -27,5 +30,5 @@
   "bugs": {
     "url": "https://github.com/Nanak1/pixel/issues"
   },
-  "homepage": "https://github.com/Nanak1/pixel#readme"
+  "homepage": "https://nanak1.github.io/pixel"
 }

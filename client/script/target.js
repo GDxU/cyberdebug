@@ -19,6 +19,13 @@ window.TARGET = {
         TARGET.store.push(target);
         GAME.target.addChild(target.sprite);
 
+        if (USER.id !== target.id) {
+            target.sprite.cursor = 'hover';
+            target.sprite.interactive = true;
+            target.sprite.on('pointerover', e => e.currentTarget.filters = [new PIXI.filters.OutlineFilter(1, 0xffffff, 1)]);
+            target.sprite.on('pointerout', e => e.currentTarget.filters = undefined);
+        }
+
     },
 
     update: t => {
@@ -36,6 +43,11 @@ window.TARGET = {
 
                 target.sprite = new PIXI.Sprite(TOOL.getModel(t.model));
                 GAME.target.addChild(target.sprite);
+
+                if (USER.id !== target.id) {
+                    target.sprite.cursor = 'hover';
+                    target.sprite.interactive = true;
+                }
 
             }
 

@@ -19,7 +19,7 @@
 }
 
 html {
-    cursor: url('/client/image/cursor/default.png'), auto;
+    cursor: url('/client/image/cursor/default.png') 11 11, auto;
 }
 
 body {
@@ -27,6 +27,10 @@ body {
     color: rgba(255, 255, 255, 1);
     margin: 0;
     overflow: hidden;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 canvas {
@@ -34,7 +38,6 @@ canvas {
 }
 
 div {
-    user-select: none;
     z-index: 1;
 }
 
@@ -85,7 +88,7 @@ input {
     background-color: rgba(54, 57, 62, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.4);
     color: rgba(255, 255, 255, 1);
-    cursor: url('/client/image/cursor/text.png') 8 10, auto;
+    cursor: url('/client/image/cursor/text.png') 11 11, auto;
     font-family: 'europeext normal', monospace;
     font-size: 16px;
     line-height: 16px;
@@ -103,7 +106,7 @@ input:hover, input:focus {
 .button {
     background-color: rgba(54, 57, 62, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.4);
-    cursor: url('/client/image/cursor/pointer.png') 4 0, auto;
+    cursor: url('/client/image/cursor/pointer.png') 11 11, auto;
     font-family: new_zelek, monospace;
     font-size: 24px;
     line-height: 24px;

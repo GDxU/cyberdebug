@@ -31,6 +31,8 @@ window.GAME = {
 
         GAME.application.renderer.roundPixels = true;
         GAME.application.renderer.autoResize = true;
+        GAME.application.renderer.plugins.interaction.cursorStyles.default = "url('/client/image/cursor/default.png') 11 11, auto";
+        GAME.application.renderer.plugins.interaction.cursorStyles.hover = "url('/client/image/cursor/pointer.png') 11 11, auto";
 
         document.body.appendChild(GAME.application.view);
         window.addEventListener('resize', function () {

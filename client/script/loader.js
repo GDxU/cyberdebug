@@ -9,7 +9,7 @@ window.LOADER = {
         loader.add('magenta', '/client/image/model/magenta.png');
         loader.add('yellow',  '/client/image/model/yellow.png');
 
-        loader.add('pin', '/client/image/pin.png');
+        loader.add('pin', '/client/image/cursor/pin.png');
 
         loader.add('tile',   '/client/image/tile.png');
 

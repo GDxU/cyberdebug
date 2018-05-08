@@ -55,4 +55,20 @@ TOOL.getAzimuth = (a, b) => {
 
 };
 
+TOOL.move = (a, b, s) => {
+
+    if (a && b && s) {
+
+        if (a.x < b.x) a.x += s;
+        if (a.x > b.x) a.x -= s;
+        if (a.y < b.y) a.y += s;
+        if (a.y > b.y) a.y -= s;
+
+        if (Math.abs(a.x - b.x) < s) a.x = b.x;
+        if (Math.abs(a.y - b.y) < s) a.y = b.y;
+
+    }
+
+};
+
 module.exports = TOOL;

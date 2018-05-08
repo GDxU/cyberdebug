@@ -7,11 +7,9 @@ TARGET.model = 0;
 TARGET.users = [];
 TARGET.bots = [];
 
-TARGET.generateId = () => {
-
-    return TARGET.id++;
-
-};
+TARGET.generateId = () => TARGET.id++;
+TARGET.generateX = () => 10000 + TOOL.getRandomInt(-400, 400);
+TARGET.generateY = () => 10000 + TOOL.getRandomInt(-400, 400);
 
 TARGET.get = id => TARGET.bots.concat(TARGET.users).filter(target => target.id === id)[0];
 
@@ -60,14 +58,15 @@ TARGET.appendUser = ws => {
         id: TARGET.generateId(),
         name: '',
         model: TARGET.model++,
-        x: 10000 + TOOL.getRandomInt(-400, 400),
-        y: 10000 + TOOL.getRandomInt(-400, 400),
+        x: TARGET.generateX(),
+        y: TARGET.generateY(),
         kill: 0,
         stun: 0,
         die: 0,
         score: 0,
         contract: undefined,
-        hunter: 0
+        hunter: 0,
+        speed: 2
     };
 
     TARGET.users.push(ws.user);
@@ -75,9 +74,9 @@ TARGET.appendUser = ws => {
 
 };
 
-TARGET.removeUser = ws => {
+TARGET.removeUser = id => {
 
-    TARGET.users = TARGET.users.filter(user => user.id !== ws.user.id);
+    TARGET.users = TARGET.users.filter(user => user.id !== id);
     TARGET.updateBots();
 
 };
@@ -114,21 +113,25 @@ TARGET.exportTargets = ws => {
 
 };
 
-TARGET.initBots = () => {
+TARGET.initBot = data => {
 
-    for (let i = 0; i < 100; i++) {
+    data = data || {};
 
-        TARGET.bots.push({
-            id: TARGET.generateId(),
-            model: 0,
-            x: 10000 + TOOL.getRandomInt(-400, 400),
-            y: 10000 + TOOL.getRandomInt(-400, 400)
-        });
+    let bot = {
+        id: TARGET.generateId(),
+        model: data.model || 0,
+        x: data.x || TARGET.generateX(),
+        y: data.y || TARGET.generateY()
+    };
 
-    }
+    TARGET.bots.push(bot);
+
+    return bot;
 
 };
-TARGET.initBots();
+
+// создание ботов
+while (TARGET.bots.length < 100) TARGET.initBot();
 
 TARGET.updateBots = () => {
 

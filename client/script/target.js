@@ -23,7 +23,7 @@ window.TARGET = {
         if (USER.id !== target.id) {
             target.sprite.cursor = 'hover';
             target.sprite.interactive = true;
-            target.sprite.on('pointerover', e => e.currentTarget.filters = [new PIXI.filters.OutlineFilter(1, 0xffffff, 1)]);
+            target.sprite.on('pointerover', e => e.currentTarget.filters = USER.contract || USER.hunter ? [new PIXI.filters.OutlineFilter(1, 0xffff00, 1)] : undefined);
             target.sprite.on('pointerout', e => e.currentTarget.filters = undefined);
         }
 
@@ -49,6 +49,8 @@ window.TARGET = {
                 if (USER.id !== target.id) {
                     target.sprite.cursor = 'hover';
                     target.sprite.interactive = true;
+                    target.sprite.on('pointerover', e => e.currentTarget.filters = USER.contract || USER.hunter ? [new PIXI.filters.OutlineFilter(1, 0xffff00, 1)] : undefined);
+                    target.sprite.on('pointerout', e => e.currentTarget.filters = undefined);
                 }
 
             }

@@ -52,8 +52,8 @@ WS.server.on('connection', ws => {
 
         console.log('WS close');
 
-        CONTRACT.remove(ws);
-        TARGET.removeUser(ws);
+        CONTRACT.disconnect(ws.user);
+        TARGET.removeUser(ws.user.id);
 
     });
 

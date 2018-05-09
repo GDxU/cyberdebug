@@ -1,5 +1,21 @@
 window.TOOL = {
 
+    colors: {
+
+        k: '#000000',
+
+        r: '#ff0000',
+        g: '#00ff00',
+        b: '#0000ff',
+
+        c: '#00ffff',
+        m: '#ff00ff',
+        y: '#ffff00',
+
+        w: '#ffffff'
+
+    },
+
     getModel: i => {
 
         i = i || 0;
@@ -13,7 +29,7 @@ window.TOOL = {
 
         let name = names[i % names.length];
 
-        return LOADER.loader.resources[name].texture;
+        return PIXI.loader.resources[name].texture;
 
     },
 

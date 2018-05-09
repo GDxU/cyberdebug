@@ -4,7 +4,7 @@ window.ACTION = {
 
     init: () => {
 
-        ACTION.pin = new PIXI.Sprite(LOADER.loader.resources.pin.texture);
+        ACTION.pin = new PIXI.Sprite(PIXI.loader.resources.pin.texture);
         ACTION.pin.anchor.set(0.5, 0.5);
         ACTION.pin.visible = false;
         GAME.marker.addChild(ACTION.pin);

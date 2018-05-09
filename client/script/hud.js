@@ -1,39 +1,98 @@
 window.HUD = {
 
-    store: [],
+    sync: () => {
+
+        HUD.radar.store.forEach((radar, i) => {
+
+            radar.x = CAMERA.getX();
+            radar.y = CAMERA.getY();
+
+            if (USER.contract) {
+
+                radar.rotation = USER.contract.azimuth;
+                radar.visible = USER.contract.radar === i;
+
+            } else radar.visible = false;
+
+        });
+
+        HUD.detector.store.forEach((detector, i) => {
+
+            detector.x = CAMERA.getX();
+            detector.y = CAMERA.getY(70);
+
+            if (typeof USER.detector === 'number') {
+
+                detector.visible = USER.detector === i;
+
+            } else detector.visible = false;
+
+        });
+
+    },
 
     init: () => {
 
-        for (let i = 0; i < 5; i++) {
+        HUD.radar.init();
+        HUD.detector.init();
 
-            let hud = new PIXI.Sprite(LOADER.loader.resources['hud' + i].texture);
+    },
 
-            hud.visible = false;
-            hud.anchor.set(0.5, 0.5);
+    radar: {
 
-            HUD.store.push(hud);
-            GAME.marker.addChild(hud);
+        store: [],
+
+        init: () => {
+
+            if (!HUD.radar.store.length) {
+
+                for (let i = 0; i < 5; i++) {
+
+                    let radar = new PIXI.Sprite(TEXTURE['radar_' + i]);
+
+                    radar.visible = false;
+                    radar.anchor.set(0.5);
+
+                    HUD.radar.store.push(radar);
+                    GAME.hud.addChild(radar);
+
+                }
+
+            }
 
         }
 
     },
 
-    sync: () => {
+    detector: {
 
-        if (!HUD.store.length) HUD.init();
+        store: [],
 
-        if (USER.contract) {
+        init: () => {
 
-            HUD.store.forEach((hud, i) => {
+            if (!HUD.detector.store.length) {
 
-                hud.x = USER.target.sprite.x;
-                hud.y = USER.target.sprite.y;
-                hud.rotation = USER.contract.azimuth;
-                hud.visible = USER.contract.hud === i;
+                for (let i = 0; i < 5; i++) {
 
-            });
+                    let detector = new PIXI.extras.AnimatedSprite([
+                        TEXTURE['detector_' + i + '_0'],
+                        TEXTURE['detector_' + i + '_1'],
+                        TEXTURE['detector_' + i + '_2']
+                    ]);
 
-        } else HUD.store.forEach(hud => hud.visible = false);
+                    detector.visible = false;
+                    detector.anchor.set(0.5);
+                    detector.animationSpeed = 0.1;
+                    detector.play();
+
+                    HUD.detector.store.push(detector);
+                    GAME.hud.addChild(detector);
+
+                }
+
+            }
+
+        }
 
     }
 

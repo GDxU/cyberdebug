@@ -1,6 +1,6 @@
 window.addEventListener('load', () => {
 
-    LOADER.init();
+    TEXTURE.init();
     GUI.init();
 
 });

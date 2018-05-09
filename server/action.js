@@ -8,6 +8,11 @@ ACTION.pause = false;
 ACTION.tr = 40;
 ACTION.ms = 1000 / ACTION.tr;
 ACTION.store = [];
+ACTION.range = {
+    kill: 43,
+    stun: 54,
+    miss: 54,
+};
 
 ACTION.sync = (ws, data) => {
 
@@ -84,7 +89,7 @@ setInterval(() => {
                 if (action.user.contract && action.user.contract.id === action.target.id) {
 
                     // проверка на необходимость подойти для убийства
-                    if (TOOL.getDistance(action.user, action.target) < 100) {
+                    if (TOOL.getDistance(action.user, action.target) <= ACTION.range.kill) {
 
                         CONTRACT.kill(action.user);
                         ACTION.store.splice(ACTION.store.indexOf(action), 1);
@@ -97,7 +102,7 @@ setInterval(() => {
                 if (action.target.contract && action.target.contract.id === action.user.id) {
 
                     // проверка на необходимость подойти для оглушения
-                    if (TOOL.getDistance(action.user, action.target) < 150) {
+                    if (TOOL.getDistance(action.user, action.target) < ACTION.range.stun) {
 
                         CONTRACT.stun(action.user, action.target);
                         ACTION.store.splice(ACTION.store.indexOf(action), 1);
@@ -112,7 +117,7 @@ setInterval(() => {
                 if (action.user.hunter || action.user.contract) {
 
                     // проверка на необходимость подойти для промаха
-                    if (TOOL.getDistance(action.user, action.target) < 150) {
+                    if (TOOL.getDistance(action.user, action.target) < ACTION.range.miss) {
 
                         CONTRACT.miss(action.user, action.target);
                         ACTION.store.splice(ACTION.store.indexOf(action), 1);

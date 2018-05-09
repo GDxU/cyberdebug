@@ -14,6 +14,7 @@ window.USER = {
             USER.id =       WS.data.user.id;
             USER.contract = WS.data.user.contract;
             USER.hunter =   WS.data.user.hunter;
+            USER.detector = WS.data.user.detector;
 
             if (!USER.target && USER.id) {
 

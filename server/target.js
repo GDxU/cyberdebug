@@ -15,29 +15,59 @@ TARGET.get = id => TARGET.bots.concat(TARGET.users).filter(target => target.id =
 
 TARGET.exportUser = ws => {
 
+    let distance = [250, 500, 750, 1000];
+
+    // проверка контракта
+
     let contract = undefined;
 
     if (ws.user.contract) {
 
-        let hud = 0;
-        let distance = [200, 400, 600, 800];
+        let i = 0;
 
-        for (; hud < distance.length; hud++) if (TOOL.getDistance(ws.user, ws.user.contract) < distance[hud]) break;
+        for (; i < distance.length; i++) if (TOOL.getDistance(ws.user, ws.user.contract) < distance[i]) break;
 
         contract = {
             name: ws.user.contract.name,
             model: ws.user.contract.model,
             hunter: ws.user.contract.hunter,
-            hud: hud,
+            radar: i,
             azimuth: TOOL.getAzimuth(ws.user, ws.user.contract)
         };
 
     }
 
+    // проверка охотника
+
+    let detector = undefined;
+
+    if (ws.user.hunter > 0) {
+
+        detector = distance.length;
+
+        TARGET.users.forEach(user => {
+
+            if (user.contract && user.contract.id === ws.user.id) {
+
+                let i = 0;
+
+                for (; i < distance.length; i++) if (TOOL.getDistance(user, ws.user) < distance[i]) break;
+
+                if (detector > i) detector = i;
+
+            }
+
+        });
+
+    }
+
+    // информация о пользователе
+
     return {
         id: ws.user.id,
         contract: contract,
-        hunter: ws.user.hunter
+        hunter: ws.user.hunter,
+        detector: detector
     };
 
 };

@@ -1,12 +1,20 @@
 window.GAME = {
 
+    // application
+    // ├ hud
+    // └ world
+    //   ├ marker
+    //   ├ target
+    //   └ background
+
     application: undefined,
 
+    hud: undefined,
     world: undefined,
 
-    background: undefined,
-    target: undefined,
     marker: undefined,
+    target: undefined,
+    background: undefined,
 
     init: () => {
 
@@ -17,6 +25,7 @@ window.GAME = {
         GAME.initBackground();
         GAME.initTarget();
         GAME.initMarker();
+        GAME.initHUD();
 
     },
 
@@ -38,6 +47,13 @@ window.GAME = {
         window.addEventListener('resize', function () {
             GAME.application.renderer.resize(window.innerWidth, window.innerHeight);
         });
+
+    },
+
+    initHUD: () => {
+
+        GAME.hud = new PIXI.Container();
+        GAME.application.stage.addChild(GAME.hud);
 
     },
 
@@ -86,15 +102,10 @@ window.GAME = {
 
     },
 
-    initBackground: () => {
+    initMarker: () => {
 
-        GAME.background = new PIXI.extras.TilingSprite(
-            LOADER.loader.resources.tile.texture,
-            20000,
-            20000
-        );
-
-        GAME.world.addChild(GAME.background);
+        GAME.marker = new PIXI.Container();
+        GAME.world.addChild(GAME.marker);
 
     },
 
@@ -105,10 +116,15 @@ window.GAME = {
 
     },
 
-    initMarker: () => {
+    initBackground: () => {
 
-        GAME.marker = new PIXI.Container();
-        GAME.world.addChild(GAME.marker);
+        GAME.background = new PIXI.extras.TilingSprite(
+            PIXI.loader.resources.tile.texture,
+            20000,
+            20000
+        );
+
+        GAME.world.addChild(GAME.background);
 
     }
 

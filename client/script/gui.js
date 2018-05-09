@@ -46,6 +46,7 @@ window.GUI = {
                 GUI.menu.hide();
 
                 GAME.init();
+                HUD.init();
                 WS.init();
 
                 GUI.total.show();

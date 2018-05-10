@@ -6,10 +6,11 @@ TARGET.id = 0;
 TARGET.model = 0;
 TARGET.users = [];
 TARGET.bots = [];
+TARGET.botCount = 5000;
 
 TARGET.generateId = () => TARGET.id++;
-TARGET.generateX = () => 10000 + TOOL.getRandomInt(-400, 400);
-TARGET.generateY = () => 10000 + TOOL.getRandomInt(-400, 400);
+TARGET.generateX = () => 10000 + TOOL.getRandomInt(-2000, 2000);
+TARGET.generateY = () => 10000 + TOOL.getRandomInt(-2000, 2000);
 
 TARGET.get = id => TARGET.bots.concat(TARGET.users).filter(target => target.id === id)[0];
 
@@ -76,7 +77,7 @@ TARGET.syncUser = (ws, data) => {
 
     if (data.user) {
 
-        ws.user.name = data.user.name;
+        ws.user.name = data.user.name.substr(0, 16);
 
     }
 
@@ -161,7 +162,7 @@ TARGET.initBot = data => {
 };
 
 // создание ботов
-while (TARGET.bots.length < 100) TARGET.initBot();
+while (TARGET.bots.length < TARGET.botCount) TARGET.initBot();
 
 TARGET.updateBots = () => {
 

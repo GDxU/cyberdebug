@@ -15,7 +15,33 @@ AI.move = () => {
 
     TARGET.bots.forEach((bot, i) => {
 
-        bot[i % 2 ? 'x' : 'y'] += Math.round(Math.sin(temp[i % temp.length]));
+        let a = Math.round(Math.sin(temp[i % temp.length]));
+
+        if (i % 5 === 0) {
+
+            bot.x += a;
+
+        }
+
+        if (i % 5 === 1) {
+
+            bot.y += a
+
+        }
+
+        if (i % 5 === 2) {
+
+            bot.x += a;
+            bot.y -= a;
+
+        }
+
+        if (i % 5 === 3) {
+
+            bot.x -= a;
+            bot.y += a;
+
+        }
 
     });
 

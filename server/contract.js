@@ -123,7 +123,16 @@ setInterval(() => {
 
                 for (let hunter = 0; hunter < 4; hunter++) {
 
+                    /*
                     user.contract = TARGET.users.filter(target =>
+                        target.id !== user.id &&
+                        target.hunter === hunter + 1 && (
+                            !target.contract || target.contract.id !== user.id
+                        )
+                    )[0];
+                    */
+
+                    if (!user.contract) user.contract = user.contract = TARGET.users.filter(target =>
                         target.id !== user.id &&
                         target.hunter === hunter && (
                             !target.contract || target.contract.id !== user.id

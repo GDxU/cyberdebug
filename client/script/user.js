@@ -16,17 +16,9 @@ window.USER = {
             USER.hunter =   WS.data.user.hunter;
             USER.detector = WS.data.user.detector;
 
-            if (!USER.target && USER.id) {
+            // проверка на инициализацию модели игрока
 
-                USER.target = TARGET.get(USER.id);
-
-                GUI.user.show();
-                GUI.contract.show();
-
-            }
-
-            GUI.user.sync();
-            GUI.contract.sync();
+            if (!USER.target && USER.id) USER.target = TARGET.get(USER.id);
 
         }
 

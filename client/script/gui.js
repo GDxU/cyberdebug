@@ -3,8 +3,8 @@ window.GUI = {
     init: () => {
 
         GUI.menu.init();
+        GUI.tool.init();
         GUI.total.init();
-        GUI.debug.init();
 
     },
 
@@ -20,20 +20,12 @@ window.GUI = {
             GUI.menu.start = document.getElementById('menu_start');
 
             GUI.menu.header.innerText = 'PIXEL';
-            GUI.menu.text.innerText = 'Enter your Name';
+            GUI.menu.text.innerText = 'Введите ваше Имя';
             GUI.menu.name.value = Cookies.get('name') || TOOL.getName();
             GUI.menu.random.innerText = '?!';
-            GUI.menu.start.innerText = 'Start';
-
-            let left = Math.floor(window.innerWidth / 2) - Math.floor(GUI.menu.panel.offsetWidth / 2);
-            let top = Math.floor(window.innerHeight / 2) - Math.floor(GUI.menu.panel.offsetHeight / 2);
+            GUI.menu.start.innerText = 'Старт';
 
             GUI.menu.hide();
-
-            GUI.menu.panel.style.top = top + 'px';
-            GUI.menu.panel.style.right = 'auto';
-            GUI.menu.panel.style.bottom = 'auto';
-            GUI.menu.panel.style.left = left + 'px';
 
             GUI.menu.random.addEventListener('click', () => GUI.menu.name.value = TOOL.getName());
             GUI.menu.start.addEventListener('click', () => {
@@ -47,8 +39,7 @@ window.GUI = {
                 HUD.init();
                 WS.init();
 
-                GUI.total.show();
-                GUI.debug.show();
+                GUI.tool.show();
 
             });
 
@@ -56,13 +47,55 @@ window.GUI = {
 
         show: () => {
 
-            GUI.menu.panel.style.display = 'block';
+            GUI.menu.panel.style.left = CAMERA.getX(- Math.floor(GUI.menu.panel.offsetWidth / 2)) + 'px';
+            GUI.menu.panel.style.top = CAMERA.getY(- Math.floor(GUI.menu.panel.offsetHeight / 2)) + 'px';
 
         },
 
         hide: () => {
 
-            GUI.menu.panel.style.display = 'none';
+            GUI.menu.panel.style.left = '';
+            GUI.menu.panel.style.top = '';
+
+        }
+
+    },
+
+    tool: {
+
+        init: () => {
+
+            GUI.tool.panel = document.getElementById('tool');
+            GUI.tool.total = document.getElementById('tool_total');
+
+            GUI.tool.total.addEventListener('click', GUI.tool.onTotal);
+            window.addEventListener('keydown', event => {
+
+                if (event.key === '`') GUI.tool.onTotal();
+
+            });
+
+        },
+
+        show: () => {
+
+            GUI.tool.panel.style.left = '10px';
+            GUI.tool.panel.style.top = 'auto';
+            GUI.tool.panel.style.bottom = '10px';
+
+        },
+
+        hide: () => {
+
+            GUI.tool.panel.style.left = '';
+            GUI.tool.panel.style.top = '';
+            GUI.tool.panel.style.bottom = '';
+
+        },
+
+        onTotal: () => {
+
+            GUI.total.panel.style.left ? GUI.total.hide() : GUI.total.show();
 
         }
 
@@ -70,59 +103,85 @@ window.GUI = {
 
     total: {
 
+        ms: 0,
+        tr: 0,
+        timestamps: [],
+
         init: () => {
 
             GUI.total.panel = document.getElementById('total');
             GUI.total.table = document.getElementById('total_table');
+            GUI.total.info = document.getElementById('total_info');
 
             GUI.total.hide();
 
-            GUI.total.panel.style.top = 'auto';
-            GUI.total.panel.style.right = '10px';
-            GUI.total.panel.style.bottom = '10px';
-            GUI.total.panel.style.left = 'auto';
-
         },
 
         show: () => {
 
-            GUI.total.panel.style.display = 'block';
+            GUI.total.panel.style.left = CAMERA.getX(- Math.floor(GUI.total.panel.offsetWidth / 2)) + 'px';
+            GUI.total.panel.style.top = CAMERA.getY(- Math.floor(GUI.total.panel.offsetHeight / 2)) + 'px';
 
         },
 
         hide: () => {
 
-            GUI.total.panel.style.display = 'none';
-
-        }
-
-    },
-
-    debug: {
-
-        init: () => {
-
-            GUI.debug.panel = document.getElementById('debug');
-            GUI.debug.info = document.getElementById('debug_info');
-
-            GUI.debug.hide();
-
-            GUI.debug.panel.style.top = 'auto';
-            GUI.debug.panel.style.right = 'auto';
-            GUI.debug.panel.style.bottom = '10px';
-            GUI.debug.panel.style.left = '10px';
+            GUI.total.panel.style.left = '';
+            GUI.total.panel.style.top = '';
 
         },
 
-        show: () => {
+        sync: () => {
 
-            GUI.debug.panel.style.display = 'block';
+            if (WS.data.totals) {
 
-        },
+                // счёт
 
-        hide: () => {
+                let html = '';
 
-            GUI.debug.panel.style.display = 'none';
+                WS.data.totals.forEach((total, i) => {
+
+                    html += '<tr>' +
+                        '<td>' + (i + 1) + '</td>' +
+                        '<td>' + total.name + '</td>' +
+                        '<td>' + total.kill + '</td>' +
+                        '<td>' + total.stun + '</td>' +
+                        '<td>' + total.die + '</td>' +
+                        '<td>' + total.score + '</td>' +
+                        '</tr>';
+
+                });
+
+                GUI.total.table.innerHTML = html;
+
+                // информация
+
+                GUI.total.timestamps.push(Date.now());
+
+                if (GUI.total.timestamps[GUI.total.timestamps.length - 1] - GUI.total.timestamps[0] > 1000) {
+
+                    let s = 0;
+
+                    for (let i = 1; i < GUI.total.timestamps.length; i++) s += GUI.total.timestamps[i] - GUI.total.timestamps[i - 1];
+
+                    GUI.total.ms = s / (GUI.total.timestamps.length - 1);
+                    GUI.total.tr = 1000 / GUI.total.ms;
+
+                    GUI.total.timestamps = [];
+
+                }
+
+                GUI.total.info.innerHTML = '<span>Игроки: </span>' + WS.data.users +
+                    ' <span>Боты: </span>' + WS.data.bots +
+                    ' <span>Здесь: </span>' + WS.data.targets.length +
+                    '<br><span>Пинг:</span> ' + GUI.total.ms.toFixed(2) +
+                    ' <span>Тикрейт:</span> ' + GUI.total.tr.toFixed(2);
+
+                // проверка на видимость
+
+                if (GUI.total.panel.style.left) GUI.total.show();
+
+            }
 
         }
 

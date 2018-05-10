@@ -22,35 +22,26 @@
     <div class="button" id="menu_start"></div>
 </div>
 
+<div class="panel" id="tool">
+    <div class="button" id="tool_total">Счет</div>
+</div>
+
 <div class="panel" id="total">
-    <div class="header">Total</div>
+    <div class="header">Счет</div>
     <table class="text">
         <thead>
         <tr>
-            <th colspan="7">Player</th>
-            <th colspan="4">Contract</th>
-        </tr>
-        <tr>
-            <th>id</th>
-            <th>Name</th>
-            <th>Kill</th>
-            <th>Stun</th>
-            <th>Die</th>
-            <th>Score</th>
-            <th>Hunter</th>
-            <th>id</th>
-            <th>Name</th>
-            <th>Model</th>
-            <th>Hunter</th>
+            <th>#</th>
+            <th>Имя</th>
+            <th>Убийство</th>
+            <th>Оглушение</th>
+            <th>Смерть</th>
+            <th>Очки</th>
         </tr>
         </thead>
         <tbody id="total_table"></tbody>
     </table>
-</div>
-
-<div class="panel" id="debug">
-    <div class="header">Debug</div>
-    <div class="text" id="debug_info"></div>
+    <div class="text center" id="total_info"></div>
 </div>
 
 <script src="/node_modules/pixi.js/dist/pixi.min.js"></script>
@@ -59,7 +50,6 @@
 
 <script src="/client/script/action.js"></script>
 <script src="/client/script/camera.js"></script>
-<script src="/client/script/debug.js"></script>
 <script src="/client/script/game.js"></script>
 <script src="/client/script/gui.js"></script>
 <script src="/client/script/hud.js"></script>
@@ -67,7 +57,6 @@
 <script src="/client/script/target.js"></script>
 <script src="/client/script/texture.js"></script>
 <script src="/client/script/tool.js"></script>
-<script src="/client/script/total.js"></script>
 <script src="/client/script/user.js"></script>
 <script src="/client/script/ws.js"></script>
 

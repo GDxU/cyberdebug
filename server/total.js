@@ -9,19 +9,11 @@ TOTAL.export = () => {
     TARGET.users.forEach(user => {
 
         totals.push({
-            id: user.id,
             name: user.name,
             kill: user.kill,
             stun: user.stun,
             die: user.die,
-            score: user.score,
-            contract: user.contract ? {
-                id: user.contract.id,
-                name: user.contract.name,
-                model: user.contract.model,
-                hunter: user.contract.hunter
-            } : undefined,
-            hunter: user.hunter
+            score: user.score
         });
 
     });

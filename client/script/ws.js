@@ -47,11 +47,10 @@ window.WS = {
 
             USER.sync();
             TARGET.sync();
-            TOTAL.sync();
+            GUI.total.sync();
             CAMERA.sync();
             ACTION.sync();
             HUD.sync();
-            DEBUG.sync();
 
         });
 

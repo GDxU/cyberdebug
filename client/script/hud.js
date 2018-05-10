@@ -155,7 +155,7 @@ window.HUD = {
                 });
 
                 HUD.info.target = {
-                    sprite: new PIXI.Sprite(TEXTURE['hud_line_target']),
+                    sprite: new PIXI.Sprite(PIXI.loader.resources['/client/image/hud/unknown.png'].texture),
                     name: new PIXI.Text('Target', style),
                     line: new PIXI.Sprite(TEXTURE['hud_line_target']),
                     hunter: new PIXI.Text('0', style)
@@ -194,7 +194,7 @@ window.HUD = {
             HUD.info.user.name.text = USER.name;
             HUD.info.user.hunter.text = USER.hunter;
 
-            HUD.info.target.sprite.texture = USER.contract ? TOOL.getModel(USER.contract.model) : TEXTURE['hud_line_target'];
+            HUD.info.target.sprite.texture = USER.contract ? TOOL.getModel(USER.contract.model) : PIXI.loader.resources['/client/image/hud/unknown.png'].texture;
             HUD.info.target.name.text = USER.contract ? USER.contract.name : 'Поиск...';
             HUD.info.target.hunter.text = USER.contract ? USER.contract.hunter : '?';
 

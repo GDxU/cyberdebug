@@ -16,6 +16,7 @@ window.TEXTURE = {
         PIXI.loader.add('/client/image/hud/radar.png');
         PIXI.loader.add('/client/image/hud/detector.png');
         PIXI.loader.add('/client/image/hud/line.png');
+        PIXI.loader.add('/client/image/hud/unknown.png');
 
         PIXI.loader.load(() => {
 

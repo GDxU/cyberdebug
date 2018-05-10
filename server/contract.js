@@ -119,6 +119,8 @@ setInterval(() => {
 
         TARGET.users.forEach(user => {
 
+            if (user.hunter < 0) user.hunter = 0;
+
             if (!user.contract) {
 
                 for (let hunter = 0; hunter < 4; hunter++) {

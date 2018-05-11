@@ -100,6 +100,8 @@ TARGET.appendUser = ws => {
         speed: 2
     };
 
+    ws.user.ws = ws;
+
     TARGET.users.push(ws.user);
     TARGET.updateBots();
 

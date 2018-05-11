@@ -5,6 +5,7 @@ window.HUD = {
         HUD.radar.sync();
         HUD.detector.sync();
         HUD.info.sync();
+        HUD.alert.sync();
 
     },
 
@@ -13,6 +14,7 @@ window.HUD = {
         HUD.radar.init();
         HUD.detector.init();
         HUD.info.init();
+        HUD.alert.init();
 
     },
 
@@ -200,6 +202,118 @@ window.HUD = {
 
             HUD.info.container.x = CAMERA.getX();
             HUD.info.container.y = CAMERA.getY();
+
+        }
+
+    },
+
+    alert: {
+
+        init: () => {
+
+            // очки
+
+            HUD.alert.score = new PIXI.Text('', {
+                fontFamily: 'New_Zelek',
+                fontSize: 24
+            });
+
+            HUD.alert.score.anchor.set(0.5, 1);
+
+            GAME.hud.addChild(HUD.alert.score);
+
+            // информация
+
+            HUD.alert.info = new PIXI.Text('', {
+                fontFamily: 'New_Zelek',
+                fontSize: 24
+            });
+
+            HUD.alert.info.anchor.set(0.5, 1);
+
+            GAME.hud.addChild(HUD.alert.info);
+
+        },
+
+        sync: () => {
+
+            HUD.alert.score.x = CAMERA.getX();
+            HUD.alert.score.y = CAMERA.getY(-90);
+
+            HUD.alert.info.x = CAMERA.getX();
+            HUD.alert.info.y = CAMERA.getY(-70);
+
+            if (WS.data.alert) {
+
+                // удаление алерта при наличии
+
+                if (HUD.alert.timeout) {
+
+                    clearTimeout(HUD.alert.timeout);
+                    HUD.alert.timeout = undefined;
+                    HUD.alert.score.text = '';
+                    HUD.alert.info.text = '';
+
+                }
+
+                setTimeout(() => {
+
+                    HUD.alert.timeout = undefined;
+                    HUD.alert.score.text = '';
+                    HUD.alert.info.text = '';
+
+                }, 2000);
+
+                // disconnect
+
+                if (WS.data.alert === 'disconnect') {
+                    HUD.alert.info.text = 'Контракт аннулирован';
+                    HUD.alert.info.style.fill = '#ffff00';
+                }
+
+                // kill
+
+                if (WS.data.alert === 'killed') {
+                    HUD.alert.info.text = TOOL.getRandomInt(100) ? 'Убит' : 'Потрачено';
+                    HUD.alert.info.style.fill = '#ff00ff';
+                }
+
+                if (WS.data.alert === 'kill') {
+                    HUD.alert.score.text = '+200';
+                    HUD.alert.score.style.fill = '#00ffff';
+                    HUD.alert.info.text = 'Убийство';
+                    HUD.alert.info.style.fill = '#00ffff';
+                }
+
+                if (WS.data.alert === 'fail') {
+                    HUD.alert.info.text = 'Контракт потерян';
+                    HUD.alert.info.style.fill = '#ffff00';
+                }
+
+                // miss
+
+                if (WS.data.alert === 'miss') {
+                    HUD.alert.info.text = 'Промах';
+                    HUD.alert.info.style.fill = '#ffff00';
+                }
+
+                // stun
+
+                if (WS.data.alert === 'stun') {
+                    HUD.alert.score.text = '+100';
+                    HUD.alert.score.style.fill = '#00ffff';
+                    HUD.alert.info.text = 'Оглушение';
+                    HUD.alert.info.style.fill = '#00ffff';
+                }
+
+                if (WS.data.alert === 'stunned') {
+                    HUD.alert.score.text = '-50';
+                    HUD.alert.score.style.fill = '#ff00ff';
+                    HUD.alert.info.text = 'Оглушен';
+                    HUD.alert.info.style.fill = '#ff00ff';
+                }
+
+            }
 
         }
 

@@ -1,3 +1,4 @@
+let ALERT = require('./alert');
 let TARGET = require('./target');
 
 let CONTRACT = {};
@@ -9,7 +10,8 @@ CONTRACT.store = [];
 
 CONTRACT.score = {
     kill: 200,
-    stun: 100
+    stun: 100,
+    stunned: 50
 };
 
 CONTRACT.disconnect = user => {
@@ -22,7 +24,10 @@ CONTRACT.disconnect = user => {
     // удаление всех контрактов на игрока (если контракт есть, причём на этого игрока)
     TARGET.users.forEach(hunter => {
 
-        if (hunter.contract && hunter.contract.id === user.id) hunter.contract = undefined;
+        if (hunter.contract && hunter.contract.id === user.id) {
+            hunter.contract = undefined;
+            ALERT.send(hunter.ws, 'disconnect');
+        }
 
     });
 
@@ -48,6 +53,7 @@ CONTRACT.kill = user => {
 
     // обновление показателей цели
     user.contract.die++;
+    ALERT.send(user.contract.ws, 'killed');
 
     // респаун цели
     user.contract.x = TARGET.generateX();
@@ -58,13 +64,17 @@ CONTRACT.kill = user => {
     let id = user.contract.id;
     TARGET.users.forEach(hunter => {
 
-        if (hunter.contract && hunter.contract.id === id) hunter.contract = undefined;
+        if (hunter.contract && hunter.contract.id === id) {
+            hunter.contract = undefined;
+            ALERT.send(hunter.ws, 'fail');
+        }
 
     });
 
     // обновление показателей игрока
     user.kill++;
     user.score += CONTRACT.score.kill;
+    ALERT.send(user.ws, 'kill');
 
     CONTRACT.pause = false;
 
@@ -85,6 +95,8 @@ CONTRACT.miss = (user, bot) => {
 
     }
 
+    ALERT.send(user.ws, 'miss');
+
     // респаун бота
     bot.x = TARGET.generateX();
     bot.y = TARGET.generateY();
@@ -102,10 +114,13 @@ CONTRACT.stun = (user, hunter) => {
 
     // удаление контракта на игрока
     hunter.contract = undefined;
+    if (hunter.score >= CONTRACT.score.stunned) hunter.score -= CONTRACT.score.stunned;
+    ALERT.send(hunter.ws, 'stunned');
 
     // обновление показателей игрока
     user.stun++;
     user.score += CONTRACT.score.stun;
+    ALERT.send(user.ws, 'stun');
 
     CONTRACT.pause = false;
 

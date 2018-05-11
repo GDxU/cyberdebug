@@ -1,4 +1,4 @@
-@font-face{
+@font-face {
     font-family: new_zelek;
     font-style: normal;
     font-weight: 400;
@@ -8,7 +8,7 @@
     url('/client/font/new_zelek/new_zelek.ttf') format('truetype')
 }
 
-@font-face{
+@font-face {
     font-family: europeext normal;
     font-style: normal;
     font-weight: 400;
@@ -46,42 +46,37 @@ table {
 }
 
 th {
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(0, 255, 255, 0.8);
     font-weight: normal;
 }
 
 th, td {
-    padding: 4px;
+    padding: 8px;
     font-size: 12px;
 }
 
 td {
-    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    border-top: 1px solid rgba(0, 255, 255, 0.8);
 }
 
-td:not(:first-child), th:not(:first-child) {
+td:nth-child(n+3) {
     text-align: right;
 }
 
-img {
-    margin: 0 auto 16px auto;
-    display: none;
-}
-
 .panel {
-    background-color: rgba(47, 49, 54, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    background-color: rgba(0, 255, 255, 0.2);
+    border: 1px solid rgba(0, 255, 255, 0.8);
     left: -9999px;
-    padding: 16px 16px 0 16px;
+    padding: 8px 8px 0 8px;
     position: fixed;
     top: -9999px;
 }
 
 .header {
     font-family: new_zelek, monospace;
-    font-size: 32px;
-    line-height: 32px;
-    margin-bottom: 16px;
+    font-size: 24px;
+    line-height: 24px;
+    margin-bottom: 8px;
     text-align: center;
 }
 
@@ -89,56 +84,63 @@ img {
     font-family: 'europeext normal', monospace;
     font-size: 12px;
     line-height: 12px;
-    margin-bottom: 16px;
-    text-align: left;
+    margin-bottom: 8px;
+    text-align: center;
 }
 
 .text span {
     color: rgba(255, 255, 255, 0.4);
 }
 
-input {
-    background-color: rgba(54, 57, 62, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+input[type=text] {
+    background-color: rgba(0, 255, 255, 0.2);
+    border: 1px solid rgba(0, 255, 255, 0.8);
     color: rgba(255, 255, 255, 1);
     cursor: url('/client/image/cursor/text.png') 11 11, auto;
     font-family: 'europeext normal', monospace;
-    font-size: 16px;
-    line-height: 16px;
-    margin-bottom: 16px;
-    height: 24px;
-    padding: 10px;
+    font-size: 12px;
+    line-height: 12px;
+    margin-bottom: 8px;
+    padding: 7px;
     text-align: center;
 }
 
 input:hover, input:focus {
-    background-color: rgba(66, 70, 77, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    background-color: rgba(0, 255, 255, 0.4);
 }
 
 .button {
-    background-color: rgba(54, 57, 62, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    background-color: rgba(0, 255, 255, 0.2);
+    border: 1px solid rgba(0, 255, 255, 0.8);
     cursor: url('/client/image/cursor/pointer.png') 11 11, auto;
     font-family: new_zelek, monospace;
-    font-size: 24px;
-    line-height: 24px;
-    margin-bottom: 16px;
-    padding: 10px;
+    font-size: 12px;
+    line-height: 12px;
+    margin-bottom: 8px;
+    padding: 8px;
     text-align: center;
     transition: all 0.2s;
 }
 
 .button:hover {
-    background-color: rgba(66, 70, 77, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    background-color: rgba(0, 255, 255, 0.4);
 }
 
 .button-input {
     float: right;
-    margin-left: 16px;
+    margin-left: 8px;
 }
 
-.center {
-    text-align: center;
+#tool {
+    left: -9999px;
+    position: fixed;
+    top: -9999px;
+}
+
+#tool .button {
+    margin: 0 0 0 8px;
+}
+
+#tool .button:first-child {
+    margin: 0;
 }

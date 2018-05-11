@@ -71,7 +71,7 @@ window.GUI = {
             GUI.tool.total.addEventListener('click', GUI.tool.onTotal);
             window.addEventListener('keydown', event => {
 
-                if (event.key === '`') GUI.tool.onTotal();
+                if (event.code === 'Backquote') GUI.tool.onTotal();
 
             });
 
@@ -111,6 +111,7 @@ window.GUI = {
 
             GUI.total.panel = document.getElementById('total');
             GUI.total.table = document.getElementById('total_table');
+            GUI.total.target = document.getElementById('total_target');
             GUI.total.info = document.getElementById('total_info');
 
             GUI.total.hide();
@@ -119,8 +120,8 @@ window.GUI = {
 
         show: () => {
 
-            GUI.total.panel.style.left = CAMERA.getX(- Math.floor(GUI.total.panel.offsetWidth / 2)) + 'px';
-            GUI.total.panel.style.top = CAMERA.getY(- Math.floor(GUI.total.panel.offsetHeight / 2)) + 'px';
+            GUI.total.panel.style.left = '8px';
+            GUI.total.panel.style.top = '8px';
 
         },
 
@@ -154,6 +155,12 @@ window.GUI = {
 
                 GUI.total.table.innerHTML = html;
 
+                // цели
+
+                GUI.total.target.innerHTML = '<span>Игроки: </span>' + WS.data.users +
+                    '<span style="margin-left: 8px;">Боты: </span>' + WS.data.bots +
+                    '<span style="margin-left: 8px;">Здесь: </span>' + WS.data.targets.length;
+
                 // информация
 
                 GUI.total.timestamps.push(Date.now());
@@ -171,11 +178,8 @@ window.GUI = {
 
                 }
 
-                GUI.total.info.innerHTML = '<span>Игроки: </span>' + WS.data.users +
-                    ' <span>Боты: </span>' + WS.data.bots +
-                    ' <span>Здесь: </span>' + WS.data.targets.length +
-                    '<br><span>Пинг:</span> ' + GUI.total.ms.toFixed(2) +
-                    ' <span>Тикрейт:</span> ' + GUI.total.tr.toFixed(2);
+                GUI.total.info.innerHTML = '<span>Задержка:</span> ' + GUI.total.ms.toFixed(2) +
+                    '<span style="margin-left: 8px;">Тикрейт:</span> ' + GUI.total.tr.toFixed(2);
 
                 // проверка на видимость
 

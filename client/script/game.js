@@ -45,7 +45,16 @@ window.GAME = {
 
         document.body.appendChild(GAME.application.view);
         window.addEventListener('resize', function () {
+
             GAME.application.renderer.resize(window.innerWidth, window.innerHeight);
+
+            if (WS.client.readyState === WebSocket.OPEN) WS.client.send(JSON.stringify({
+                camera: {
+                    w: window.innerWidth,
+                    h: window.innerHeight
+                }
+            }));
+
         });
 
     },
@@ -92,9 +101,12 @@ window.GAME = {
 
             }
 
-            WS.client.send(message);
+            if (WS.client.readyState === WebSocket.OPEN) {
 
-            console.log('WS send ' + message);
+                WS.client.send(message);
+                console.log('WS send ' + message);
+
+            }
 
         });
 

@@ -19,8 +19,12 @@ CONTRACT.disconnect = user => {
 
     CONTRACT.pause = true;
 
+    /** target */
+
     // уменьшение количества охотников за целью (если цель была)
     if (user.contract) user.contract.hunter--;
+
+    /** hunter */
 
     TARGET.users.forEach(hunter => {
 
@@ -43,7 +47,10 @@ CONTRACT.disconnect = user => {
 CONTRACT.kill = user => {
 
     CONTRACT.pause = true;
+
     if (!ACTION) ACTION = require('./action');
+
+    /** target */
 
     // обнуление количества охотников за целью
     user.contract.hunter = 0;
@@ -73,6 +80,17 @@ CONTRACT.kill = user => {
     user.contract.x = TARGET.generateX();
     user.contract.y = TARGET.generateY();
 
+    /** user */
+
+    // обновление показателей игрока
+    user.kill++;
+    user.score += CONTRACT.score.kill;
+
+    // оповещение игрока о выполненном контракте
+    ALERT.send(user.ws, 'kill');
+
+    /** hunter */
+
     // id вынесен в переменную на случай преждевременного удаления цели у игрока
     let id = user.contract.id;
 
@@ -84,18 +102,11 @@ CONTRACT.kill = user => {
             hunter.contract = undefined;
 
             // оповещение охотника о проваленном контракте
-            ALERT.send(hunter.ws, 'fail');
+            if (hunter.id !== user.id) ALERT.send(hunter.ws, 'fail');
 
         }
 
     });
-
-    // обновление показателей игрока
-    user.kill++;
-    user.score += CONTRACT.score.kill;
-
-    // оповещение игрока о выполненном контракте
-    ALERT.send(user.ws, 'kill');
 
     CONTRACT.pause = false;
 
@@ -104,6 +115,8 @@ CONTRACT.kill = user => {
 CONTRACT.miss = (user, bot) => {
 
     CONTRACT.pause = true;
+
+    /** target */
 
     // проверка на наличие контракта
     if (user.contract) {
@@ -119,8 +132,12 @@ CONTRACT.miss = (user, bot) => {
 
     }
 
+    /** user */
+
     // оповещение игрока о промахе по цели или охотнику
     ALERT.send(user.ws, 'miss');
+
+    /** bot */
 
     // респаун бота
     bot.x = TARGET.generateX();
@@ -133,13 +150,25 @@ CONTRACT.miss = (user, bot) => {
 CONTRACT.stun = (user, hunter) => {
 
     CONTRACT.pause = true;
+
     if (!ACTION) ACTION = require('./action');
+
+    /** user */
 
     // уменьшение количества охотников за игроком
     user.hunter--;
 
     // обнуление последней цели
     user.last = undefined;
+
+    // обновление показателей игрока
+    user.stun++;
+    user.score += CONTRACT.score.stun;
+
+    // оповещение об оглушении охотника
+    ALERT.send(user.ws, 'stun');
+
+    /** hunter */
 
     // удаление контракта на игрока
     hunter.contract = undefined;
@@ -152,13 +181,6 @@ CONTRACT.stun = (user, hunter) => {
 
     // оповещение об оглушенности целью
     ALERT.send(hunter.ws, 'stunned');
-
-    // обновление показателей игрока
-    user.stun++;
-    user.score += CONTRACT.score.stun;
-
-    // оповещение об оглушении охотника
-    ALERT.send(user.ws, 'stun');
 
     CONTRACT.pause = false;
 

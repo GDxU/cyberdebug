@@ -76,6 +76,12 @@ ACTION.sync = (ws, data) => {
 
 };
 
+ACTION.remove = action => {
+
+    ACTION.store.splice(ACTION.store.indexOf(action), 1);
+
+};
+
 setInterval(() => {
 
     if (!ACTION.pause) ACTION.store.forEach(action => {
@@ -92,7 +98,7 @@ setInterval(() => {
                     if (TOOL.getDistance(action.user, action.target) <= ACTION.range.kill) {
 
                         CONTRACT.kill(action.user);
-                        ACTION.store.splice(ACTION.store.indexOf(action), 1);
+                        ACTION.remove(action);
 
                     } else TOOL.move(action.user, action.target, action.user.speed);
 
@@ -105,7 +111,7 @@ setInterval(() => {
                     if (TOOL.getDistance(action.user, action.target) < ACTION.range.stun) {
 
                         CONTRACT.stun(action.user, action.target);
-                        ACTION.store.splice(ACTION.store.indexOf(action), 1);
+                        ACTION.remove(action);
 
                     } else TOOL.move(action.user, action.target, action.user.speed);
 
@@ -120,7 +126,7 @@ setInterval(() => {
                     if (TOOL.getDistance(action.user, action.target) < ACTION.range.miss) {
 
                         CONTRACT.miss(action.user, action.target);
-                        ACTION.store.splice(ACTION.store.indexOf(action), 1);
+                        ACTION.remove(action);
 
                     } else TOOL.move(action.user, action.target, action.user.speed);
 
@@ -135,7 +141,7 @@ setInterval(() => {
             if (
                 action.user.x === action.x &&
                 action.user.y === action.y
-            ) ACTION.store.splice(ACTION.store.indexOf(action), 1);
+            ) ACTION.remove(action);
 
         }
 

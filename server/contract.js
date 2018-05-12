@@ -80,14 +80,15 @@ CONTRACT.kill = user => {
     user.contract.action = 'killed';
 
     // кулдаун 3 секунды
+    let target = user.contract;
     setTimeout(() => {
 
         // респаун цели
-        user.contract.x = TARGET.generateX();
-        user.contract.y = TARGET.generateY();
+        target.x = TARGET.generateX();
+        target.y = TARGET.generateY();
 
         // смена типа на стоящий у цели
-        user.contract.action = 'stand';
+        target.action = 'stand';
 
     }, 3000);
 

@@ -85,7 +85,7 @@ ACTION.move = (a, b, s) => {
 
         TOOL.move(a, b, s);
 
-        if (x === a.x || y === a.y) a.action = 'stand';
+        if (a.x === b.x && a.y === b.y) a.action = 'stand';
         else a.action = s === 2 ? 'walk' : 'run';
 
         if (x === a.x && y > a.y) a.side = 'n';

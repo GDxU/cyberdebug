@@ -76,9 +76,20 @@ CONTRACT.kill = user => {
     // удаление у цели действия
     ACTION.removeByUser(user.contract);
 
-    // респаун цели
-    user.contract.x = TARGET.generateX();
-    user.contract.y = TARGET.generateY();
+    // смена типа на убитый у цели
+    user.contract.action = 'killed';
+
+    // кулдаун 3 секунды
+    setTimeout(() => {
+
+        // респаун цели
+        user.contract.x = TARGET.generateX();
+        user.contract.y = TARGET.generateY();
+
+        // смена типа на стоящий у цели
+        user.contract.action = 'stand';
+
+    }, 3000);
 
     /** user */
 
@@ -88,6 +99,17 @@ CONTRACT.kill = user => {
 
     // оповещение игрока о выполненном контракте
     ALERT.send(user.ws, 'kill');
+
+    // смена типа на убийство у игрока
+    user.action = 'kill';
+
+    // кулдаун 1 секунда
+    setTimeout(() => {
+
+        // смена типа на стоящий у игрока
+        user.action = 'stand';
+
+    }, 1000);
 
     /** hunter */
 
@@ -137,11 +159,33 @@ CONTRACT.miss = (user, bot) => {
     // оповещение игрока о промахе по цели или охотнику
     ALERT.send(user.ws, 'miss');
 
+    // смена типа на промах у игрока
+    user.action = 'miss';
+
+    // кулдаун 3 секунды
+    setTimeout(() => {
+
+        // смена типа на стоящий у игрока
+        user.action = 'stand';
+
+    }, 3000);
+
     /** bot */
 
-    // респаун бота
-    bot.x = TARGET.generateX();
-    bot.y = TARGET.generateY();
+    // смена типа на не правильный у бота
+    bot.action = 'missed';
+
+    // кулдаун 3 секунды
+    setTimeout(() => {
+
+        // респаун бота
+        bot.x = TARGET.generateX();
+        bot.y = TARGET.generateY();
+
+        // смена типа на стоящий у бота
+        bot.action = 'stand';
+
+    }, 3000);
 
     CONTRACT.pause = false;
 
@@ -168,6 +212,17 @@ CONTRACT.stun = (user, hunter) => {
     // оповещение об оглушении охотника
     ALERT.send(user.ws, 'stun');
 
+    // смена типа на оглушающий у игрока
+    user.action = 'stun';
+
+    // кулдаун 1 секунда
+    setTimeout(() => {
+
+        // смена типа на стоящий у игрока
+        user.action = 'stand';
+
+    }, 1000);
+
     /** hunter */
 
     // удаление контракта на игрока
@@ -181,6 +236,17 @@ CONTRACT.stun = (user, hunter) => {
 
     // оповещение об оглушенности целью
     ALERT.send(hunter.ws, 'stunned');
+
+    // смена типа на оглушенный у охотника
+    hunter.action = 'stunned';
+
+    // кулдаун 3 секунда
+    setTimeout(() => {
+
+        // смена типа на стоящий у охотника
+        hunter.action = 'stand';
+
+    }, 3000);
 
     CONTRACT.pause = false;
 

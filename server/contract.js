@@ -21,12 +21,16 @@ CONTRACT.disconnect = user => {
     // уменьшение количества охотников за целью (если цель была)
     if (user.contract) user.contract.hunter--;
 
-    // удаление всех контрактов на игрока (если контракт есть, причём на этого игрока)
     TARGET.users.forEach(hunter => {
 
         if (hunter.contract && hunter.contract.id === user.id) {
+
+            // удаление всех контрактов на игрока (если контракт есть, причём на этого игрока)
             hunter.contract = undefined;
+
+            // оповещение о выходе цели из игры
             ALERT.send(hunter.ws, 'disconnect');
+
         }
 
     });
@@ -53,20 +57,30 @@ CONTRACT.kill = user => {
 
     // обновление показателей цели
     user.contract.die++;
+
+    // сброс идентификатора последнего контракта
+    user.contract.last = undefined;
+
+    // оповещение цели о смерти
     ALERT.send(user.contract.ws, 'killed');
 
     // респаун цели
     user.contract.x = TARGET.generateX();
     user.contract.y = TARGET.generateY();
 
-    // удаление всех контрактов на цель
     // id вынесен в переменную на случай преждевременного удаления цели у игрока
     let id = user.contract.id;
+
     TARGET.users.forEach(hunter => {
 
         if (hunter.contract && hunter.contract.id === id) {
+
+            // удаление всех контрактов на цель
             hunter.contract = undefined;
+
+            // оповещение охотника о проваленном контракте
             ALERT.send(hunter.ws, 'fail');
+
         }
 
     });
@@ -74,6 +88,8 @@ CONTRACT.kill = user => {
     // обновление показателей игрока
     user.kill++;
     user.score += CONTRACT.score.kill;
+
+    // оповещение игрока о выполненном контракте
     ALERT.send(user.ws, 'kill');
 
     CONTRACT.pause = false;
@@ -90,11 +106,15 @@ CONTRACT.miss = (user, bot) => {
         // уменьшение количества охотников за целью
         user.contract.hunter--;
 
+        // сброс идентификатора последнего контракта
+        user.contract.last = undefined;
+
         // удаление контракта на цель
         user.contract = undefined;
 
     }
 
+    // оповещение игрока о промахе по цели или охотнику
     ALERT.send(user.ws, 'miss');
 
     // респаун бота
@@ -114,12 +134,18 @@ CONTRACT.stun = (user, hunter) => {
 
     // удаление контракта на игрока
     hunter.contract = undefined;
+
+    // штраф за обнаружение
     if (hunter.score >= CONTRACT.score.stunned) hunter.score -= CONTRACT.score.stunned;
+
+    // оповещение об оглушенности целью
     ALERT.send(hunter.ws, 'stunned');
 
     // обновление показателей игрока
     user.stun++;
     user.score += CONTRACT.score.stun;
+
+    // оповещение об оглушении охотника
     ALERT.send(user.ws, 'stun');
 
     CONTRACT.pause = false;
@@ -134,31 +160,46 @@ setInterval(() => {
 
         TARGET.users.forEach(user => {
 
+            // фикс бага с отрицательным значением охотников
             if (user.hunter < 0) user.hunter = 0;
 
-            if (!user.contract) {
+            // проверка на необходимость поиска контракта
+            if (!user.contract && ['stand', 'walk', 'run', 'kill', 'stun'].includes(user.action)) {
 
                 for (let hunter = 0; hunter < 4; hunter++) {
 
-                    /*
-                    user.contract = TARGET.users.filter(target =>
-                        target.id !== user.id &&
-                        target.hunter === hunter + 1 && (
-                            !target.contract || target.contract.id !== user.id
-                        )
-                    )[0];
-                    */
+                    // выдача контракта при отсутствии
 
-                    if (!user.contract) user.contract = user.contract = TARGET.users.filter(target =>
-                        target.id !== user.id &&
-                        target.hunter === hunter && (
-                            !target.contract || target.contract.id !== user.id
-                        )
-                    )[0];
+                    if (!user.contract) {
+
+                        let targets = TARGET.users;
+
+                        // исключение самого себя
+                        targets = targets.filter(target => target.id !== user.id);
+
+                        // исключение последней цели
+                        targets = targets.filter(target => target.id !== user.last);
+
+                        // минимальное количество охотников за целью
+                        targets = targets.filter(target => target.hunter === hunter);
+
+                        // исключение охотников за игроком
+                        targets = targets.filter(target => !target.contract || target.contract.id !== user.id);
+
+                        user.contract = targets[0];
+
+                    }
+
+                    // если контракт был найден
 
                     if (user.contract) {
 
+                        // устанавливаем данную цель последней
+                        user.last = user.contract.id;
+
+                        // у цели увеличиваем количество охотников
                         user.contract.hunter++;
+                        
                         break;
 
                     }

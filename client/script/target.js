@@ -9,6 +9,8 @@ window.TARGET = {
         let target = {
             id: t.id,
             model: t.model,
+            action: t.action,
+            side: t.side,
             sprite: new PIXI.Sprite(TOOL.getModel(t.model))
         };
 
@@ -55,6 +57,8 @@ window.TARGET = {
 
             }
 
+            target.action = t.action;
+            target.side = t.side;
             target.sprite.x = t.x;
             target.sprite.y = t.y;
 

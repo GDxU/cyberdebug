@@ -1,3 +1,4 @@
+let ACTION = require('./action');
 let TARGET = require('./target');
 
 let AI = {};
@@ -16,32 +17,26 @@ AI.move = () => {
     TARGET.bots.forEach((bot, i) => {
 
         let a = Math.round(Math.sin(temp[i % temp.length]));
+        let point = {
+            x: bot.x,
+            y: bot.y
+        };
 
-        if (i % 5 === 0) {
+        if (i % 5 === 0) point.x += a;
 
-            bot.x += a;
-
-        }
-
-        if (i % 5 === 1) {
-
-            bot.y += a
-
-        }
+        if (i % 5 === 1) point.y += a;
 
         if (i % 5 === 2) {
-
-            bot.x += a;
-            bot.y -= a;
-
+            point.x += a;
+            point.y -= a;
         }
 
         if (i % 5 === 3) {
-
-            bot.x -= a;
-            bot.y += a;
-
+            point.x -= a;
+            point.y += a;
         }
+
+        ACTION.move(bot, point, 2);
 
     });
 

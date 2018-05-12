@@ -11,6 +11,7 @@ TARGET.botCount = 100;
 TARGET.generateId = () => TARGET.id++;
 TARGET.generateX = () => 10000 + TOOL.getRandomInt(-400, 400);
 TARGET.generateY = () => 10000 + TOOL.getRandomInt(-400, 400);
+TARGET.generateSide = () => ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'][TOOL.getRandomInt(7)];
 
 TARGET.get = id => TARGET.bots.concat(TARGET.users).filter(target => target.id === id)[0];
 
@@ -89,6 +90,8 @@ TARGET.appendUser = ws => {
         id: TARGET.generateId(),
         name: '',
         model: TARGET.model++,
+        action: 'stand',
+        side: TARGET.generateSide(),
         x: TARGET.generateX(),
         y: TARGET.generateY(),
         kill: 0,
@@ -97,6 +100,7 @@ TARGET.appendUser = ws => {
         score: 0,
         contract: undefined,
         hunter: 0,
+        last: undefined,
         speed: 2
     };
 
@@ -136,6 +140,8 @@ TARGET.exportTargets = ws => {
         targets.push({
             id: target.id,
             model: target.model,
+            action: target.action,
+            side: target.side,
             x: target.x,
             y: target.y
         });
@@ -153,6 +159,8 @@ TARGET.initBot = data => {
     let bot = {
         id: TARGET.generateId(),
         model: data.model || 0,
+        action: data.action || 'stand',
+        side: data.side || TARGET.generateSide(),
         x: data.x || TARGET.generateX(),
         y: data.y || TARGET.generateY()
     };

@@ -104,9 +104,21 @@ ACTION.move = (a, b, s) => {
 
 };
 
+ACTION.removeByUser = user => {
+
+    let actions = ACTION.store.filter(action => action.user === user);
+
+    if (actions.length === 1) ACTION.remove(actions[0]);
+
+    if (actions.length > 1) console.log('ACTION error');
+
+};
+
 ACTION.remove = action => {
 
-    ACTION.store.splice(ACTION.store.indexOf(action), 1);
+    let i = ACTION.store.indexOf(action);
+
+    if (i > -1) ACTION.store.splice(i, 1);
 
 };
 

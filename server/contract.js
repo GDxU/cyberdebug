@@ -1,3 +1,4 @@
+let ACTION = undefined;
 let ALERT = require('./alert');
 let TARGET = require('./target');
 
@@ -42,6 +43,7 @@ CONTRACT.disconnect = user => {
 CONTRACT.kill = user => {
 
     CONTRACT.pause = true;
+    if (!ACTION) ACTION = require('./action');
 
     // обнуление количества охотников за целью
     user.contract.hunter = 0;
@@ -63,6 +65,9 @@ CONTRACT.kill = user => {
 
     // оповещение цели о смерти
     ALERT.send(user.contract.ws, 'killed');
+
+    // удаление у цели действия
+    ACTION.removeByUser(user.contract);
 
     // респаун цели
     user.contract.x = TARGET.generateX();
@@ -128,12 +133,19 @@ CONTRACT.miss = (user, bot) => {
 CONTRACT.stun = (user, hunter) => {
 
     CONTRACT.pause = true;
+    if (!ACTION) ACTION = require('./action');
 
     // уменьшение количества охотников за игроком
     user.hunter--;
 
+    // обнуление последней цели
+    user.last = undefined;
+
     // удаление контракта на игрока
     hunter.contract = undefined;
+
+    // удаление у охотника действия
+    ACTION.removeByUser(hunter);
 
     // штраф за обнаружение
     if (hunter.score >= CONTRACT.score.stunned) hunter.score -= CONTRACT.score.stunned;
@@ -199,7 +211,7 @@ setInterval(() => {
 
                         // у цели увеличиваем количество охотников
                         user.contract.hunter++;
-                        
+
                         break;
 
                     }

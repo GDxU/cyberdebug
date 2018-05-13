@@ -6,7 +6,7 @@ TARGET.id = 0;
 TARGET.model = 0;
 TARGET.users = [];
 TARGET.bots = [];
-TARGET.botCount = 100;
+TARGET.botCount = 40;
 
 TARGET.generateId = () => TARGET.id++;
 TARGET.generateX = () => 10000 + TOOL.getRandomInt(-400, 400);
@@ -78,7 +78,7 @@ TARGET.syncUser = (ws, data) => {
 
     if (data.user) {
 
-        ws.user.name = data.user.name.substr(0, 8);
+        ws.user.name = data.user.name.substr(0, 20);
 
     }
 

@@ -26,7 +26,7 @@ window.GUI = {
             GUI.menu.random.addEventListener('click', () => GUI.menu.name.value = TOOL.getName());
             GUI.menu.start.addEventListener('click', () => {
 
-                USER.name = GUI.menu.name.value.substr(0, 8);
+                USER.name = GUI.menu.name.value.substr(0, 20);
                 Cookies.set('name', USER.name, {expires: 365});
 
                 GUI.menu.visible(false);

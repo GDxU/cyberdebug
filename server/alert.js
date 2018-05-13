@@ -6,7 +6,7 @@ ALERT.send = (ws, alert) => {
         alert: alert
     };
 
-    ws.send(JSON.stringify(message));
+    if (ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify(message));
 
 };
 

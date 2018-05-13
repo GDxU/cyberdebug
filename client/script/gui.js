@@ -19,7 +19,7 @@ window.GUI = {
             GUI.menu.random = document.getElementById('menu_random');
             GUI.menu.start = document.getElementById('menu_start');
 
-            GUI.menu.header.innerText = 'PIXEL';
+            GUI.menu.header.innerText = 'Cyber Debug';
             GUI.menu.text.innerText = 'Введите ваше Имя';
             GUI.menu.name.value = Cookies.get('name') || TOOL.getName();
             GUI.menu.random.innerText = '?!';

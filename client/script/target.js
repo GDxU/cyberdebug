@@ -11,13 +11,15 @@ window.TARGET = {
             model: t.model,
             action: t.action,
             side: t.side,
-            sprite: new PIXI.Sprite(TOOL.getModel(t.model))
+            sprite: new PIXI.extras.AnimatedSprite(TEXTURE.character(t.model, t.action, t.side))
         };
 
         target.sprite.anchor.set(0.5, 0.5);
         target.sprite.target = target;
         target.sprite.x = t.x;
         target.sprite.y = t.y;
+
+        target.sprite.animationSpeed = 0;
 
         TARGET.store.push(target);
         GAME.target.addChild(target.sprite);
@@ -37,30 +39,33 @@ window.TARGET = {
 
         if (target) {
 
-            if (target.model !== t.model) {
-
-                target.model = t.model;
-
-                GAME.target.removeChild(target.sprite);
-                target.sprite.destroy();
-
-                target.sprite = new PIXI.Sprite(TOOL.getModel(t.model));
-                target.sprite.target = target;
-                GAME.target.addChild(target.sprite);
-
-                if (USER.id !== target.id) {
-                    target.sprite.cursor = 'hover';
-                    target.sprite.interactive = true;
-                    target.sprite.on('pointerover', e => e.currentTarget.filters = USER.contract || USER.hunter ? [new PIXI.filters.OutlineFilter(1, 0xffff00, 1)] : undefined);
-                    target.sprite.on('pointerout', e => e.currentTarget.filters = undefined);
-                }
-
-            }
-
-            target.action = t.action;
-            target.side = t.side;
             target.sprite.x = t.x;
             target.sprite.y = t.y;
+
+            if (
+
+                target.model === t.model &&
+                target.action === t.action &&
+                target.side === t.side
+
+            ) {
+
+                if (target.action === 'walk') {
+
+                    target.sprite.animationSpeed = 0.1;
+                    target.sprite.play();
+
+                } else target.sprite.animationSpeed = 0;
+
+            } else {
+
+                target.model = t.model;
+                target.action = t.action;
+                target.side = t.side;
+
+                target.sprite.textures = TEXTURE.character(t.model, t.action, t.side);
+
+            }
 
         }
 

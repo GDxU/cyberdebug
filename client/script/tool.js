@@ -16,23 +16,6 @@ window.TOOL = {
 
     },
 
-    getModel: i => {
-
-        i = i || 0;
-
-        let names = [
-            'white',
-            'cyan',
-            'magenta',
-            'yellow'
-        ];
-
-        let name = names[i % names.length];
-
-        return PIXI.loader.resources[name].texture;
-
-    },
-
     getRandomInt: (min, max) => {
 
         if (!max) {

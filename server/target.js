@@ -2,7 +2,7 @@ let TOOL = require('./tool');
 
 let TARGET = {};
 
-TARGET.id = 0;
+TARGET.id = 1;
 TARGET.model = 0;
 TARGET.users = [];
 TARGET.bots = [];

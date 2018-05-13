@@ -196,7 +196,7 @@ window.HUD = {
             HUD.info.user.name.text = USER.name;
             HUD.info.user.hunter.text = USER.hunter;
 
-            HUD.info.target.sprite.texture = USER.contract ? TOOL.getModel(USER.contract.model) : PIXI.loader.resources['/client/image/hud/unknown.png'].texture;
+            HUD.info.target.sprite.texture = USER.contract ? TEXTURE.character(USER.contract.model, 'stand', 's') : PIXI.loader.resources['/client/image/hud/unknown.png'].texture;
             HUD.info.target.name.text = USER.contract ? USER.contract.name : 'Поиск...';
             HUD.info.target.hunter.text = USER.contract ? USER.contract.hunter : '?';
 

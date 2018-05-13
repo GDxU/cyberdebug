@@ -5,7 +5,7 @@
     <meta charset=utf-8>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Cyber Debug</title>
+    <title>Cyberdebug</title>
 
     <link href="/client/image/favicon.png" rel="icon">
 
@@ -14,21 +14,41 @@
 </head>
 <body>
 
-<div class="panel" id="menu">
-    <div class="header" id="menu_header"></div>
-    <div class="text" id="menu_text"></div>
-    <input type="text" placeholder="Name" id="menu_name">
-    <div class="button button-input" id="menu_random"></div>
-    <div class="button" id="menu_start"></div>
+<div id="menu">
+    <h1>Cyberdebug</h1>
+    <p>Введите ваше Имя</p>
+    <input id="menu_name" type="text" placeholder="Имя">
+    <button id="menu_random" class="input">?!</button>
+    <button id="menu_start">Старт</button>
+    <button id="menu_about">Описание</button>
+</div>
+
+<div id="about">
+    <button id="about_close" class="close">x</button>
+    <h1>Cyberdebug</h1>
+    <p>Игра представляет собой адаптацию мультиплеера из Assassin's Creed в жанре социального стелса. Да, мне очень нравится идея мультиплеера в Assassin's Creed, но Ubisoft к сожалению больше не занимается его развитием. К тому же очень хотелось такой геймплей в масштабах целого города в стиле cyberpunk и over9000 репликантов, а не большой карты и 8 игроков.</p>
+    <p>Так как я на 70% состою не из воды, а из игр, то хочу добавить в игру всё то что люблю из разных вселенных, таких как Assassin'c Creed, Witcher, Cyberpunk, Final Fantasy, Metal Gear и так далее. Что из этого получится, надеюсь когда нибудь увижу, так как останавливаться не собираюсь.</p>
+    <p>Работает всё на JavaScript, а значит поддержка большого количества платформ, где возможно использовать браузер. Серверная часть реализована на Node.js. Да, я люблю JavaScript.</p>
+    <h1>Проект</h1>
+    <p>Да, на всякий случай оставлю ссылку на проект.</p>
+    <ul>
+        <li>GitHub: <a href="https://nanak1.github.io/cyberdebug/">https://nanak1.github.io/cyberdebug/</a></li>
+    </ul>
+    <h1>Контакты</h1>
+    <p>Если Вам вдруг интересно со мной связаться, то оставлю часть своих контактов.</p>
+    <ul>
+        <li>VK: <a href="https://vk.com/nanaki">https://vk.com/nanaki</a></li>
+        <li>Email: <a href="mailto:nanaki.god@gmail.com">nanaki.god@gmail.com</a></li>
+    </ul>
 </div>
 
 <div id="tool">
-    <div class="button" id="tool_total">Счет</div>
+    <button id="tool_total">Счет</button>
 </div>
 
-<div class="panel" id="total">
-    <div class="header">Счет</div>
-    <table class="text">
+<div id="total">
+    <h1>Счет</h1>
+    <table>
         <thead>
         <tr>
             <th>#</th>
@@ -41,8 +61,8 @@
         </thead>
         <tbody id="total_table"></tbody>
     </table>
-    <div class="text center" id="total_target"></div>
-    <div class="text center" id="total_info"></div>
+    <p id="total_target"></p>
+    <p id="total_info"></p>
 </div>
 
 <script src="/node_modules/pixi.js/dist/pixi.min.js"></script>

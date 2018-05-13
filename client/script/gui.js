@@ -3,6 +3,7 @@ window.GUI = {
     init: () => {
 
         GUI.menu.init();
+        GUI.about.init();
         GUI.tool.init();
         GUI.total.init();
 
@@ -13,17 +14,12 @@ window.GUI = {
         init: () => {
 
             GUI.menu.panel = document.getElementById('menu');
-            GUI.menu.header = document.getElementById('menu_header');
-            GUI.menu.text = document.getElementById('menu_text');
             GUI.menu.name = document.getElementById('menu_name');
             GUI.menu.random = document.getElementById('menu_random');
             GUI.menu.start = document.getElementById('menu_start');
+            GUI.menu.about = document.getElementById('menu_about');
 
-            GUI.menu.header.innerText = 'Cyber Debug';
-            GUI.menu.text.innerText = 'Введите ваше Имя';
             GUI.menu.name.value = Cookies.get('name') || TOOL.getName();
-            GUI.menu.random.innerText = '?!';
-            GUI.menu.start.innerText = 'Старт';
 
             GUI.menu.hide();
 
@@ -42,6 +38,12 @@ window.GUI = {
                 GUI.tool.show();
 
             });
+            GUI.menu.about.addEventListener('click', () => {
+
+                GUI.menu.hide();
+                GUI.about.show();
+
+            });
 
         },
 
@@ -56,6 +58,40 @@ window.GUI = {
 
             GUI.menu.panel.style.left = '';
             GUI.menu.panel.style.top = '';
+
+        }
+
+    },
+
+    about: {
+
+        init: () => {
+
+            GUI.about.panel = document.getElementById('about');
+            GUI.about.close = document.getElementById('about_close');
+
+            GUI.about.hide();
+
+            GUI.about.close.addEventListener('click', () => {
+
+                GUI.about.hide();
+                GUI.menu.show();
+
+            });
+
+        },
+
+        show: () => {
+
+            GUI.about.panel.style.left = CAMERA.getX(- Math.floor(GUI.about.panel.offsetWidth / 2)) + 'px';
+            GUI.about.panel.style.top = CAMERA.getY(- Math.floor(GUI.about.panel.offsetHeight / 2)) + 'px';
+
+        },
+
+        hide: () => {
+
+            GUI.about.panel.style.left = '';
+            GUI.about.panel.style.top = '';
 
         }
 

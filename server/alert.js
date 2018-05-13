@@ -1,3 +1,5 @@
+let WebSocket = require('ws');
+
 let ALERT = {};
 
 ALERT.send = (ws, alert) => {

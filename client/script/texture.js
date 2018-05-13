@@ -2,11 +2,6 @@ window.TEXTURE = {
 
     init: () => {
 
-        PIXI.loader.add('white',   '/client/image/model/white.png');
-        PIXI.loader.add('cyan',    '/client/image/model/cyan.png');
-        PIXI.loader.add('magenta', '/client/image/model/magenta.png');
-        PIXI.loader.add('yellow',  '/client/image/model/yellow.png');
-
         PIXI.loader.add('pin', '/client/image/cursor/pin.png');
 
         PIXI.loader.add('tile',   '/client/image/tile.png');

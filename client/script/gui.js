@@ -21,7 +21,7 @@ window.GUI = {
 
             GUI.menu.name.value = Cookies.get('name') || TOOL.getName();
 
-            GUI.menu.hide();
+            GUI.menu.visible(false);
 
             GUI.menu.random.addEventListener('click', () => GUI.menu.name.value = TOOL.getName());
             GUI.menu.start.addEventListener('click', () => {
@@ -29,35 +29,32 @@ window.GUI = {
                 USER.name = GUI.menu.name.value.substr(0, 8);
                 Cookies.set('name', USER.name, {expires: 365});
 
-                GUI.menu.hide();
+                GUI.menu.visible(false);
 
                 GAME.init();
                 HUD.init();
                 WS.init();
 
-                GUI.tool.show();
+                GUI.tool.visible(true);
 
             });
             GUI.menu.about.addEventListener('click', () => {
 
-                GUI.menu.hide();
-                GUI.about.show();
+                GUI.menu.visible(false);
+                GUI.about.visible(true);
 
             });
 
         },
 
-        show: () => {
+        visible: v => {
 
-            GUI.menu.panel.style.left = CAMERA.getX(- Math.floor(GUI.menu.panel.offsetWidth / 2)) + 'px';
-            GUI.menu.panel.style.top = CAMERA.getY(- Math.floor(GUI.menu.panel.offsetHeight / 2)) + 'px';
+            if (typeof v === 'boolean') {
 
-        },
+                GUI.menu.panel.style.left = v ? CAMERA.getX(- Math.floor(GUI.menu.panel.offsetWidth / 2)) + 'px' : '';
+                GUI.menu.panel.style.top = v ? CAMERA.getY(- Math.floor(GUI.menu.panel.offsetHeight / 2)) + 'px' : '';
 
-        hide: () => {
-
-            GUI.menu.panel.style.left = '';
-            GUI.menu.panel.style.top = '';
+            } else return !!GUI.menu.panel.style.left;
 
         }
 
@@ -70,28 +67,25 @@ window.GUI = {
             GUI.about.panel = document.getElementById('about');
             GUI.about.close = document.getElementById('about_close');
 
-            GUI.about.hide();
+            GUI.about.visible(false);
 
             GUI.about.close.addEventListener('click', () => {
 
-                GUI.about.hide();
-                GUI.menu.show();
+                GUI.about.visible(false);
+                GUI.menu.visible(true);
 
             });
 
         },
 
-        show: () => {
+        visible: v => {
 
-            GUI.about.panel.style.left = CAMERA.getX(- Math.floor(GUI.about.panel.offsetWidth / 2)) + 'px';
-            GUI.about.panel.style.top = CAMERA.getY(- Math.floor(GUI.about.panel.offsetHeight / 2)) + 'px';
+            if (typeof v === 'boolean') {
 
-        },
+                GUI.about.panel.style.left = v ? CAMERA.getX(- Math.floor(GUI.about.panel.offsetWidth / 2)) + 'px' : '';
+                GUI.about.panel.style.top = v ? CAMERA.getY(- Math.floor(GUI.about.panel.offsetHeight / 2)) + 'px' : '';
 
-        hide: () => {
-
-            GUI.about.panel.style.left = '';
-            GUI.about.panel.style.top = '';
+            } else return !!GUI.about.panel.style.left;
 
         }
 
@@ -107,31 +101,27 @@ window.GUI = {
             GUI.tool.total.addEventListener('click', GUI.tool.onTotal);
             window.addEventListener('keydown', event => {
 
-                if (event.code === 'Backquote') GUI.tool.onTotal();
+                if (event.code === 'Backquote' && GUI.tool.visible()) GUI.tool.onTotal();
 
             });
 
         },
 
-        show: () => {
+        visible: v => {
 
-            GUI.tool.panel.style.left = '10px';
-            GUI.tool.panel.style.top = 'auto';
-            GUI.tool.panel.style.bottom = '10px';
+            if (typeof v === 'boolean') {
 
-        },
+                GUI.tool.panel.style.left = v ? '10px' : '';
+                GUI.tool.panel.style.top = v ? 'auto' : '';
+                GUI.tool.panel.style.bottom = v ? '10px' : '';
 
-        hide: () => {
-
-            GUI.tool.panel.style.left = '';
-            GUI.tool.panel.style.top = '';
-            GUI.tool.panel.style.bottom = '';
+            } else return !!GUI.tool.panel.style.left;
 
         },
 
         onTotal: () => {
 
-            GUI.total.panel.style.left ? GUI.total.hide() : GUI.total.show();
+            GUI.total.visible(!GUI.total.visible());
 
         }
 
@@ -150,21 +140,18 @@ window.GUI = {
             GUI.total.target = document.getElementById('total_target');
             GUI.total.info = document.getElementById('total_info');
 
-            GUI.total.hide();
+            GUI.total.visible(false);
 
         },
 
-        show: () => {
+        visible: v => {
 
-            GUI.total.panel.style.left = '8px';
-            GUI.total.panel.style.top = '8px';
+            if (typeof v === 'boolean') {
 
-        },
+                GUI.total.panel.style.left = v ? '8px' : '';
+                GUI.total.panel.style.top = v ? '8px' : '';
 
-        hide: () => {
-
-            GUI.total.panel.style.left = '';
-            GUI.total.panel.style.top = '';
+            } else return !!GUI.total.panel.style.left;
 
         },
 
@@ -219,7 +206,7 @@ window.GUI = {
 
                 // проверка на видимость
 
-                if (GUI.total.panel.style.left) GUI.total.show();
+                if (GUI.total.panel.style.left) GUI.total.visible(true);
 
             }
 

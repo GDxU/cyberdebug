@@ -26,7 +26,7 @@ window.TEXTURE = {
             TEXTURE.initDetector();
             TEXTURE.initLine();
 
-            GUI.menu.show();
+            GUI.menu.visible(true);
 
         });
 

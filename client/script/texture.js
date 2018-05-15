@@ -81,22 +81,27 @@ window.TEXTURE = {
 
     initCharacter: () => {
 
-        let actions = ['stand', 'walk1', 'walk2', 'kill', 'killed', 'stun', 'stunned', 'miss', 'missed'];
-        let side = ['s', 'sw', 'w', 'nw', 'n', 'ne', 'e', 'se'];
+        let actions = ['stand1', 'stand2', 'walk1', 'walk2'];
+        let sides = ['w', 'sw', 's', 'se', 'e', 'ne', 'n', 'nw'];
 
         for (let c = 0; c < TEXTURE.characters.length; c++) {
 
+            let character = TEXTURE.characters[c];
+            let texture = PIXI.loader.resources['/client/image/character/' + character + '.png'].texture;
+            let width = Math.floor(texture.width / sides.length);
+            let height = Math.floor(texture.height / actions.length);
+
             for (let a = 0; a < actions.length; a++) {
 
-                for (let s = 0; s < side.length; s++) {
+                let action = actions[a];
 
-                    let C = TEXTURE.characters[c];
-                    let A = actions[a];
-                    let S = side[s];
+                for (let s = 0; s < sides.length; s++) {
 
-                    TEXTURE['character_' + C + '_' + A + '_' + S] = new PIXI.Texture(
-                        PIXI.loader.resources['/client/image/character/' + C + '.png'].texture,
-                        new PIXI.Rectangle(s * 21, a * 21, 21, 21)
+                    let side = sides[s];
+
+                    TEXTURE['character_' + character + '_' + action + '_' + side] = new PIXI.Texture(
+                        texture,
+                        new PIXI.Rectangle(s * width, a * height, width, height)
                     );
 
                 }
@@ -111,17 +116,24 @@ window.TEXTURE = {
 
         let character = TEXTURE.characters[model % TEXTURE.characters.length];
 
-        if (action === 'walk') {
+        if (action.includes('stand')) {
 
             return [
-                TEXTURE['character_' + character + '_' + action + '1_' + side],
-                TEXTURE['character_' + character + '_' + action + '2_' + side]
+                TEXTURE['character_' + character + '_stand1_' + side],
+                TEXTURE['character_' + character + '_stand2_' + side]
             ];
 
-        } else return [TEXTURE['character_' + character + '_' + action + '_' + side]];
+        } else {
+
+            return [
+                TEXTURE['character_' + character + '_walk1_' + side],
+                TEXTURE['character_' + character + '_walk2_' + side]
+            ];
+
+        }
 
     },
 
-    characters: ['debug']
+    characters: ['default']
 
 };

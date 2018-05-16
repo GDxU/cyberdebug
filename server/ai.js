@@ -1,5 +1,5 @@
-let ACTION = require('./action');
 let TARGET = require('./target');
+let TOOL = require('./tool');
 
 let AI = {};
 
@@ -16,23 +16,30 @@ AI.move = () => {
 
     TARGET.bots.forEach((bot, i) => {
 
-        let a = Math.round(Math.sin(temp[i % temp.length]));
+        let delta = Math.round(Math.sin(temp[i % temp.length]));
 
-        if (i % 5 === 0) bot.x += a;
+        let b = {
+            x: bot.x,
+            y: bot.y
+        };
 
-        if (i % 5 === 1) bot.y += a;
+        if (i % 5 === 0) b.x += delta;
+
+        if (i % 5 === 1) b.y += delta;
 
         if (i % 5 === 2) {
-            bot.x += a;
-            bot.y -= a;
+            b.x += delta;
+            b.y -= delta;
         }
 
         if (i % 5 === 3) {
-            bot.x -= a;
-            bot.y += a;
+            b.x -= delta;
+            b.y += delta;
         }
 
-        bot.action = a === 0 ? 'stand' : 'walk';
+        TOOL.setSide(bot, b);
+        TOOL.setAction(bot, b);
+        TOOL.move(bot, b);
 
     });
 

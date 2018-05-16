@@ -162,7 +162,8 @@ TARGET.initBot = data => {
         action: data.action || 'stand',
         side: data.side || TARGET.generateSide(),
         x: data.x || TARGET.generateX(),
-        y: data.y || TARGET.generateY()
+        y: data.y || TARGET.generateY(),
+        speed: 2
     };
 
     TARGET.bots.push(bot);

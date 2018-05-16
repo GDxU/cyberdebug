@@ -55,19 +55,72 @@ TOOL.getAzimuth = (a, b) => {
 
 };
 
-TOOL.move = (a, b, s) => {
+TOOL.move = (a, b) => {
 
-    if (a && b && s) {
+    let move = undefined;
 
-        if (a.x < b.x) a.x += s;
-        if (a.x > b.x) a.x -= s;
-        if (a.y < b.y) a.y += s;
-        if (a.y > b.y) a.y -= s;
+    if (a && b && a.speed) {
 
-        if (Math.abs(a.x - b.x) < s) a.x = b.x;
-        if (Math.abs(a.y - b.y) < s) a.y = b.y;
+        if (a.x < b.x) a.x += a.speed;
+        if (a.x > b.x) a.x -= a.speed;
+        if (a.y < b.y) a.y += a.speed;
+        if (a.y > b.y) a.y -= a.speed;
+
+        if (Math.abs(a.x - b.x) < a.speed) a.x = b.x;
+        if (Math.abs(a.y - b.y) < a.speed) a.y = b.y;
+
+        move = a.x === b.x && a.y === b.y;
 
     }
+
+    return move;
+
+};
+
+TOOL.setSide = (a, b) => {
+
+    let side = undefined;
+
+    if (a && b) {
+
+        if (a.x === b.x && a.y === b.y) side = a.side;
+        else {
+
+            if (a.x === b.x && a.y > b.y) side = 'n';
+            if (a.x === b.x && a.y < b.y) side = 's';
+
+            if (a.x > b.x && a.y === b.y) side = 'w';
+            if (a.x < b.x && a.y === b.y) side = 'e';
+
+            if (a.x < b.x && a.y > b.y) side = 'ne';
+            if (a.x < b.x && a.y < b.y) side = 'se';
+
+            if (a.x > b.x && a.y > b.y) side = 'nw';
+            if (a.x > b.x && a.y < b.y) side = 'sw';
+
+            a.side = side;
+
+        }
+
+    }
+
+    return side;
+
+};
+
+TOOL.setAction = (a, b) => {
+
+    let action = undefined;
+
+    if (a && b) {
+
+        action = a.x === b.x && a.y === b.y ? 'stand' : 'walk';
+
+        a.action = action;
+
+    }
+
+    return action;
 
 };
 

@@ -76,29 +76,13 @@ ACTION.sync = (ws, data) => {
 
 };
 
-ACTION.move = (a, b, s) => {
+ACTION.move = (a, b) => {
 
     if (['stand', 'walk', 'run'].includes(a.action)) {
 
-        let x = a.x;
-        let y = a.y;
-
-        TOOL.move(a, b, s);
-
-        if (a.x === b.x && a.y === b.y) a.action = 'stand';
-        else a.action = s === 2 ? 'walk' : 'run';
-
-        if (x === a.x && y > a.y) a.side = 'n';
-        if (x === a.x && y < a.y) a.side = 's';
-
-        if (x > a.x && y === a.y) a.side = 'w';
-        if (x < a.x && y === a.y) a.side = 'e';
-
-        if (x < a.x && y > a.y) a.side = 'ne';
-        if (x < a.x && y < a.y) a.side = 'se';
-
-        if (x > a.x && y > a.y) a.side = 'nw';
-        if (x > a.x && y < a.y) a.side = 'sw';
+        TOOL.setSide(a, b);
+        TOOL.setAction(a, b);
+        if (TOOL.move(a, b)) TOOL.setAction(a, b);
 
     }
 
@@ -140,7 +124,7 @@ setInterval(() => {
                         CONTRACT.kill(action.user);
                         ACTION.remove(action);
 
-                    } else ACTION.move(action.user, action.target, action.user.speed);
+                    } else ACTION.move(action.user, action.target);
 
                 }
 
@@ -153,7 +137,7 @@ setInterval(() => {
                         CONTRACT.stun(action.user, action.target);
                         ACTION.remove(action);
 
-                    } else ACTION.move(action.user, action.target, action.user.speed);
+                    } else ACTION.move(action.user, action.target);
 
                 }
 
@@ -168,7 +152,7 @@ setInterval(() => {
                         CONTRACT.miss(action.user, action.target);
                         ACTION.remove(action);
 
-                    } else ACTION.move(action.user, action.target, action.user.speed);
+                    } else ACTION.move(action.user, action.target);
 
                 }
 
@@ -176,7 +160,7 @@ setInterval(() => {
 
         } else {
 
-            ACTION.move(action.user, action, action.user.speed);
+            ACTION.move(action.user, action);
 
             if (
                 action.user.x === action.x &&

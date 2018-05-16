@@ -11,7 +11,7 @@ window.TEXTURE = {
         PIXI.loader.add('/client/image/hud/radar.png');
         PIXI.loader.add('/client/image/hud/detector.png');
         PIXI.loader.add('/client/image/hud/line.png');
-        PIXI.loader.add('/client/image/hud/unknown.png');
+        PIXI.loader.add('/client/image/hud/frame.png');
 
         // character
 
@@ -91,6 +91,11 @@ window.TEXTURE = {
             let width = Math.floor(texture.width / sides.length);
             let height = Math.floor(texture.height / actions.length);
 
+            TEXTURE['character_' + character] = new PIXI.Texture(
+                texture,
+                new PIXI.Rectangle(2 * width, 0, width, width)
+            );
+
             for (let a = 0; a < actions.length; a++) {
 
                 let action = actions[a];
@@ -131,6 +136,14 @@ window.TEXTURE = {
             ];
 
         }
+
+    },
+
+    preview: model => {
+
+        let character = TEXTURE.characters[model % TEXTURE.characters.length];
+
+        return TEXTURE['character_' + character];
 
     },
 

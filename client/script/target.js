@@ -19,7 +19,8 @@ window.TARGET = {
         target.sprite.x = t.x;
         target.sprite.y = t.y;
 
-        target.sprite.animationSpeed = 0;
+        target.sprite.animationSpeed = 0.01;
+        target.sprite.play();
 
         TARGET.store.push(target);
         GAME.target.addChild(target.sprite);
@@ -55,7 +56,12 @@ window.TARGET = {
                     target.sprite.animationSpeed = 0.1;
                     target.sprite.play();
 
-                } else target.sprite.animationSpeed = 0;
+                } else {
+
+                    target.sprite.animationSpeed = 0.01;
+                    target.sprite.play();
+
+                }
 
             } else {
 

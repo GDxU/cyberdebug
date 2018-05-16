@@ -157,16 +157,29 @@ window.HUD = {
                 });
 
                 HUD.info.target = {
-                    sprite: new PIXI.Sprite(PIXI.loader.resources['/client/image/hud/unknown.png'].texture),
+                    frame: new PIXI.Sprite(PIXI.loader.resources['/client/image/hud/frame.png'].texture),
+                    unknown: new PIXI.Text('?', style),
+                    preview: new PIXI.Sprite(),
                     name: new PIXI.Text('Target', style),
                     line: new PIXI.Sprite(TEXTURE['hud_line_target']),
                     hunter: new PIXI.Text('0', style)
                 };
 
-                HUD.info.target.sprite.anchor.set(0, 1);
-                HUD.info.target.sprite.x = 50;
-                HUD.info.target.sprite.y = -22;
-                HUD.info.container.addChild(HUD.info.target.sprite);
+                HUD.info.target.frame.anchor.set(0.5, 0.5);
+                HUD.info.target.frame.x = 60;
+                HUD.info.target.frame.y = -32;
+                HUD.info.container.addChild(HUD.info.target.frame);
+
+                HUD.info.target.unknown.anchor.set(0.5, 0.5);
+                HUD.info.target.unknown.x = 60;
+                HUD.info.target.unknown.y = -32;
+                HUD.info.container.addChild(HUD.info.target.unknown);
+
+                HUD.info.target.preview.visible = false;
+                HUD.info.target.preview.anchor.set(0.5, 0.5);
+                HUD.info.target.preview.x = 60;
+                HUD.info.target.preview.y = -32;
+                HUD.info.container.addChild(HUD.info.target.preview);
 
                 HUD.info.target.name.anchor.set(0, 1);
                 HUD.info.target.name.x = 55;
@@ -196,7 +209,9 @@ window.HUD = {
             HUD.info.user.name.text = USER.name;
             HUD.info.user.hunter.text = USER.hunter;
 
-            HUD.info.target.sprite.texture = USER.contract ? TEXTURE.character(USER.contract.model, 'stand', 's')[0] : PIXI.loader.resources['/client/image/hud/unknown.png'].texture;
+            HUD.info.target.unknown.visible = !USER.contract;
+            HUD.info.target.preview.visible = !!USER.contract;
+            HUD.info.target.preview.texture = USER.contract ? TEXTURE.preview(USER.contract.model) : undefined;
             HUD.info.target.name.text = USER.contract ? USER.contract.name : 'Поиск...';
             HUD.info.target.hunter.text = USER.contract ? USER.contract.hunter : '?';
 

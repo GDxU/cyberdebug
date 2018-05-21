@@ -81,7 +81,7 @@ window.TEXTURE = {
 
     initCharacter: () => {
 
-        let actions = ['stand1', 'stand2', 'walk1', 'walk2'];
+        let actions = ['stand', 'walk1', 'walk2'];
         let sides = ['w', 'sw', 's', 'se', 'e', 'ne', 'n', 'nw'];
 
         for (let c = 0; c < TEXTURE.characters.length; c++) {
@@ -124,8 +124,7 @@ window.TEXTURE = {
         if (action.includes('stand')) {
 
             return [
-                TEXTURE['character_' + character + '_stand1_' + side],
-                TEXTURE['character_' + character + '_stand2_' + side]
+                TEXTURE['character_' + character + '_stand_' + side]
             ];
 
         } else {

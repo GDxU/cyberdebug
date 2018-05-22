@@ -8,6 +8,9 @@ let HTTP = {};
 HTTP.ip = '' || TOOL.getIp();
 HTTP.port = 80;
 
+// временно заблокированные IP адреса из-за любопытства
+HTTP.banned = [];
+
 HTTP.types = {
     html: 'text/html',
     js: 'text/javascript',
@@ -18,28 +21,47 @@ HTTP.types = {
 HTTP.server = http.createServer((req, res) => {
 
     let path = '.' + (req.url === '/' ? '/client/index.html' : req.url);
-    console.log('HTTP ' + req.connection.remoteAddress + ' ' + path);
 
-    fs.readFile(path, (error, data) => {
+    // проверка на наличие IP адреса в заблокированном массиве
+    if (HTTP.banned.includes(req.connection.remoteAddress)) {
 
-        if (error) {
+        res.statusCode = 404;
+        res.end(http.STATUS_CODES[404]);
 
-            res.statusCode = 404;
-            res.end(http.STATUS_CODES[404]);
+        console.log('HTTP banned ' + req.connection.remoteAddress + ' ' + path);
 
-        } else {
+    } else {
 
-            Object.keys(HTTP.types).forEach(type => {
-                let regexp = new RegExp('\.' + type + '$');
-                if (regexp.test(path)) res.writeHead(200, {
-                    'Content-Type': HTTP.types[type]
+        fs.readFile(path, (error, data) => {
+
+            if (error) {
+
+                res.statusCode = 404;
+                res.end(http.STATUS_CODES[404]);
+
+                // блокировка любопытного клиента
+                HTTP.banned.push(req.connection.remoteAddress);
+
+                console.log('HTTP ban ' + req.connection.remoteAddress + ' ' + path);
+
+            } else {
+
+                Object.keys(HTTP.types).forEach(type => {
+                    let regexp = new RegExp('\.' + type + '$');
+                    if (regexp.test(path)) res.writeHead(200, {
+                        'Content-Type': HTTP.types[type]
+                    });
                 });
-            });
-            res.end(data);
 
-        }
+                res.end(data);
 
-    });
+                console.log('HTTP ' + req.connection.remoteAddress + ' ' + path);
+
+            }
+
+        });
+
+    }
 
 });
 

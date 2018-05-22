@@ -11,7 +11,7 @@ window.TARGET = {
             model: t.model,
             action: t.action,
             side: t.side,
-            sprite: new PIXI.extras.AnimatedSprite(TEXTURE.character(t.model, t.action, t.side))
+            sprite: new PIXI.extras.AnimatedSprite(TEXTURE.character.get(t.model, t.action, t.side))
         };
 
         target.sprite.anchor.set(0.5, 0.5);
@@ -69,7 +69,7 @@ window.TARGET = {
                 target.action = t.action;
                 target.side = t.side;
 
-                target.sprite.textures = TEXTURE.character(t.model, t.action, t.side);
+                target.sprite.textures = TEXTURE.character.get(t.model, t.action, t.side);
 
             }
 

@@ -211,7 +211,7 @@ window.HUD = {
 
             HUD.info.target.unknown.visible = !USER.contract;
             HUD.info.target.preview.visible = !!USER.contract;
-            HUD.info.target.preview.texture = USER.contract ? TEXTURE.preview(USER.contract.model) : undefined;
+            HUD.info.target.preview.texture = USER.contract ? TEXTURE.character.preview(USER.contract.model) : undefined;
             HUD.info.target.name.text = USER.contract ? USER.contract.name : 'Поиск...';
             HUD.info.target.hunter.text = USER.contract ? USER.contract.hunter : '?';
 

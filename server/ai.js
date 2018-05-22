@@ -8,11 +8,11 @@ AI.ms = 1000 / AI.tr;
 
 let temp = [];
 
-for (let i = 0; i < 10; i++) temp.push(0);
+for (let i = 0; i < 16; i++) temp.push(0);
 
 AI.move = () => {
 
-    for (let i = 0; i < temp.length; i++) temp[i] += (i + 1) / 100;
+    for (let i = 0; i < temp.length; i++) temp[i] += (i + 1) / 200;
 
     TARGET.bots.forEach((bot, i) => {
 

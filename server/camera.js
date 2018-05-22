@@ -7,10 +7,16 @@ CAMERA.sync = (ws, data) => {
         let w = parseInt(data.camera.w);
         let h = parseInt(data.camera.h);
 
-        if (!isNaN(w) && !isNaN(h)) ws.camera = {
-            w: w,
-            h: h
-        };
+        if (!isNaN(w) && !isNaN(h)) {
+
+            if (w > 4000) w = 4000;
+            if (h > 4000) h = 4000;
+
+            ws.camera = {
+                w: w,
+                h: h
+            };
+        }
 
     }
 

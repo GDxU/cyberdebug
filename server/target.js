@@ -6,11 +6,26 @@ TARGET.id = 1;
 TARGET.model = 0;
 TARGET.users = [];
 TARGET.bots = [];
-TARGET.botCount = 40;
+
+/**
+ * Генерация ботов
+ * @width {integer} ширина поля генерации ботов
+ * @height {integer} высота поля генерации ботов
+ * @delta {integer} количество ботов на квадрат 100х100
+ */
+
+let width = 4000;
+let height = 4000;
+let delta = 2;
+
+TARGET.botCount = Math.floor(width * height * delta / 10000);
+
+let x = Math.floor(width / 2);
+let y = Math.floor(height / 2);
 
 TARGET.generateId = () => TARGET.id++;
-TARGET.generateX = () => 10000 + TOOL.getRandomInt(-400, 400);
-TARGET.generateY = () => 10000 + TOOL.getRandomInt(-400, 400);
+TARGET.generateX = () => 10000 + TOOL.getRandomInt(-x, x);
+TARGET.generateY = () => 10000 + TOOL.getRandomInt(-y, y);
 TARGET.generateSide = () => ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'][TOOL.getRandomInt(7)];
 
 TARGET.get = id => TARGET.bots.concat(TARGET.users).filter(target => target.id === id)[0];
@@ -86,6 +101,11 @@ TARGET.syncUser = (ws, data) => {
 
 TARGET.appendUser = ws => {
 
+    ws.camera = {
+        w: 100,
+        h: 100
+    };
+
     ws.user = {
         id: TARGET.generateId(),
         name: '',
@@ -120,13 +140,8 @@ TARGET.removeUser = id => {
 
 TARGET.exportTargets = ws => {
 
-    let camera = ws.camera || {w: 100, h: 100};
-
-    if (camera.x > 2000) camera.x = 2000;
-    if (camera.y > 2000) camera.y = 2000;
-
-    let x = Math.floor(camera.w / 2) + 100;
-    let y = Math.floor(camera.h / 2) + 100;
+    let x = Math.floor(ws.camera.w / 2) + 100;
+    let y = Math.floor(ws.camera.h / 2) + 100;
 
     let x1 = ws.user.x - x;
     let x2 = ws.user.x + x;
@@ -134,8 +149,9 @@ TARGET.exportTargets = ws => {
     let y2 = ws.user.y + y;
 
     let targets = [];
+    let filter = t => x1 < t.x && t.x < x2 && y1 < t.y && t.y < y2;
 
-    TARGET.bots.concat(TARGET.users).filter(t => x1 < t.x && t.x < x2 && y1 < t.y && t.y < y2).forEach(target => {
+    TARGET.bots.concat(TARGET.users).filter(filter).forEach(target => {
 
         targets.push({
             id: target.id,

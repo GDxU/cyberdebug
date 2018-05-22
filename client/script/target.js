@@ -26,9 +26,12 @@ window.TARGET = {
         GAME.target.addChild(target.sprite);
 
         if (USER.id !== target.id) {
-            target.sprite.cursor = 'hover';
+            // target.sprite.cursor = 'hover';
             target.sprite.interactive = true;
-            target.sprite.on('pointerover', e => e.currentTarget.filters = USER.contract || USER.hunter ? [new PIXI.filters.OutlineFilter(1, 0xffff00, 1)] : undefined);
+            target.sprite.on('pointerover', e => {
+                e.currentTarget.filters = USER.contract || USER.hunter ? [new PIXI.filters.OutlineFilter(1, 0xffff00, 1)] : undefined;
+                e.currentTarget.cursor = USER.contract || USER.hunter ? 'hover' : 'default';
+            });
             target.sprite.on('pointerout', e => e.currentTarget.filters = undefined);
         }
 

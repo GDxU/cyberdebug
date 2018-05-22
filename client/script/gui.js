@@ -136,11 +136,18 @@ window.GUI = {
         init: () => {
 
             GUI.total.panel = document.getElementById('total');
+            GUI.total.close = document.getElementById('total_close');
             GUI.total.table = document.getElementById('total_table');
             GUI.total.target = document.getElementById('total_target');
             GUI.total.info = document.getElementById('total_info');
 
             GUI.total.visible(false);
+
+            GUI.total.close.addEventListener('click', () => {
+
+                GUI.total.visible(false);
+
+            });
 
         },
 

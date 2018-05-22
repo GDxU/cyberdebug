@@ -32,7 +32,7 @@ window.GAME = {
     initApplication: () => {
 
         PIXI.utils.skipHello();
-        PIXI.settings.PRECISION_FRAGMENT = PIXI.PRECISION.HIGH;
+        // PIXI.settings.PRECISION_FRAGMENT = PIXI.PRECISION.HIGH;
 
         GAME.application = new PIXI.Application(window.innerWidth, window.innerHeight, {
             transparent: true
@@ -76,28 +76,22 @@ window.GAME = {
 
             let message = undefined;
 
-            if (e.target.target) {
+            if (e.target.target && (USER.hunter || USER.contract)) {
 
-                message = JSON.stringify({
-                    action: {
-                        id: e.target.target.id
-                    }
-                });
+                let id = e.target.target.id;
+
+                ACTION.follow(id);
+                message = JSON.stringify({action: {id: id}});
 
             } else {
 
-                let x = Math.floor(e.data.global.x - GAME.world.x);
-                let y = Math.floor(e.data.global.y - GAME.world.y);
+                let point = {
+                    x: Math.floor(e.data.global.x - GAME.world.x),
+                    y: Math.floor(e.data.global.y - GAME.world.y)
+                };
 
-                message = JSON.stringify({
-                    action: {
-                        x: x,
-                        y: y
-                    }
-                });
-
-                ACTION.pin.x = x;
-                ACTION.pin.y = y;
+                ACTION.goto(point);
+                message = JSON.stringify({action: point});
 
             }
 

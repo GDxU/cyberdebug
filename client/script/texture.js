@@ -141,7 +141,9 @@ window.TEXTURE = {
 
                 return [
                     TEXTURE['character_' + character + '_walk1_' + side],
-                    TEXTURE['character_' + character + '_walk2_' + side]
+                    TEXTURE['character_' + character + '_stand_' + side],
+                    TEXTURE['character_' + character + '_walk2_' + side],
+                    TEXTURE['character_' + character + '_stand_' + side]
                 ];
 
             }

@@ -56,13 +56,13 @@ window.TARGET = {
 
                 if (target.action === 'walk') {
 
-                    target.sprite.animationSpeed = 0.1;
+                    target.sprite.animationSpeed = 0.2;
                     target.sprite.play();
 
                 } else {
 
-                    target.sprite.animationSpeed = 0.01;
-                    target.sprite.play();
+                    target.sprite.animationSpeed = 0;
+                    // target.sprite.play();
 
                 }
 

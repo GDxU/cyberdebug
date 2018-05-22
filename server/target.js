@@ -15,7 +15,9 @@ TARGET.bots = [];
  */
 
 let width = 4000;
+// let width = 400;
 let height = 4000;
+// let height = 400;
 let delta = 2;
 
 TARGET.botCount = Math.floor(width * height * delta / 10000);

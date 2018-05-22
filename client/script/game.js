@@ -44,6 +44,7 @@ window.GAME = {
         GAME.application.renderer.plugins.interaction.cursorStyles.hover = "url('/client/image/cursor/pointer.png') 11 11, auto";
 
         document.body.appendChild(GAME.application.view);
+
         window.addEventListener('resize', function () {
 
             GAME.application.renderer.resize(window.innerWidth, window.innerHeight);
@@ -119,6 +120,13 @@ window.GAME = {
 
         GAME.target = new PIXI.Container();
         GAME.world.addChild(GAME.target);
+
+        // сортировка целей по Y
+        GAME.application.ticker.add(() => {
+
+            GAME.target.children.sort((a, b) => a.y > b.y ? 1 : (b.y > a.y ? -1 : 0));
+
+        });
 
     },
 

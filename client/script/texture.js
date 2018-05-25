@@ -90,7 +90,7 @@ window.TEXTURE = {
 
         init: () => {
 
-            let actions = ['stand', 'walk1', 'walk2'];
+            let types = ['s', 'l', 'r', 't'];
             let sides = ['s', 'se', 'e', 'ne', 'n'];
 
             for (let c = 0; c < TEXTURE.character.store.length; c++) {
@@ -98,26 +98,26 @@ window.TEXTURE = {
                 let character = TEXTURE.character.store[c];
                 let texture = PIXI.loader.resources['/client/image/character/' + character + '.png'].texture;
                 let width = Math.floor(texture.width / sides.length);
-                let height = Math.floor(texture.height / actions.length);
+                let height = Math.floor(texture.height / types.length);
 
                 TEXTURE['character_' + character] = new PIXI.Texture(
                     texture,
                     new PIXI.Rectangle(0, 0, width, width)
                 );
 
-                for (let a = 0; a < actions.length; a++) {
+                for (let t = 0; t < types.length; t++) {
 
-                    let action = actions[a];
+                    let type = types[t];
 
                     for (let s = 0; s < sides.length; s++) {
 
                         let side = sides[s];
-                        let frame = new PIXI.Rectangle(s * width, a * height, width, height);
+                        let frame = new PIXI.Rectangle(s * width, t * height, width, height);
 
-                        TEXTURE['character_' + character + '_' + action + '_' + side] = new PIXI.Texture(texture, frame);
-                        if (side === 'se') TEXTURE['character_' + character + '_' + action + '_sw'] = new PIXI.Texture(texture, frame, null, null, 12);
-                        if (side === 'e')  TEXTURE['character_' + character + '_' + action + '_w']  = new PIXI.Texture(texture, frame, null, null, 12);
-                        if (side === 'ne') TEXTURE['character_' + character + '_' + action + '_nw'] = new PIXI.Texture(texture, frame, null, null, 12);
+                        TEXTURE['character_' + character + '_' + type + '_' + side] = new PIXI.Texture(texture, frame);
+                        if (side === 'se') TEXTURE['character_' + character + '_' + type + '_sw'] = new PIXI.Texture(texture, frame, null, null, 12);
+                        if (side === 'e')  TEXTURE['character_' + character + '_' + type + '_w']  = new PIXI.Texture(texture, frame, null, null, 12);
+                        if (side === 'ne') TEXTURE['character_' + character + '_' + type + '_nw'] = new PIXI.Texture(texture, frame, null, null, 12);
 
                     }
 
@@ -131,20 +131,77 @@ window.TEXTURE = {
 
             let character = TEXTURE.character.store[model % TEXTURE.character.store.length];
 
-            if (action.includes('stand')) {
+            if (action === 'stand') {
 
                 return [
-                    TEXTURE['character_' + character + '_stand_' + side]
-                ];
+                    TEXTURE['character_' + character + '_s_' + side],
+                    TEXTURE['character_' + character + '_s_' + side]
+                ]
 
-            } else {
+            }
+
+            if (['walk', 'run'].includes(action)) {
 
                 return [
-                    TEXTURE['character_' + character + '_walk1_' + side],
-                    TEXTURE['character_' + character + '_stand_' + side],
-                    TEXTURE['character_' + character + '_walk2_' + side],
-                    TEXTURE['character_' + character + '_stand_' + side]
-                ];
+                    TEXTURE['character_' + character + '_s_' + side],
+                    TEXTURE['character_' + character + '_l_' + side],
+                    TEXTURE['character_' + character + '_s_' + side],
+                    TEXTURE['character_' + character + '_r_' + side]
+                ]
+
+            }
+
+            if (action === 'kill') {
+
+                return [
+                    TEXTURE['character_' + character + '_t_' + side],
+                    TEXTURE['character_' + character + '_r_' + side]
+                ]
+
+            }
+
+            if (action === 'killed') {
+
+                return [
+                    TEXTURE['character_' + character + '_t_' + side],
+                    TEXTURE['character_' + character + '_t_' + side]
+                ]
+
+            }
+
+            if (action === 'stun') {
+
+                return [
+                    TEXTURE['character_' + character + '_r_' + side],
+                    TEXTURE['character_' + character + '_r_' + side]
+                ]
+
+            }
+
+            if (action === 'stunned') {
+
+                return [
+                    TEXTURE['character_' + character + '_t_' + side],
+                    TEXTURE['character_' + character + '_t_' + side]
+                ]
+
+            }
+
+            if (action === 'miss') {
+
+                return [
+                    TEXTURE['character_' + character + '_t_' + side],
+                    TEXTURE['character_' + character + '_t_' + side]
+                ]
+
+            }
+
+            if (action === 'missed') {
+
+                return [
+                    TEXTURE['character_' + character + '_t_' + side],
+                    TEXTURE['character_' + character + '_t_' + side]
+                ]
 
             }
 
@@ -155,6 +212,52 @@ window.TEXTURE = {
             let character = TEXTURE.character.store[model % TEXTURE.character.store.length];
 
             return TEXTURE['character_' + character];
+
+        },
+
+        test: () => {
+
+            let x = 10000;
+            let y = 10000;
+
+            let actions = {
+                stand: 1 / 60,
+                walk: 1 / 15,
+                run: 1 / 5,
+                kill: 1 / 30,
+                killed: 1 / 30,
+                stun: 1 / 30,
+                stunned: 1 / 30,
+                miss: 1 / 30,
+                missed: 1 / 30
+            };
+
+            let sides = ['w', 'sw', 's', 'se', 'e', 'ne', 'n', 'nw'];
+
+            for (let c = 0; c < TEXTURE.character.store.length; c++) {
+
+                for (let a = 0; a < Object.keys(actions).length; a++) {
+
+                    for (let s = 0; s < sides.length; s++) {
+
+                        let i = new PIXI.extras.AnimatedSprite(TEXTURE.character.get(
+                            c,
+                            Object.keys(actions)[a],
+                            sides[s]
+                        ));
+
+                        i.animationSpeed = actions[Object.keys(actions)[a]];
+                        i.x = x + c * 200 + s * 20;
+                        i.y = y + a * 50;
+                        i.play();
+
+                        GAME.world.addChild(i);
+
+                    }
+
+                }
+
+            }
 
         }
 

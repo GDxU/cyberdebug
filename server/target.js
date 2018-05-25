@@ -14,13 +14,14 @@ TARGET.bots = [];
  * @delta {integer} количество ботов на квадрат 100х100
  */
 
-let width = 4000;
-// let width = 400;
-let height = 4000;
-// let height = 400;
-let delta = 2;
+// let width = 4000;
+// let height = 4000;
+// let delta = 2;
+// TARGET.botCount = Math.floor(width * height * delta / 10000);
 
-TARGET.botCount = Math.floor(width * height * delta / 10000);
+width = 0;
+height = 0;
+TARGET.botCount = 0;
 
 let x = Math.floor(width / 2);
 let y = Math.floor(height / 2);

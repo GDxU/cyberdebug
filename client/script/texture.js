@@ -13,6 +13,15 @@ window.TEXTURE = {
         PIXI.loader.add('/client/image/hud/line.png');
         PIXI.loader.add('/client/image/hud/frame.png');
 
+        // weapon
+
+        PIXI.loader.add('/client/image/weapon/katana.png');
+        PIXI.loader.add('/client/image/weapon/taser.png');
+
+        // sfx
+
+        PIXI.loader.add('/client/image/sfx/blood.png');
+
         // character
 
         TEXTURE.character.store.forEach(character => PIXI.loader.add('/client/image/character/' + character + '.png'));
@@ -20,6 +29,7 @@ window.TEXTURE = {
         PIXI.loader.load(() => {
 
             TEXTURE.hud.init();
+            TEXTURE.weapon.init();
             TEXTURE.character.init();
 
             GUI.menu.visible(true);
@@ -84,46 +94,337 @@ window.TEXTURE = {
 
     },
 
+    weapon: {
+
+        // 0 grad (0), 90 grad (2), 180 grad (4), 270 grad (6)
+        // Mirrors: vertical (8), main diagonal (10), horizontal (12), reverse diagonal (14)
+
+        init: () => {
+
+            TEXTURE.weapon.initKatana();
+            TEXTURE.weapon.initTaser();
+
+        },
+
+        initKatana: () => {
+
+            let horizontal = new PIXI.Rectangle(0, 0, 20, 4);
+            let htrim = new PIXI.Rectangle(0, 0, 4, 20);
+            let diagonal = new PIXI.Rectangle(0, 4, 15, 14);
+            let dtrim = new PIXI.Rectangle(0, 4, 14, 15);
+
+            let texture = PIXI.loader.resources['/client/image/weapon/katana.png'].texture;
+
+            TEXTURE['weapon_katana_w']  = new PIXI.Texture(texture, horizontal, null, null, 12);
+            TEXTURE['weapon_katana_sw'] = new PIXI.Texture(texture, diagonal,   null, null, 12);
+            TEXTURE['weapon_katana_s']  = new PIXI.Texture(texture, horizontal, htrim, htrim, 6);
+            TEXTURE['weapon_katana_se'] = new PIXI.Texture(texture, diagonal);
+            TEXTURE['weapon_katana_e']  = new PIXI.Texture(texture, horizontal);
+            TEXTURE['weapon_katana_ne'] = new PIXI.Texture(texture, diagonal,   dtrim, dtrim, 2);
+            TEXTURE['weapon_katana_n']  = new PIXI.Texture(texture, horizontal, htrim, htrim, 2);
+            TEXTURE['weapon_katana_nw'] = new PIXI.Texture(texture, diagonal,   dtrim, dtrim, 14);
+
+        },
+
+        initTaser: () => {
+
+            let horizontal = new PIXI.Rectangle(0, 0, 13, 3);
+            let htrim = new PIXI.Rectangle(0, 0, 3, 13);
+            let diagonal = new PIXI.Rectangle(0, 3, 10, 10);
+
+            let texture = PIXI.loader.resources['/client/image/weapon/taser.png'].texture;
+
+            TEXTURE['weapon_taser_w']  = new PIXI.Texture(texture, horizontal, null, null, 4);
+            TEXTURE['weapon_taser_sw'] = new PIXI.Texture(texture, diagonal, null, null, 6);
+            TEXTURE['weapon_taser_s']  = new PIXI.Texture(texture, horizontal, htrim, htrim, 6);
+            TEXTURE['weapon_taser_se'] = new PIXI.Texture(texture, diagonal);
+            TEXTURE['weapon_taser_e']  = new PIXI.Texture(texture, horizontal);
+            TEXTURE['weapon_taser_ne'] = new PIXI.Texture(texture, diagonal, null, null, 2);
+            TEXTURE['weapon_taser_n']  = new PIXI.Texture(texture, horizontal, htrim, htrim, 2);
+            TEXTURE['weapon_taser_nw'] = new PIXI.Texture(texture, diagonal, null, null, 4);
+
+        },
+
+        test: () => {
+
+            let sides = ['w', 'sw', 's', 'se', 'e', 'ne', 'n', 'nw'];
+
+            ['katana', 'taser'].forEach((weapon, w) => {
+
+                for (let s = 0; s < sides.length; s++) {
+
+                    let i = new PIXI.Sprite(TEXTURE['weapon_' + weapon + '_' + sides[s]]);
+
+                    i.scale.set(2);
+                    i.x = 10000 + s * 50;
+                    i.y = 10000 - 100 - w * 50;
+
+                    GAME.world.addChild(i);
+
+                }
+
+            });
+
+        }
+
+    },
+
     character: {
 
         store: ['man', 'woman'],
 
         init: () => {
 
-            let types = ['s', 'l', 'r', 't'];
-            let sides = ['s', 'se', 'e', 'ne', 'n'];
+            let w = 15;
+            let h = 45;
 
-            for (let c = 0; c < TEXTURE.character.store.length; c++) {
+            TEXTURE.character.store.forEach((character, c) => {
 
-                let character = TEXTURE.character.store[c];
                 let texture = PIXI.loader.resources['/client/image/character/' + character + '.png'].texture;
-                let width = Math.floor(texture.width / sides.length);
-                let height = Math.floor(texture.height / types.length);
 
-                TEXTURE['character_' + character] = new PIXI.Texture(
-                    texture,
-                    new PIXI.Rectangle(0, 0, width, width)
-                );
+                TEXTURE['character_' + character] = new PIXI.Texture(texture, new PIXI.Rectangle(0, 0, w, w));
 
-                for (let t = 0; t < types.length; t++) {
+                ['s', 'se', 'e', 'ne', 'n'].forEach((side, s) => {
 
-                    let type = types[t];
+                    // stand, walk1, walk2
 
-                    for (let s = 0; s < sides.length; s++) {
+                    ['stand', 'walk1', 'walk2'].forEach((type, t) => {
 
-                        let side = sides[s];
-                        let frame = new PIXI.Rectangle(s * width, t * height, width, height);
+                        let frame = new PIXI.Rectangle(s * w, t * h, w, h);
 
                         TEXTURE['character_' + character + '_' + type + '_' + side] = new PIXI.Texture(texture, frame);
+
                         if (side === 'se') TEXTURE['character_' + character + '_' + type + '_sw'] = new PIXI.Texture(texture, frame, null, null, 12);
                         if (side === 'e')  TEXTURE['character_' + character + '_' + type + '_w']  = new PIXI.Texture(texture, frame, null, null, 12);
                         if (side === 'ne') TEXTURE['character_' + character + '_' + type + '_nw'] = new PIXI.Texture(texture, frame, null, null, 12);
 
-                    }
+                    });
 
-                }
+                    // turn
 
-            }
+                    let f = (side, rotate) => {
+
+                        let d = ['s', 'n'].includes(side) ? h - 20 : h - 17;
+
+                        let body = new PIXI.Rectangle(s * w, h, w, d);
+                        let legs = new PIXI.Rectangle(s * w, 2 * h + d, w, h - d);
+
+                        TEXTURE['character_' + character + '_turn_' + side] = new PIXI.RenderTexture.create(w, h);
+
+                        let container = new PIXI.Container();
+
+                        container.addChild(new PIXI.Sprite(new PIXI.Texture(texture, body, null, null, rotate)));
+                        container.addChild(new PIXI.Sprite(new PIXI.Texture(texture, legs, null, null, rotate)));
+
+                        container.children[1].position.set(0, d);
+
+                        container.setTransform();
+
+                        GAME.application.renderer.render(container, TEXTURE['character_' + character + '_turn_' + side]);
+
+                    };
+
+                    f(side, 0);
+                    if (side === 'se') f('sw', 12);
+                    if (side === 'e')  f('w',  12);
+                    if (side === 'ne') f('nw', 12);
+
+                    // kill 1
+
+                    f = side => {
+
+                        let p = {
+                            w:  [2, 24],
+                            sw: [8, 24],
+                            s:  [7, 20],
+                            se: [6, 24],
+                            e:  [7, 24],
+                            ne: [7, 8],
+                            n:  [18, 7],
+                            nw: [8, 8]
+                        };
+
+                        TEXTURE['character_' + character + '_kill1_' + side] = new PIXI.RenderTexture.create(w + 14, h);
+
+                        let container = new PIXI.Container();
+
+                        container.addChild(new PIXI.Sprite(TEXTURE['character_' + character + '_turn_' + side]));
+                        container.addChild(new PIXI.Sprite(TEXTURE['weapon_katana_' + side]));
+
+                        container.children[0].position.set(7, 0);
+                        container.children[1].position.set(p[side][0], p[side][1]);
+
+                        container.setTransform();
+
+                        if (['nw', 'n', 'ne'].includes(side)) container.children.reverse();
+
+                        GAME.application.renderer.render(container, TEXTURE['character_' + character + '_kill1_' + side]);
+
+                    };
+
+                    f(side);
+                    if (side === 'se') f('sw');
+                    if (side === 'e')  f('w');
+                    if (side === 'ne') f('nw');
+
+                    // kill 2
+
+                    f = side => {
+
+                        let p = {
+                            w:  [0, 25],
+                            sw: [6, 25],
+                            s:  [7, 21],
+                            se: [8, 25],
+                            e:  [9, 25],
+                            ne: [9, 7],
+                            n:  [18, 6],
+                            nw: [6, 7]
+                        };
+
+                        TEXTURE['character_' + character + '_kill2_' + side] = new PIXI.RenderTexture.create(w + 14, h);
+
+                        let container = new PIXI.Container();
+
+                        container.addChild(new PIXI.Sprite(TEXTURE['character_' + character + '_walk2_' + side]));
+                        container.addChild(new PIXI.Sprite(TEXTURE['weapon_katana_' + side]));
+
+                        container.children[0].position.set(7, 0);
+                        container.children[1].position.set(p[side][0], p[side][1]);
+
+                        container.setTransform();
+
+                        if (['nw', 'n', 'ne'].includes(side)) container.children.reverse();
+
+                        GAME.application.renderer.render(container, TEXTURE['character_' + character + '_kill2_' + side]);
+
+                    };
+
+                    f(side);
+                    if (side === 'se') f('sw');
+                    if (side === 'e')  f('w');
+                    if (side === 'ne') f('nw');
+
+                    // killed
+
+                    f = side => {
+
+                        for (let i = 0; i < 4; i++) {
+
+                            TEXTURE['character_' + character + '_killed' + (i + 1) + '_' + side] = new PIXI.RenderTexture.create(w, h);
+
+                            let container = new PIXI.Container();
+                            let frame = new PIXI.Rectangle(i * 5, 0, 5, 15);
+                            let blood = new PIXI.Texture(PIXI.loader.resources['/client/image/sfx/blood.png'].texture, frame);
+
+                            container.addChild(new PIXI.Sprite(TEXTURE['character_' + character + '_turn_' + side]));
+                            container.addChild(new PIXI.Sprite(blood));
+
+                            container.children[1].position.set(5, 15);
+
+                            container.setTransform();
+
+                            GAME.application.renderer.render(container, TEXTURE['character_' + character + '_killed' + (i + 1) + '_' + side]);
+
+                        }
+
+                    };
+
+                    f(side);
+                    if (side === 'se') f('sw');
+                    if (side === 'e')  f('w');
+                    if (side === 'ne') f('nw');
+
+                    // stun 1
+
+                    f = side => {
+
+                        let p = {
+                            w:  [6, 24],
+                            sw: [10, 25],
+                            s:  [8, 23],
+                            se: [9, 25],
+                            e:  [10, 24],
+                            ne: [9, 15],
+                            n:  [18, 12],
+                            nw: [10, 15]
+                        };
+
+                        TEXTURE['character_' + character + '_stun1_' + side] = new PIXI.RenderTexture.create(w + 14, h);
+
+                        let container = new PIXI.Container();
+
+                        container.addChild(new PIXI.Sprite(TEXTURE['character_' + character + '_turn_' + side]));
+                        container.addChild(new PIXI.Sprite(TEXTURE['weapon_taser_' + side]));
+
+                        container.children[0].position.set(7, 0);
+                        container.children[1].position.set(p[side][0], p[side][1]);
+
+                        container.setTransform();
+
+                        if (['nw', 'n', 'ne'].includes(side)) container.children.reverse();
+
+                        GAME.application.renderer.render(container, TEXTURE['character_' + character + '_stun1_' + side]);
+
+                    };
+
+                    f(side);
+                    if (side === 'se') f('sw');
+                    if (side === 'e')  f('w');
+                    if (side === 'ne') f('nw');
+
+                    // stun 2
+
+                    f = side => {
+
+                        let p = {
+                            w:  [6, 24],
+                            sw: [10, 25],
+                            s:  [8, 23],
+                            se: [9, 25],
+                            e:  [10, 24],
+                            ne: [9, 15],
+                            n:  [18, 12],
+                            nw: [10, 15]
+                        };
+
+                        let r = {
+                            w:  'e',
+                            sw: 'ne',
+                            s:  'n',
+                            se: 'nw',
+                            e:  'w',
+                            ne: 'sw',
+                            n:  's',
+                            nw: 'se'
+                        };
+
+                        TEXTURE['character_' + character + '_stun2_' + side] = new PIXI.RenderTexture.create(w + 14, h);
+
+                        let container = new PIXI.Container();
+
+                        container.addChild(new PIXI.Sprite(TEXTURE['character_' + character + '_turn_' + side]));
+                        container.addChild(new PIXI.Sprite(TEXTURE['weapon_taser_' + r[side]]));
+
+                        container.children[0].position.set(7, 0);
+                        container.children[1].position.set(p[side][0], p[side][1]);
+
+                        container.setTransform();
+
+                        if (['nw', 'n', 'ne'].includes(side)) container.children.reverse();
+
+                        GAME.application.renderer.render(container, TEXTURE['character_' + character + '_stun2_' + side]);
+
+                    };
+
+                    f(side);
+                    if (side === 'se') f('sw');
+                    if (side === 'e')  f('w');
+                    if (side === 'ne') f('nw');
+
+                });
+
+            });
 
         },
 
@@ -134,8 +435,7 @@ window.TEXTURE = {
             if (action === 'stand') {
 
                 return [
-                    TEXTURE['character_' + character + '_s_' + side],
-                    TEXTURE['character_' + character + '_s_' + side]
+                    TEXTURE['character_' + character + '_stand_' + side]
                 ]
 
             }
@@ -143,10 +443,10 @@ window.TEXTURE = {
             if (['walk', 'run'].includes(action)) {
 
                 return [
-                    TEXTURE['character_' + character + '_s_' + side],
-                    TEXTURE['character_' + character + '_l_' + side],
-                    TEXTURE['character_' + character + '_s_' + side],
-                    TEXTURE['character_' + character + '_r_' + side]
+                    TEXTURE['character_' + character + '_stand_' + side],
+                    TEXTURE['character_' + character + '_walk1_' + side],
+                    TEXTURE['character_' + character + '_stand_' + side],
+                    TEXTURE['character_' + character + '_walk2_' + side]
                 ]
 
             }
@@ -154,8 +454,8 @@ window.TEXTURE = {
             if (action === 'kill') {
 
                 return [
-                    TEXTURE['character_' + character + '_t_' + side],
-                    TEXTURE['character_' + character + '_r_' + side]
+                    TEXTURE['character_' + character + '_kill1_' + side],
+                    TEXTURE['character_' + character + '_kill2_' + side]
                 ]
 
             }
@@ -163,8 +463,10 @@ window.TEXTURE = {
             if (action === 'killed') {
 
                 return [
-                    TEXTURE['character_' + character + '_t_' + side],
-                    TEXTURE['character_' + character + '_t_' + side]
+                    TEXTURE['character_' + character + '_killed1_' + side],
+                    TEXTURE['character_' + character + '_killed2_' + side],
+                    TEXTURE['character_' + character + '_killed3_' + side],
+                    TEXTURE['character_' + character + '_killed4_' + side]
                 ]
 
             }
@@ -172,8 +474,8 @@ window.TEXTURE = {
             if (action === 'stun') {
 
                 return [
-                    TEXTURE['character_' + character + '_r_' + side],
-                    TEXTURE['character_' + character + '_r_' + side]
+                    TEXTURE['character_' + character + '_stun1_' + side],
+                    TEXTURE['character_' + character + '_stun2_' + side]
                 ]
 
             }
@@ -181,8 +483,7 @@ window.TEXTURE = {
             if (action === 'stunned') {
 
                 return [
-                    TEXTURE['character_' + character + '_t_' + side],
-                    TEXTURE['character_' + character + '_t_' + side]
+                    TEXTURE['character_' + character + '_walk2_' + side]
                 ]
 
             }
@@ -190,8 +491,7 @@ window.TEXTURE = {
             if (action === 'miss') {
 
                 return [
-                    TEXTURE['character_' + character + '_t_' + side],
-                    TEXTURE['character_' + character + '_t_' + side]
+                    TEXTURE['character_' + character + '_stand_' + side]
                 ]
 
             }
@@ -199,8 +499,7 @@ window.TEXTURE = {
             if (action === 'missed') {
 
                 return [
-                    TEXTURE['character_' + character + '_t_' + side],
-                    TEXTURE['character_' + character + '_t_' + side]
+                    TEXTURE['character_' + character + '_stand_' + side]
                 ]
 
             }
@@ -217,16 +516,15 @@ window.TEXTURE = {
 
         test: () => {
 
-            let x = 10000;
-            let y = 10000;
+            let scale = 1;
 
             let actions = {
                 stand: 1 / 60,
                 walk: 1 / 15,
-                run: 1 / 5,
+                run: 1 / 10,
                 kill: 1 / 30,
-                killed: 1 / 30,
-                stun: 1 / 30,
+                killed: 1 / 45,
+                stun: 1 / 15,
                 stunned: 1 / 30,
                 miss: 1 / 30,
                 missed: 1 / 30
@@ -247,8 +545,10 @@ window.TEXTURE = {
                         ));
 
                         i.animationSpeed = actions[Object.keys(actions)[a]];
-                        i.x = x + c * 200 + s * 20;
-                        i.y = y + a * 50;
+                        i.scale.set(scale);
+                        i.anchor.set(0.5);
+                        i.x = 10000 + c * 200 * scale + s * 25 * scale;
+                        i.y = 10000 + a * 50 * scale;
                         i.play();
 
                         GAME.world.addChild(i);

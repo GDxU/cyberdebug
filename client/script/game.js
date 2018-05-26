@@ -31,12 +31,9 @@ window.GAME = {
 
     initApplication: () => {
 
-        PIXI.utils.skipHello();
-        // PIXI.settings.PRECISION_FRAGMENT = PIXI.PRECISION.HIGH;
-
-        GAME.application = new PIXI.Application(window.innerWidth, window.innerHeight, {
-            transparent: true
-        });
+        // GAME.application = new PIXI.Application(window.innerWidth, window.innerHeight, {
+        //     transparent: true
+        // });
 
         GAME.application.renderer.roundPixels = true;
         GAME.application.renderer.autoResize = true;

@@ -38,6 +38,7 @@ window.GUI = {
                 GUI.tool.visible(true);
 
                 TEXTURE.character.test();
+                TEXTURE.weapon.test();
 
             });
             GUI.menu.about.addEventListener('click', () => {

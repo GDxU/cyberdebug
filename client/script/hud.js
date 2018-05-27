@@ -34,7 +34,7 @@ window.HUD = {
                     radar.anchor.set(0.5);
 
                     HUD.radar.store.push(radar);
-                    GAME.hud.addChild(radar);
+                    LAYER.hud.addChild(radar);
 
                 }
 
@@ -84,7 +84,7 @@ window.HUD = {
                     detector.play();
 
                     HUD.detector.store.push(detector);
-                    GAME.hud.addChild(detector);
+                    LAYER.hud.addChild(detector);
 
                 }
 
@@ -198,7 +198,7 @@ window.HUD = {
 
                 // hud
 
-                GAME.hud.addChild(HUD.info.container);
+                LAYER.hud.addChild(HUD.info.container);
 
             }
 
@@ -235,7 +235,7 @@ window.HUD = {
 
             HUD.alert.score.anchor.set(0.5, 1);
 
-            GAME.hud.addChild(HUD.alert.score);
+            LAYER.hud.addChild(HUD.alert.score);
 
             // информация
 
@@ -246,7 +246,7 @@ window.HUD = {
 
             HUD.alert.info.anchor.set(0.5, 1);
 
-            GAME.hud.addChild(HUD.alert.info);
+            LAYER.hud.addChild(HUD.alert.info);
 
         },
 

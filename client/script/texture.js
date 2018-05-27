@@ -161,7 +161,7 @@ window.TEXTURE = {
                     i.x = 10000 + s * 50;
                     i.y = 10000 - 100 - w * 50;
 
-                    GAME.world.addChild(i);
+                    LAYER.world.addChild(i);
 
                 }
 
@@ -644,7 +644,7 @@ window.TEXTURE = {
                         i.y = 10000 + a * 50 * scale;
                         i.play();
 
-                        GAME.world.addChild(i);
+                        LAYER.world.addChild(i);
 
                     }
 

@@ -20,8 +20,8 @@ window.CAMERA = {
 
         if (USER.target) {
 
-            GAME.world.x = CAMERA.getX(- USER.target.sprite.x);
-            GAME.world.y = CAMERA.getY(- USER.target.sprite.y);
+            LAYER.world.x = CAMERA.getX(- USER.target.sprite.x);
+            LAYER.world.y = CAMERA.getY(- USER.target.sprite.y);
 
         }
 

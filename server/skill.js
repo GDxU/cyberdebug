@@ -43,7 +43,18 @@ SKILL.store = {
 
             TARGET.bots.forEach(bot => {
 
-                if (TOOL.getDistance(ws.user, bot) < distance) bot.model = ws.user.model;
+                if (TOOL.getDistance(ws.user, bot) < distance) {
+
+                    bot.model = ws.user.model;
+                    bot.action = 'missed';
+
+                    setTimeout(() => {
+
+                        bot.action = 'stand';
+
+                    }, 1000);
+
+                }
 
             });
 
@@ -59,8 +70,20 @@ SKILL.store = {
 
         if (!ws.user.teleport) {
 
-            ws.user.x = TARGET.generateX();
-            ws.user.y = TARGET.generateY();
+            ws.user.action = 'missed';
+
+            setTimeout(() => {
+
+                ws.user.x = TARGET.generateX();
+                ws.user.y = TARGET.generateY();
+
+            }, 1000);
+
+            setTimeout(() => {
+
+                ws.user.action = 'stand';
+
+            }, 2000);
 
             ws.user.teleport = SKILL.cooldown.teleport;
 

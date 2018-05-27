@@ -110,62 +110,67 @@ setInterval(() => {
 
     if (!ACTION.pause) ACTION.store.forEach(action => {
 
-        if (action.target) {
+        // проверка игрока на телепорт
+        if (action.user.action !== 'missed') {
 
-            // проверка на игрока или бота
-            if (typeof action.target.name === 'string') {
+            if (action.target) {
 
-                // проверка на наличие цели, и правильность выбранной цели для убийства
-                if (action.user.contract && action.user.contract.id === action.target.id) {
+                // проверка на игрока или бота
+                if (typeof action.target.name === 'string') {
 
-                    // проверка на необходимость подойти для убийства
-                    if (TOOL.getDistance(action.user, action.target) <= ACTION.range.kill) {
+                    // проверка на наличие цели, и правильность выбранной цели для убийства
+                    if (action.user.contract && action.user.contract.id === action.target.id) {
 
-                        CONTRACT.kill(action.user);
-                        ACTION.remove(action);
+                        // проверка на необходимость подойти для убийства
+                        if (TOOL.getDistance(action.user, action.target) <= ACTION.range.kill) {
 
-                    } else ACTION.move(action.user, action.target);
+                            CONTRACT.kill(action.user);
+                            ACTION.remove(action);
 
-                }
+                        } else ACTION.move(action.user, action.target);
 
-                // проверка на охотника, и правильность выбранного охотника для оглушения
-                if (action.target.contract && action.target.contract.id === action.user.id) {
+                    }
 
-                    // проверка на необходимость подойти для оглушения
-                    if (TOOL.getDistance(action.user, action.target) < ACTION.range.stun) {
+                    // проверка на охотника, и правильность выбранного охотника для оглушения
+                    if (action.target.contract && action.target.contract.id === action.user.id) {
 
-                        CONTRACT.stun(action.user, action.target);
-                        ACTION.remove(action);
+                        // проверка на необходимость подойти для оглушения
+                        if (TOOL.getDistance(action.user, action.target) < ACTION.range.stun) {
 
-                    } else ACTION.move(action.user, action.target);
+                            CONTRACT.stun(action.user, action.target);
+                            ACTION.remove(action);
+
+                        } else ACTION.move(action.user, action.target);
+
+                    }
+
+                } else {
+
+                    // проверка на наличие охотника или контракта
+                    if (action.user.hunter || action.user.contract) {
+
+                        // проверка на необходимость подойти для промаха
+                        if (TOOL.getDistance(action.user, action.target) < ACTION.range.miss) {
+
+                            CONTRACT.miss(action.user, action.target);
+                            ACTION.remove(action);
+
+                        } else ACTION.move(action.user, action.target);
+
+                    }
 
                 }
 
             } else {
 
-                // проверка на наличие охотника или контракта
-                if (action.user.hunter || action.user.contract) {
+                ACTION.move(action.user, action);
 
-                    // проверка на необходимость подойти для промаха
-                    if (TOOL.getDistance(action.user, action.target) < ACTION.range.miss) {
-
-                        CONTRACT.miss(action.user, action.target);
-                        ACTION.remove(action);
-
-                    } else ACTION.move(action.user, action.target);
-
-                }
+                if (
+                    action.user.x === action.x &&
+                    action.user.y === action.y
+                ) ACTION.remove(action);
 
             }
-
-        } else {
-
-            ACTION.move(action.user, action);
-
-            if (
-                action.user.x === action.x &&
-                action.user.y === action.y
-            ) ACTION.remove(action);
 
         }
 

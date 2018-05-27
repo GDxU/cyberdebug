@@ -13,7 +13,8 @@ SKILL.ms = 1000 / SKILL.tr;
 SKILL.cooldown = {
 
     morph: 1000 * 20,
-    teleport: 1000 * 40
+    teleport: 1000 * 40,
+    glitch: 1000 * 60
 
 };
 
@@ -86,6 +87,36 @@ SKILL.store = {
             }, 2000);
 
             ws.user.teleport = SKILL.cooldown.teleport;
+
+        }
+
+    },
+
+    // помехи
+
+    glitch: ws => {
+
+        if (!ws.user.glitch) {
+
+            let distance = 250;
+
+            TARGET.users.forEach(user => {
+
+                if (TOOL.getDistance(ws.user, user) < distance && ws.user.id !== user.id) {
+
+                    user.sfx.push('glitch');
+
+                    setTimeout(() => {
+
+                        user.sfx = user.sfx.filter(sfx => sfx !== 'glitch');
+
+                    }, 3000);
+
+                }
+
+            });
+
+            ws.user.glitch = SKILL.cooldown.glitch;
 
         }
 

@@ -103,10 +103,12 @@ window.GUI = {
             GUI.tool.total = document.getElementById('tool_total');
             GUI.tool.morph = document.getElementById('tool_morph');
             GUI.tool.teleport = document.getElementById('tool_teleport');
+            GUI.tool.glitch = document.getElementById('tool_glitch');
 
             GUI.tool.total.addEventListener('click', GUI.tool.onTotal);
             GUI.tool.morph.addEventListener('click', GUI.tool.onMorph);
             GUI.tool.teleport.addEventListener('click', GUI.tool.onTeleport);
+            GUI.tool.glitch.addEventListener('click', GUI.tool.onGlitch);
 
             window.addEventListener('keydown', event => {
 
@@ -115,6 +117,7 @@ window.GUI = {
                     if (event.code === 'Backquote') GUI.tool.onTotal();
                     if (event.code === 'Digit1') GUI.tool.onMorph();
                     if (event.code === 'Digit2') GUI.tool.onTeleport();
+                    if (event.code === 'Digit3') GUI.tool.onGlitch();
 
                 }
 
@@ -152,9 +155,15 @@ window.GUI = {
 
         },
 
+        onGlitch: () => {
+
+            WS.client.send(JSON.stringify({skill: 'glitch'}));
+
+        },
+
         sync: () => {
 
-            ['morph', 'teleport'].forEach(skill => {
+            ['morph', 'teleport', 'glitch'].forEach(skill => {
 
                 if (USER[skill] > 0) {
 
@@ -187,6 +196,7 @@ window.GUI = {
             GUI.total.table = document.getElementById('total_table');
             GUI.total.target = document.getElementById('total_target');
             GUI.total.info = document.getElementById('total_info');
+            GUI.total.position = document.getElementById('total_position');
 
             GUI.total.visible(false);
 
@@ -257,6 +267,15 @@ window.GUI = {
 
                 GUI.total.info.innerHTML = '<span>Задержка:</span> ' + GUI.total.ms.toFixed(2) +
                     '<span style="margin-left: 8px;">Тикрейт:</span> ' + GUI.total.tr.toFixed(2);
+
+                // позиция
+
+                if (USER.target) {
+
+                    GUI.total.position.innerHTML = '<span>X:</span> ' + USER.target.sprite.x +
+                        '<span style="margin-left: 8px;">Y:</span> ' + USER.target.sprite.y;
+
+                }
 
                 // проверка на видимость
 

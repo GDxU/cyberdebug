@@ -56,6 +56,8 @@ window.TEXTURE = {
 
         initRadar: () => {
 
+            PIXI.loader.resources['/client/image/hud/radar.png'].texture.baseTexture.scaleMode = 0;
+
             for (let x = 0; x < 5; x++) {
 
                 TEXTURE['hud_radar_' + x] = new PIXI.Texture(

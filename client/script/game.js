@@ -29,6 +29,8 @@ window.GAME = {
         GAME.application.renderer.plugins.interaction.cursorStyles.default = "url('/client/image/cursor/default.png') 11 11, auto";
         GAME.application.renderer.plugins.interaction.cursorStyles.hover = "url('/client/image/cursor/pointer.png') 11 11, auto";
 
+        GAME.application.stage.filters = [];
+
         document.body.appendChild(GAME.application.view);
 
         window.addEventListener('resize', function () {

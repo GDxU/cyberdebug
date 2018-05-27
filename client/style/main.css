@@ -254,3 +254,9 @@ button.close {
     cursor: url('/client/image/cursor/pin.png') 11 11, auto !important;
 
 }
+
+/* total */
+
+#total p {
+    text-align: center;
+}

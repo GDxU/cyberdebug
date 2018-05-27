@@ -14,14 +14,10 @@ TARGET.bots = [];
  * @delta {integer} количество ботов на квадрат 100х100
  */
 
-let width = 8000;
-let height = 8000;
+let width = 800;
+let height = 800;
 let delta = 2;
 TARGET.botCount = Math.floor(width * height * delta / 10000);
-
-// width = 0;
-// height = 0;
-// TARGET.botCount = 0;
 
 let x = Math.floor(width / 2);
 let y = Math.floor(height / 2);
@@ -89,7 +85,9 @@ TARGET.exportUser = ws => {
         hunter: ws.user.hunter,
         detector: detector,
         morph: ws.user.morph,
-        teleport: ws.user.teleport
+        teleport: ws.user.teleport,
+        glitch: ws.user.glitch,
+        sfx: ws.user.sfx
     };
 
 };
@@ -128,7 +126,9 @@ TARGET.appendUser = ws => {
         last: undefined,
         speed: 2,
         morph: 0,
-        teleport: 0
+        teleport: 0,
+        glitch: 0,
+        sfx: []
     };
 
     ws.user.ws = ws;

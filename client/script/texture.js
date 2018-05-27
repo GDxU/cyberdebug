@@ -21,6 +21,8 @@ window.TEXTURE = {
         // sfx
 
         PIXI.loader.add('/client/image/sfx/blood.png');
+        PIXI.loader.add('/client/image/sfx/miss.png');
+        PIXI.loader.add('/client/image/sfx/stunned.png');
 
         // character
 
@@ -422,6 +424,88 @@ window.TEXTURE = {
                     if (side === 'e')  f('w');
                     if (side === 'ne') f('nw');
 
+                    // stunned
+
+                    f = side => {
+
+                        for (let i = 0; i < 4; i++) {
+
+                            TEXTURE['character_' + character + '_stunned' + (i + 1) + '_' + side] = new PIXI.RenderTexture.create(w, h);
+
+                            let container = new PIXI.Container();
+                            let frame = new PIXI.Rectangle(0, 0, w, h);
+                            let stunned = new PIXI.Texture(PIXI.loader.resources['/client/image/sfx/stunned.png'].texture, frame, null, null, i * 4);
+
+                            container.addChild(new PIXI.Sprite(TEXTURE['character_' + character + '_turn_' + side]));
+                            container.addChild(new PIXI.Sprite(stunned));
+
+                            container.setTransform();
+
+                            GAME.application.renderer.render(container, TEXTURE['character_' + character + '_stunned' + (i + 1) + '_' + side]);
+
+                        }
+
+                    };
+
+                    f(side);
+                    if (side === 'se') f('sw');
+                    if (side === 'e')  f('w');
+                    if (side === 'ne') f('nw');
+
+                    // miss
+
+                    f = side => {
+
+                        for (let i = 0; i < 4; i++) {
+
+                            TEXTURE['character_' + character + '_miss' + (i + 1) + '_' + side] = new PIXI.RenderTexture.create(w, h);
+
+                            let container = new PIXI.Container();
+                            let frame = new PIXI.Rectangle(0, 0, w, h);
+                            let miss = new PIXI.Texture(PIXI.loader.resources['/client/image/sfx/miss.png'].texture, frame, null, null, i * 4);
+
+                            container.addChild(new PIXI.Sprite(TEXTURE['character_' + character + '_turn_' + side]));
+                            container.addChild(new PIXI.Sprite(miss));
+
+                            container.setTransform();
+
+                            GAME.application.renderer.render(container, TEXTURE['character_' + character + '_miss' + (i + 1) + '_' + side]);
+
+                        }
+
+                    };
+
+                    f(side);
+                    if (side === 'se') f('sw');
+                    if (side === 'e')  f('w');
+                    if (side === 'ne') f('nw');
+
+                    // missed
+
+                    f = side => {
+
+                        for (let i = 1; i < 4; i++) {
+
+                            TEXTURE['character_' + character + '_missed' + i + '_' + side] = new PIXI.RenderTexture.create(w, h);
+
+                            let container = new PIXI.Container();
+
+                            container.addChild(new PIXI.Sprite(TEXTURE['character_' + character + '_turn_' + side]));
+                            container.children[0].alpha = i * 0.25;
+
+                            container.setTransform();
+
+                            GAME.application.renderer.render(container, TEXTURE['character_' + character + '_missed' + i + '_' + side]);
+
+                        }
+
+                    };
+
+                    f(side);
+                    if (side === 'se') f('sw');
+                    if (side === 'e')  f('w');
+                    if (side === 'ne') f('nw');
+
                 });
 
             });
@@ -483,7 +567,10 @@ window.TEXTURE = {
             if (action === 'stunned') {
 
                 return [
-                    TEXTURE['character_' + character + '_walk2_' + side]
+                    TEXTURE['character_' + character + '_stunned1_' + side],
+                    TEXTURE['character_' + character + '_stunned2_' + side],
+                    TEXTURE['character_' + character + '_stunned3_' + side],
+                    TEXTURE['character_' + character + '_stunned4_' + side]
                 ]
 
             }
@@ -491,7 +578,10 @@ window.TEXTURE = {
             if (action === 'miss') {
 
                 return [
-                    TEXTURE['character_' + character + '_stand_' + side]
+                    TEXTURE['character_' + character + '_miss1_' + side],
+                    TEXTURE['character_' + character + '_miss2_' + side],
+                    TEXTURE['character_' + character + '_miss3_' + side],
+                    TEXTURE['character_' + character + '_miss4_' + side]
                 ]
 
             }
@@ -499,7 +589,10 @@ window.TEXTURE = {
             if (action === 'missed') {
 
                 return [
-                    TEXTURE['character_' + character + '_stand_' + side]
+                    TEXTURE['character_' + character + '_missed1_' + side],
+                    TEXTURE['character_' + character + '_missed2_' + side],
+                    TEXTURE['character_' + character + '_missed3_' + side],
+                    TEXTURE['character_' + character + '_missed2_' + side]
                 ]
 
             }
@@ -524,10 +617,10 @@ window.TEXTURE = {
                 run: 1 / 10,
                 kill: 1 / 30,
                 killed: 1 / 45,
-                stun: 1 / 15,
-                stunned: 1 / 30,
-                miss: 1 / 30,
-                missed: 1 / 30
+                stun: 1 / 5,
+                stunned: 1 / 5,
+                miss: 1 / 5,
+                missed: 1 / 5
             };
 
             let sides = ['w', 'sw', 's', 'se', 'e', 'ne', 'n', 'nw'];

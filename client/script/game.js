@@ -4,12 +4,28 @@ window.GAME = {
 
     init: () => {
 
+        // Пропуск приветствия рендринга
+        PIXI.utils.skipHello();
+
+        // Точность в шейдере фрагментов
+        PIXI.settings.PRECISION_FRAGMENT = PIXI.PRECISION.HIGH;
+
+        // Точность в вершинном шейдере
+        PIXI.settings.PRECISION_VERTEX = PIXI.PRECISION.HIGH;
+
+        // Масштабирование
+        PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+
         GAME.application = new PIXI.Application(window.innerWidth, window.innerHeight, {
             transparent: true
         });
 
+        // Отлючение интерполяции пикселей
         GAME.application.renderer.roundPixels = true;
+
+        // Автоматическое изменение размера области рендринга
         GAME.application.renderer.autoResize = true;
+
         GAME.application.renderer.plugins.interaction.cursorStyles.default = "url('/client/image/cursor/default.png') 11 11, auto";
         GAME.application.renderer.plugins.interaction.cursorStyles.hover = "url('/client/image/cursor/pointer.png') 11 11, auto";
 

@@ -12,8 +12,8 @@ SKILL.ms = 1000 / SKILL.tr;
 
 SKILL.cooldown = {
 
-    morph: 1000 * 5,
-    teleport: 1000 * 8
+    morph: 1000 * 20,
+    teleport: 1000 * 40
 
 };
 
@@ -39,7 +39,7 @@ SKILL.store = {
 
         if (!ws.user.morph) {
 
-            let distance = 200;
+            let distance = 250;
 
             TARGET.bots.forEach(bot => {
 

@@ -189,13 +189,68 @@ button.close {
     padding: 0;
 }
 
-#tool button {
-    display: inline;
+#tool div {
+    width: 120px;
+    position: static;
     float: left;
     margin: 0 0 0 8px;
-    width: auto;
+    cursor: url('/client/image/cursor/pointer.png') 11 11, auto;
+    font-family: new_zelek, monospace;
+    font-size: 12px;
+    line-height: 12px;
+    padding: 8px;
+    text-align: center;
+    transition: all 0.2s;
 }
 
-#tool button:first-child {
+#tool div:hover {
+    background-color: rgba(0, 255, 255, 0.4);
+}
+
+#tool div:focus {
+    outline: 0;
+}
+
+#tool div:first-child {
     margin: 0;
+}
+
+#tool span {
+    display: block;
+}
+
+#tool span:first-child,
+#tool span:last-child {
+    color: rgba(255, 255, 255, 0.4);
+    font-family: 'europeext normal', monospace;
+    font-size: 12px;
+    line-height: 12px;
+}
+
+#tool span:first-child {
+    text-align: left;
+}
+
+#tool span:nth-child(2) {
+    margin: 4px 0;
+}
+
+#tool span:last-child {
+    text-align: right;
+}
+
+.cool-down {
+
+    background-color: rgba(255, 0, 255, 0.2) !important;
+    border: 1px solid rgba(255, 0, 255, 0.8) !important;
+
+}
+
+.cool-down:hover {
+
+    background-color: rgba(255, 0, 255, 0.1) !important;
+    border: 1px solid rgba(255, 0, 255, 0.4) !important;
+    color: rgba(255, 255, 255, 0.4) !important;
+    cursor: url('/client/image/cursor/pin.png') 11 11, auto !important;
+
 }

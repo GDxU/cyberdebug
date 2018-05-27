@@ -154,8 +154,21 @@ window.GUI = {
 
         sync: () => {
 
-            GUI.tool.morph.innerText    = '1 Превращение ' + (USER.morph / 1000).toFixed(3);
-            GUI.tool.teleport.innerText = '2 Телепорт '    + (USER.teleport / 1000).toFixed(3);
+            ['morph', 'teleport'].forEach(skill => {
+
+                if (USER[skill] > 0) {
+
+                    GUI.tool[skill].classList.add('cool-down');
+                    GUI.tool[skill].children[2].innerHTML = USER[skill];
+
+                } else {
+
+                    GUI.tool[skill].classList.remove('cool-down');
+                    GUI.tool[skill].children[2].innerHTML = '<br>';
+
+                }
+
+            });
 
         }
 

@@ -11,10 +11,12 @@ window.USER = {
 
         if (WS.data.user) {
 
-            USER.id =       WS.data.user.id;
+            USER.id       = WS.data.user.id;
             USER.contract = WS.data.user.contract;
-            USER.hunter =   WS.data.user.hunter;
+            USER.hunter   = WS.data.user.hunter;
             USER.detector = WS.data.user.detector;
+            USER.morph    = WS.data.user.morph;
+            USER.teleport = WS.data.user.teleport;
 
             // проверка на инициализацию модели игрока
 

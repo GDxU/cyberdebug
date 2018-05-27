@@ -7,6 +7,7 @@ let TOTAL = require('./total');
 let AI = require('./ai');
 let ACTION = require('./action');
 let CONTRACT = require('./contract');
+let SKILL = require('./skill');
 
 let WS = {};
 
@@ -39,6 +40,7 @@ WS.server.on('connection', ws => {
             CAMERA.sync(ws, data);
             TARGET.syncUser(ws, data);
             ACTION.sync(ws, data);
+            SKILL.sync(ws, data);
 
         } catch (error) {
 

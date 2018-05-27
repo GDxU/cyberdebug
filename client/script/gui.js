@@ -99,12 +99,24 @@ window.GUI = {
         init: () => {
 
             GUI.tool.panel = document.getElementById('tool');
+
             GUI.tool.total = document.getElementById('tool_total');
+            GUI.tool.morph = document.getElementById('tool_morph');
+            GUI.tool.teleport = document.getElementById('tool_teleport');
 
             GUI.tool.total.addEventListener('click', GUI.tool.onTotal);
+            GUI.tool.morph.addEventListener('click', GUI.tool.onMorph);
+            GUI.tool.teleport.addEventListener('click', GUI.tool.onTeleport);
+
             window.addEventListener('keydown', event => {
 
-                if (event.code === 'Backquote' && GUI.tool.visible()) GUI.tool.onTotal();
+                if (GUI.tool.visible()) {
+
+                    if (event.code === 'Backquote') GUI.tool.onTotal();
+                    if (event.code === 'Digit1') GUI.tool.onMorph();
+                    if (event.code === 'Digit2') GUI.tool.onTeleport();
+
+                }
 
             });
 
@@ -125,6 +137,25 @@ window.GUI = {
         onTotal: () => {
 
             GUI.total.visible(!GUI.total.visible());
+
+        },
+
+        onMorph: () => {
+
+            WS.client.send(JSON.stringify({skill: 'morph'}));
+
+        },
+
+        onTeleport: () => {
+
+            WS.client.send(JSON.stringify({skill: 'teleport'}));
+
+        },
+
+        sync: () => {
+
+            GUI.tool.morph.innerText    = '1 Превращение ' + (USER.morph / 1000).toFixed(3);
+            GUI.tool.teleport.innerText = '2 Телепорт '    + (USER.teleport / 1000).toFixed(3);
 
         }
 

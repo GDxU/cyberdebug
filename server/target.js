@@ -87,7 +87,9 @@ TARGET.exportUser = ws => {
         id: ws.user.id,
         contract: contract,
         hunter: ws.user.hunter,
-        detector: detector
+        detector: detector,
+        morph: ws.user.morph,
+        teleport: ws.user.teleport
     };
 
 };
@@ -124,7 +126,9 @@ TARGET.appendUser = ws => {
         contract: undefined,
         hunter: 0,
         last: undefined,
-        speed: 2
+        speed: 2,
+        morph: 0,
+        teleport: 0
     };
 
     ws.user.ws = ws;

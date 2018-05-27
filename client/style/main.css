@@ -221,7 +221,7 @@ button.close {
 
 #tool span:first-child,
 #tool span:last-child {
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.8);
     font-family: 'europeext normal', monospace;
     font-size: 12px;
     line-height: 12px;

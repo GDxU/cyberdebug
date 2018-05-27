@@ -159,7 +159,7 @@ window.GUI = {
                 if (USER[skill] > 0) {
 
                     GUI.tool[skill].classList.add('cool-down');
-                    GUI.tool[skill].children[2].innerHTML = USER[skill];
+                    GUI.tool[skill].children[2].innerHTML = (USER[skill] / 1000).toFixed(3);
 
                 } else {
 

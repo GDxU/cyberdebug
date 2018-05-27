@@ -1,6 +1,6 @@
 window.TEXTURE = {
 
-    init: () => {
+    init: callback => {
 
         PIXI.loader.add('pin', '/client/image/cursor/pin.png');
 
@@ -26,15 +26,19 @@ window.TEXTURE = {
 
         // character
 
-        TEXTURE.character.store.forEach(character => PIXI.loader.add('/client/image/character/' + character + '.png'));
+        TEXTURE.character.load(() => {
 
-        PIXI.loader.load(() => {
+            TEXTURE.character.store.forEach(character => PIXI.loader.add('/client/image/character/' + character + '.png'));
 
-            TEXTURE.hud.init();
-            TEXTURE.weapon.init();
-            TEXTURE.character.init();
+            PIXI.loader.load(() => {
 
-            GUI.menu.visible(true);
+                TEXTURE.hud.init();
+                TEXTURE.weapon.init();
+                TEXTURE.character.init();
+
+                callback();
+
+            });
 
         });
 
@@ -173,7 +177,27 @@ window.TEXTURE = {
 
     character: {
 
-        store: ['man', 'woman'],
+        load: (callback) => {
+
+            let xhr = new XMLHttpRequest();
+
+            xhr.open('GET', '/character', true);
+
+            xhr.onreadystatechange = () => {
+
+                if (xhr.readyState === xhr.DONE && xhr.status === 200) {
+
+                    TEXTURE.character.store = JSON.parse(xhr.responseText);
+
+                    callback();
+
+                }
+
+            };
+
+            xhr.send();
+
+        },
 
         init: () => {
 

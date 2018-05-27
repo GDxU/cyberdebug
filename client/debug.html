@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Debug Cyberdebug</title>
+
+    <link href="/client/image/favicon.png" rel="icon">
+
+    <style type="text/css">
+        body {
+            background: rgba(32, 34, 37, 1);
+            margin: 0;
+            overflow: hidden;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+
+</head>
+<body>
+
+<script src="/node_modules/pixi.js/dist/pixi.min.js"></script>
+<script src="/node_modules/pixi-filters/dist/pixi-filters.js"></script>
+
+<script src="/client/script/texture.js"></script>
+
+<script>
+
+    window.addEventListener('load', () => {
+
+        PIXI.utils.skipHello();
+        PIXI.settings.PRECISION_FRAGMENT = PIXI.PRECISION.HIGH;
+        PIXI.settings.PRECISION_VERTEX = PIXI.PRECISION.HIGH;
+        PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+
+        window.GAME = {};
+
+        GAME.application = new PIXI.Application(window.innerWidth, window.innerHeight, {
+            transparent: true
+        });
+
+        GAME.application.renderer.roundPixels = true;
+        GAME.application.renderer.autoResize = true;
+
+        TEXTURE.init(() => {
+
+            let x = Math.floor(window.innerWidth / 2);
+            let y = Math.floor(window.innerHeight / 2);
+
+            let center = new PIXI.Sprite(PIXI.loader.resources['pin'].texture);
+
+            center.anchor.set(0.5);
+            center.x = x;
+            center.y = y;
+
+            window.WORLD = new PIXI.Container();
+
+            WORLD.interactive = true;
+
+            WORLD.addChild(new PIXI.extras.TilingSprite(
+                PIXI.loader.resources.tile.texture,
+                500 * TEXTURE.character.store.length,
+                1000
+            ));
+
+            WORLD.on('pointerdown', e => {
+
+                WORLD.x = WORLD.x + x - e.data.global.x;
+                WORLD.y = WORLD.y + y - e.data.global.y;
+
+            });
+
+            let scale = 2;
+
+            let actions = {
+                stand: 0,
+                walk: 1 / 5,
+                run: 1 / 3,
+                kill: 1 / 30,
+                killed: 1 / 45,
+                stun: 1 / 5,
+                stunned: 1 / 5,
+                miss: 1 / 5,
+                missed: 1 / 5
+            };
+
+            let sides = ['w', 'sw', 's', 'se', 'e', 'ne', 'n', 'nw'];
+
+            for (let c = 0; c < TEXTURE.character.store.length; c++) {
+
+                for (let a = 0; a < Object.keys(actions).length; a++) {
+
+                    for (let s = 0; s < sides.length; s++) {
+
+                        let i = new PIXI.extras.AnimatedSprite(TEXTURE.character.get(
+                            c,
+                            Object.keys(actions)[a],
+                            sides[s]
+                        ));
+
+                        i.animationSpeed = actions[Object.keys(actions)[a]];
+                        i.scale.set(scale);
+                        i.anchor.set(0.5);
+                        i.x = 75 + c * 250 * scale + s * 25 * scale;
+                        i.y = 75 + a * 50 * scale;
+                        i.play();
+
+                        WORLD.addChild(i);
+
+                    }
+
+                }
+
+            }
+
+            GAME.application.stage.addChild(WORLD);
+
+            GAME.application.stage.addChild(center);
+
+            document.body.appendChild(GAME.application.view);
+
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

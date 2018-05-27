@@ -15,12 +15,75 @@ HTTP.types = {
     html: 'text/html',
     js: 'text/javascript',
     css: 'text/css',
-    png: 'image/png'
+    png: 'image/png',
+    json: 'application/json'
+};
+
+HTTP.query = {
+
+    banned: res => {
+
+        res.writeHead(200, {
+            'Content-Type': HTTP.types['json']
+        });
+
+        res.end(JSON.stringify(HTTP.banned));
+
+    },
+
+    character: res => {
+
+        fs.readdir('./client/image/character/', (error, files) => {
+
+            if (error) {
+
+                res.statusCode = 404;
+                res.end(http.STATUS_CODES[404]);
+
+            } else {
+
+                let characters = [];
+
+                files.forEach(file => characters.push(file.slice(0, -4)));
+
+                res.writeHead(200, {
+                    'Content-Type': HTTP.types['json']
+                });
+
+                res.end(JSON.stringify(characters));
+
+            }
+
+        });
+
+    },
+
+    debug: res => {
+
+        fs.readFile('./client/debug.html', (error, data) => {
+
+            if (error) {
+
+                res.statusCode = 404;
+                res.end(http.STATUS_CODES[404]);
+
+            } else {
+
+                res.writeHead(200, {
+                    'Content-Type': HTTP.types['html']
+                });
+
+                res.end(data);
+
+            }
+
+        });
+
+    }
+
 };
 
 HTTP.server = http.createServer((req, res) => {
-
-    let path = '.' + (req.url === '/' ? '/client/index.html' : req.url);
 
     // проверка на наличие IP адреса в заблокированном массиве
     if (HTTP.banned.includes(req.connection.remoteAddress)) {
@@ -28,38 +91,65 @@ HTTP.server = http.createServer((req, res) => {
         res.statusCode = 404;
         res.end(http.STATUS_CODES[404]);
 
-        console.log('HTTP banned ' + req.connection.remoteAddress + ' ' + path);
+        console.log('HTTP banned ' + req.connection.remoteAddress + ' ' + req.url);
 
     } else {
 
-        fs.readFile(path, (error, data) => {
+        // фикс на случайный запрос иконки браузером
+        if (req.url === '/favicon.ico') {
 
-            if (error) {
+            res.statusCode = 404;
+            res.end(http.STATUS_CODES[404]);
 
-                res.statusCode = 404;
-                res.end(http.STATUS_CODES[404]);
+            console.log('HTTP fix ' + req.connection.remoteAddress + ' ' + req.url);
 
-                // блокировка любопытного клиента
-                HTTP.banned.push(req.connection.remoteAddress);
+        } else {
 
-                console.log('HTTP ban ' + req.connection.remoteAddress + ' ' + path);
+            // проверка запроса на данные или статику
+            let query = req.url.substr(1);
+
+            if (HTTP.query[query]) {
+
+                HTTP.query[query](res);
+
+                console.log('HTTP ' + req.connection.remoteAddress + ' ' + req.url);
 
             } else {
 
-                Object.keys(HTTP.types).forEach(type => {
-                    let regexp = new RegExp('\.' + type + '$');
-                    if (regexp.test(path)) res.writeHead(200, {
-                        'Content-Type': HTTP.types[type]
-                    });
+                let path = '.' + (req.url === '/' ? '/client/index.html' : req.url);
+
+                fs.readFile(path, (error, data) => {
+
+                    if (error) {
+
+                        res.statusCode = 404;
+                        res.end(http.STATUS_CODES[404]);
+
+                        // блокировка любопытного клиента
+                        HTTP.banned.push(req.connection.remoteAddress);
+
+                        console.log('HTTP ban ' + req.connection.remoteAddress + ' ' + req.url);
+
+                    } else {
+
+                        Object.keys(HTTP.types).forEach(type => {
+                            let regexp = new RegExp('\.' + type + '$');
+                            if (regexp.test(path)) res.writeHead(200, {
+                                'Content-Type': HTTP.types[type]
+                            });
+                        });
+
+                        res.end(data);
+
+                        console.log('HTTP ' + req.connection.remoteAddress + ' ' + req.url);
+
+                    }
+
                 });
-
-                res.end(data);
-
-                console.log('HTTP ' + req.connection.remoteAddress + ' ' + path);
 
             }
 
-        });
+        }
 
     }
 

@@ -71,7 +71,7 @@ window.TARGET = {
 
                 if (target.action === 'run') {
 
-                    target.sprite.animationSpeed = 1 / 2;
+                    target.sprite.animationSpeed = 1 / 3;
                     target.sprite.loop = true;
                     target.sprite.play();
 

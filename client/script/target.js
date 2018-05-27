@@ -54,15 +54,74 @@ window.TARGET = {
 
             ) {
 
+                if (target.action === 'stand') {
+
+                    target.sprite.stop();
+                    target.sprite.animationSpeed = 0;
+
+                }
+
                 if (target.action === 'walk') {
 
-                    target.sprite.animationSpeed = 0.2;
+                    target.sprite.animationSpeed = 1 / 5;
+                    target.sprite.loop = true;
                     target.sprite.play();
 
-                } else {
+                }
 
-                    target.sprite.animationSpeed = 0;
-                    // target.sprite.play();
+                if (target.action === 'run') {
+
+                    target.sprite.animationSpeed = 1 / 2;
+                    target.sprite.loop = true;
+                    target.sprite.play();
+
+                }
+
+                if (target.action === 'kill') {
+
+                    target.sprite.animationSpeed = 1 / 30;
+                    target.sprite.loop = false;
+                    target.sprite.play();
+
+                }
+
+                if (target.action === 'killed') {
+
+                    target.sprite.animationSpeed = 1 / 45;
+                    target.sprite.loop = false;
+                    target.sprite.play();
+
+                }
+
+                if (target.action === 'stun') {
+
+                    target.sprite.animationSpeed = 1 / 5;
+                    target.sprite.loop = true;
+                    target.sprite.play();
+
+                }
+
+                if (target.action === 'stunned') {
+
+                    target.sprite.animationSpeed = 1 / 5;
+                    target.sprite.loop = true;
+                    target.sprite.play();
+
+                }
+
+                if (target.action === 'miss') {
+
+                    target.sprite.animationSpeed = 1 / 5;
+                    target.sprite.loop = true;
+                    target.sprite.play();
+
+                }
+
+                if (target.action === 'missed') {
+
+                    target.sprite.animationSpeed = 1 / 5;
+                    target.sprite.loop = true;
+                    target.sprite.play();
 
                 }
 

@@ -16,30 +16,34 @@ AI.move = () => {
 
     TARGET.bots.forEach((bot, i) => {
 
-        let delta = Math.round(Math.sin(temp[i % temp.length]));
+        if (bot.action !== 'missed') {
 
-        let b = {
-            x: bot.x,
-            y: bot.y
-        };
+            let delta = Math.round(Math.sin(temp[i % temp.length]));
 
-        if (i % 5 === 0) b.x += delta;
+            let b = {
+                x: bot.x,
+                y: bot.y
+            };
 
-        if (i % 5 === 1) b.y += delta;
+            if (i % 5 === 0) b.x += delta;
 
-        if (i % 5 === 2) {
-            b.x += delta;
-            b.y -= delta;
+            if (i % 5 === 1) b.y += delta;
+
+            if (i % 5 === 2) {
+                b.x += delta;
+                b.y -= delta;
+            }
+
+            if (i % 5 === 3) {
+                b.x -= delta;
+                b.y += delta;
+            }
+
+            TOOL.setSide(bot, b);
+            TOOL.setAction(bot, b);
+            TOOL.move(bot, b);
+
         }
-
-        if (i % 5 === 3) {
-            b.x -= delta;
-            b.y += delta;
-        }
-
-        TOOL.setSide(bot, b);
-        TOOL.setAction(bot, b);
-        TOOL.move(bot, b);
 
     });
 

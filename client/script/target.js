@@ -15,7 +15,6 @@ window.TARGET = {
         };
 
         target.sprite.anchor.set(0.5, 0.5);
-        target.sprite.scale.set(2);
         target.sprite.target = target;
         target.sprite.x = t.x;
         target.sprite.y = t.y;

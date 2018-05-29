@@ -156,6 +156,8 @@ HTTP.server = http.createServer((req, res) => {
 });
 
 HTTP.server.listen(HTTP.port, HTTP.ip, () => {
+    console.log('Game http://cyberdebug.com');
+    console.log('Debug http://cyberdebug.com/debug');
     console.log('HTTP running at http://' + HTTP.ip + ':' + HTTP.port + '/');
 });
 

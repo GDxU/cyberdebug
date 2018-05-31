@@ -19,6 +19,10 @@ let height = 800;
 let delta = 2;
 TARGET.botCount = Math.floor(width * height * delta / 10000);
 
+TARGET.botCount = 3;
+width = Math.ceil(Math.sqrt(TARGET.botCount * 10000 / delta));
+height = width;
+
 let x = Math.floor(width / 2);
 let y = Math.floor(height / 2);
 
@@ -116,7 +120,9 @@ TARGET.appendUser = ws => {
         action: 'stand',
         side: TARGET.generateSide(),
         x: TARGET.generateX(),
+        // x: 0,
         y: TARGET.generateY(),
+        // y: 0,
         kill: 0,
         stun: 0,
         die: 0,

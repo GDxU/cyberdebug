@@ -3,8 +3,7 @@ window.TEXTURE = {
     init: callback => {
 
         PIXI.loader.add('pin', '/client/image/cursor/pin.png');
-
-        PIXI.loader.add('tile', '/client/image/tile.png');
+        PIXI.loader.add('background', '/client/image/background.png');
 
         // hud
 

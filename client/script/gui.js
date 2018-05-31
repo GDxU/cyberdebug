@@ -31,14 +31,10 @@ window.GUI = {
 
                 GUI.menu.visible(false);
 
-                LAYER.init();
                 HUD.init();
                 WS.init();
 
                 GUI.tool.visible(true);
-
-                // TEXTURE.character.test();
-                // TEXTURE.weapon.test();
 
             });
             GUI.menu.about.addEventListener('click', () => {

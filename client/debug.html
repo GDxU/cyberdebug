@@ -61,12 +61,33 @@
             window.WORLD = new PIXI.Container();
 
             WORLD.interactive = true;
+            WORLD.x = - 1000;
+            WORLD.y = - 1000;
 
-            WORLD.addChild(new PIXI.extras.TilingSprite(
-                PIXI.loader.resources.tile.texture,
-                500 * TEXTURE.character.store.length,
-                1000
-            ));
+            let background = new PIXI.Container();
+
+            // отрисовка по рядам для правильного порядка наложения
+
+            for (let y = 0; y < 20000 / 250; y++) {
+
+                for (let x = 0; x < 20000 / 500 * 2 - 1; x++) {
+
+                    if (y * 250 + (x % 2 ? 125 : 0) < 20000 - 125) {
+
+                        let sprite = new PIXI.Sprite(PIXI.loader.resources.background.texture);
+
+                        sprite.x = x * 250;
+                        sprite.y = y * 250 + (x % 2 ? 125 : 0);
+
+                        background.addChild(sprite);
+
+                    }
+
+                }
+
+            }
+
+            WORLD.addChild(background);
 
             WORLD.on('pointerdown', e => {
 
@@ -106,8 +127,8 @@
                         i.animationSpeed = actions[Object.keys(actions)[a]];
                         i.scale.set(scale);
                         i.anchor.set(0.5);
-                        i.x = 75 + c * 250 * scale + s * 25 * scale;
-                        i.y = 75 + a * 50 * scale;
+                        i.x = 1000 + 75 + c * 250 * scale + s * 25 * scale;
+                        i.y = 1000 + 75 + a * 50 * scale;
                         i.play();
 
                         WORLD.addChild(i);

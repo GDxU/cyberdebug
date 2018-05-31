@@ -16,11 +16,9 @@ window.LAYER = {
     init: () => {
 
         LAYER.initWorld();
-
         LAYER.initBackground();
         LAYER.initTarget();
         LAYER.initMarker();
-
         LAYER.initHUD();
 
     },
@@ -36,6 +34,9 @@ window.LAYER = {
     initWorld: () => {
 
         LAYER.world = new PIXI.Container();
+
+        LAYER.world.x = CAMERA.getX(- 10000);
+        LAYER.world.y = CAMERA.getY(- 10000);
 
         LAYER.world.interactive = true;
 
@@ -100,11 +101,40 @@ window.LAYER = {
 
     initBackground: () => {
 
+        /*
+
         LAYER.background = new PIXI.extras.TilingSprite(
             PIXI.loader.resources.tile.texture,
             20000,
             20000
         );
+
+        LAYER.world.addChild(LAYER.background);
+
+        */
+
+        LAYER.background = new PIXI.Container();
+
+        // отрисовка по рядам для правильного порядка наложения
+
+        for (let y = 0; y < 20000 / 250; y++) {
+
+            for (let x = 0; x < 20000 / 500 * 2 - 1; x++) {
+
+                if (y * 250 + (x % 2 ? 125 : 0) < 20000 - 125) {
+
+                    let sprite = new PIXI.Sprite(PIXI.loader.resources.background.texture);
+
+                    sprite.x = x * 250;
+                    sprite.y = y * 250 + (x % 2 ? 125 : 0);
+
+                    LAYER.background.addChild(sprite);
+
+                }
+
+            }
+
+        }
 
         LAYER.world.addChild(LAYER.background);
 

@@ -2,8 +2,20 @@ window.TEXTURE = {
 
     init: callback => {
 
+        // marker
+
         PIXI.loader.add('pin', '/client/image/cursor/pin.png');
+
+        // background
+
         PIXI.loader.add('background', '/client/image/background.png');
+
+        // road
+
+        PIXI.loader.add('/client/image/road/small_cross.png');
+        PIXI.loader.add('/client/image/road/small_line.png');
+        PIXI.loader.add('/client/image/road/small_t_a.png');
+        PIXI.loader.add('/client/image/road/small_t_b.png');
 
         // hud
 
@@ -31,6 +43,7 @@ window.TEXTURE = {
 
             PIXI.loader.load(() => {
 
+                TEXTURE.road.init();
                 TEXTURE.hud.init();
                 TEXTURE.weapon.init();
                 TEXTURE.character.init();
@@ -40,6 +53,24 @@ window.TEXTURE = {
             });
 
         });
+
+    },
+
+    road: {
+
+        init: () => {
+
+            let frame = new PIXI.Rectangle(0, 0, 480, 241);
+
+            TEXTURE['road_small_cross'] = PIXI.loader.resources['/client/image/road/small_cross.png'].texture;
+            TEXTURE['road_small_line_a'] = PIXI.loader.resources['/client/image/road/small_line.png'].texture;
+            TEXTURE['road_small_line_b'] = new PIXI.Texture(TEXTURE['road_small_line_a'], frame, null, null, 8);
+            TEXTURE['road_small_t_a'] = PIXI.loader.resources['/client/image/road/small_t_a.png'].texture;
+            TEXTURE['road_small_t_b'] = PIXI.loader.resources['/client/image/road/small_t_b.png'].texture;
+            TEXTURE['road_small_t_c'] = new PIXI.Texture(TEXTURE['road_small_t_a'], frame, null, null, 4);
+            TEXTURE['road_small_t_d'] = new PIXI.Texture(TEXTURE['road_small_t_b'], frame, null, null, 4);
+
+        },
 
     },
 
@@ -149,28 +180,6 @@ window.TEXTURE = {
             TEXTURE['weapon_taser_ne'] = new PIXI.Texture(texture, diagonal, null, null, 2);
             TEXTURE['weapon_taser_n']  = new PIXI.Texture(texture, horizontal, htrim, htrim, 2);
             TEXTURE['weapon_taser_nw'] = new PIXI.Texture(texture, diagonal, null, null, 4);
-
-        },
-
-        test: () => {
-
-            let sides = ['w', 'sw', 's', 'se', 'e', 'ne', 'n', 'nw'];
-
-            ['katana', 'taser'].forEach((weapon, w) => {
-
-                for (let s = 0; s < sides.length; s++) {
-
-                    let i = new PIXI.Sprite(TEXTURE['weapon_' + weapon + '_' + sides[s]]);
-
-                    i.scale.set(2);
-                    i.x = 10000 + s * 50;
-                    i.y = 10000 - 100 - w * 50;
-
-                    LAYER.world.addChild(i);
-
-                }
-
-            });
 
         }
 
@@ -629,53 +638,6 @@ window.TEXTURE = {
             let character = TEXTURE.character.store[model % TEXTURE.character.store.length];
 
             return TEXTURE['character_' + character];
-
-        },
-
-        test: () => {
-
-            let scale = 1;
-
-            let actions = {
-                stand: 1 / 60,
-                walk: 1 / 15,
-                run: 1 / 10,
-                kill: 1 / 30,
-                killed: 1 / 45,
-                stun: 1 / 5,
-                stunned: 1 / 5,
-                miss: 1 / 5,
-                missed: 1 / 5
-            };
-
-            let sides = ['w', 'sw', 's', 'se', 'e', 'ne', 'n', 'nw'];
-
-            for (let c = 0; c < TEXTURE.character.store.length; c++) {
-
-                for (let a = 0; a < Object.keys(actions).length; a++) {
-
-                    for (let s = 0; s < sides.length; s++) {
-
-                        let i = new PIXI.extras.AnimatedSprite(TEXTURE.character.get(
-                            c,
-                            Object.keys(actions)[a],
-                            sides[s]
-                        ));
-
-                        i.animationSpeed = actions[Object.keys(actions)[a]];
-                        i.scale.set(scale);
-                        i.anchor.set(0.5);
-                        i.x = 10000 + c * 200 * scale + s * 25 * scale;
-                        i.y = 10000 + a * 50 * scale;
-                        i.play();
-
-                        LAYER.world.addChild(i);
-
-                    }
-
-                }
-
-            }
 
         }
 

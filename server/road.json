@@ -1,0 +1,9 @@
+[
+  {"t":"road_small_cross","x":9360,"y":9960},
+  {"t":"road_small_line_a","x":9360,"y":10200},
+  {"t":"road_small_line_b","x":9360,"y":10440},
+  {"t":"road_small_t_a","x":9840,"y":9960},
+  {"t":"road_small_t_b","x":9840,"y":10200},
+  {"t":"road_small_t_c","x":10320,"y":9960},
+  {"t":"road_small_t_d","x":10320,"y":10200}
+]

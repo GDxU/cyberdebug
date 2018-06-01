@@ -193,6 +193,7 @@ window.GUI = {
             GUI.total.target = document.getElementById('total_target');
             GUI.total.info = document.getElementById('total_info');
             GUI.total.position = document.getElementById('total_position');
+            GUI.total.mouse = document.getElementById('total_mouse');
 
             GUI.total.visible(false);
 
@@ -273,9 +274,14 @@ window.GUI = {
 
                 }
 
-                // проверка на видимость
+                // мышка
 
-                if (GUI.total.panel.style.left) GUI.total.visible(true);
+                if (LAYER.world.mouse) {
+
+                    GUI.total.mouse.innerHTML = '<span>X:</span> ' + LAYER.world.mouse.x +
+                        '<span style="margin-left: 8px;">Y:</span> ' + LAYER.world.mouse.y;
+
+                }
 
             }
 

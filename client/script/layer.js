@@ -5,6 +5,7 @@ window.LAYER = {
     // └ world
     //   ├ marker
     //   ├ target
+    //   ├ road
     //   └ background
 
     hud: undefined,
@@ -13,25 +14,46 @@ window.LAYER = {
     target: undefined,
     background: undefined,
 
-    init: () => {
+    init: (callback) => {
 
-        LAYER.initWorld();
-        LAYER.initBackground();
-        LAYER.initTarget();
-        LAYER.initMarker();
-        LAYER.initHUD();
+        // 1.
+        LAYER.initWorld(() => {
+
+            // 1.1.
+            LAYER.initBackground(() => {
+
+                // 1.2.
+                LAYER.initRoad(() => {
+
+                    // 1.3.
+                    LAYER.initTarget(() => {
+
+                        // 1.4.
+                        LAYER.initMarker(() => {
+
+                            // 2.
+                            LAYER.initHUD(() => {
+
+                                GAME.application.stage.addChild(LAYER.world);
+                                GAME.application.stage.addChild(LAYER.hud);
+
+                                callback();
+
+                            });
+
+                        });
+
+                    });
+
+                });
+
+            });
+
+        });
 
     },
 
-    initHUD: () => {
-
-        LAYER.hud = new PIXI.Container();
-
-        GAME.application.stage.addChild(LAYER.hud);
-
-    },
-
-    initWorld: () => {
+    initWorld: (callback) => {
 
         LAYER.world = new PIXI.Container();
 
@@ -72,19 +94,99 @@ window.LAYER = {
 
         });
 
-        GAME.application.stage.addChild(LAYER.world);
+        LAYER.world.on('mousemove', e => {
+
+            LAYER.world.mouse = {
+                x: e.data.global.x - LAYER.world.x,
+                y: e.data.global.y - LAYER.world.y
+            };
+
+        });
+
+        callback();
 
     },
 
-    initMarker: () => {
+    initBackground: (callback) => {
 
-        LAYER.marker = new PIXI.Container();
+        // 480
+        let width = PIXI.loader.resources.background.texture.width;
 
-        LAYER.world.addChild(LAYER.marker);
+        // 241
+        let height = PIXI.loader.resources.background.texture.height;
+
+        let style = {
+            fontFamily: 'EuropeExt Normal',
+            fontSize: 12,
+            fill: '#ffffff'
+        };
+
+        LAYER.background = new PIXI.Container();
+
+        for (let y = 0; y < 20000 / (height - 1); y++) {
+
+            for (let x = 0; x < 20000 / width * 2; x++) {
+
+                let tile = new PIXI.Sprite(PIXI.loader.resources.background.texture);
+
+                tile.anchor.set(0, 1);
+                tile.position.set(x * (height - 1), y * (height - 1) + (x % 2 ? Math.floor((height - 1) / 2) : 0));
+
+                LAYER.background.addChild(tile);
+
+                let info = new PIXI.Text(tile.x + ', ' + tile.y, style);
+
+                info.anchor.set(0, 1);
+                info.position.set(tile.x + 125, tile.y - 65);
+
+                LAYER.background.addChild(info);
+
+            }
+
+        }
+
+        LAYER.world.addChild(LAYER.background);
+
+        callback();
 
     },
 
-    initTarget: () => {
+    initRoad: (callback) => {
+
+        let xhr = new XMLHttpRequest();
+
+        xhr.open('GET', '/server/road.json', true);
+
+        xhr.onreadystatechange = () => {
+
+            if (xhr.readyState === xhr.DONE && xhr.status === 200) {
+
+                LAYER.road = new PIXI.Container();
+
+                JSON.parse(xhr.responseText).forEach(road => {
+
+                    let sprite = new PIXI.Sprite(TEXTURE[road.t]);
+
+                    sprite.anchor.set(0, 1);
+                    sprite.position.set(road.x, road.y);
+
+                    LAYER.road.addChild(sprite);
+
+                });
+
+                LAYER.world.addChild(LAYER.road);
+
+                callback();
+
+            }
+
+        };
+
+        xhr.send();
+
+    },
+
+    initTarget: (callback) => {
 
         LAYER.target = new PIXI.Container();
 
@@ -97,46 +199,25 @@ window.LAYER = {
 
         });
 
+        callback();
+
     },
 
-    initBackground: () => {
+    initMarker: (callback) => {
 
-        /*
+        LAYER.marker = new PIXI.Container();
 
-        LAYER.background = new PIXI.extras.TilingSprite(
-            PIXI.loader.resources.tile.texture,
-            20000,
-            20000
-        );
+        LAYER.world.addChild(LAYER.marker);
 
-        LAYER.world.addChild(LAYER.background);
+        callback();
 
-        */
+    },
 
-        LAYER.background = new PIXI.Container();
+    initHUD: (callback) => {
 
-        // отрисовка по рядам для правильного порядка наложения
+        LAYER.hud = new PIXI.Container();
 
-        for (let y = 0; y < 20000 / 250; y++) {
-
-            for (let x = 0; x < 20000 / 500 * 2 - 1; x++) {
-
-                if (y * 250 + (x % 2 ? 125 : 0) < 20000 - 125) {
-
-                    let sprite = new PIXI.Sprite(PIXI.loader.resources.background.texture);
-
-                    sprite.x = x * 250;
-                    sprite.y = y * 250 + (x % 2 ? 125 : 0);
-
-                    LAYER.background.addChild(sprite);
-
-                }
-
-            }
-
-        }
-
-        LAYER.world.addChild(LAYER.background);
+        callback();
 
     }
 

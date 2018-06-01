@@ -1,61 +1,39 @@
 window.LAYER = {
 
-    // main
-    // ├ hud
-    // └ world
-    //   ├ marker
-    //   ├ target
-    //   ├ road
-    //   └ background
-
-    hud: undefined,
-    world: undefined,
-    marker: undefined,
-    target: undefined,
-    background: undefined,
-
     init: (callback) => {
 
-        // 1.
+        LAYER.world = new PIXI.Container();
+        LAYER.background = LAYER.world.addChild(new PIXI.Container());
+        LAYER.road       = LAYER.world.addChild(new PIXI.Container());
+        LAYER.info       = LAYER.world.addChild(new PIXI.Container());
+        LAYER.target     = LAYER.world.addChild(new PIXI.Container());
+        LAYER.marker     = LAYER.world.addChild(new PIXI.Container());
+        LAYER.hud = new PIXI.Container();
+
         LAYER.initWorld(() => {
-
-            // 1.1.
             LAYER.initBackground(() => {
-
-                // 1.2.
                 LAYER.initRoad(() => {
 
-                    // 1.3.
-                    LAYER.initTarget(() => {
+                    // сортировка целей по Y
+                    GAME.application.ticker.add(() => {
 
-                        // 1.4.
-                        LAYER.initMarker(() => {
-
-                            // 2.
-                            LAYER.initHUD(() => {
-
-                                GAME.application.stage.addChild(LAYER.world);
-                                GAME.application.stage.addChild(LAYER.hud);
-
-                                callback();
-
-                            });
-
-                        });
+                        LAYER.target.children.sort((a, b) => a.y > b.y ? 1 : (b.y > a.y ? -1 : 0));
 
                     });
 
+                    // добавление слоёв в отрисовщик
+                    GAME.application.stage.addChild(LAYER.world);
+                    GAME.application.stage.addChild(LAYER.hud);
+
+                    callback();
+
                 });
-
             });
-
         });
 
     },
 
     initWorld: (callback) => {
-
-        LAYER.world = new PIXI.Container();
 
         LAYER.world.x = CAMERA.getX(- 10000);
         LAYER.world.y = CAMERA.getY(- 10000);
@@ -121,8 +99,6 @@ window.LAYER = {
             fill: '#ffffff'
         };
 
-        LAYER.background = new PIXI.Container();
-
         for (let y = 0; y < 20000 / (height - 1); y++) {
 
             for (let x = 0; x < 20000 / width * 2; x++) {
@@ -139,13 +115,11 @@ window.LAYER = {
                 info.anchor.set(0, 1);
                 info.position.set(tile.x + 125, tile.y - 65);
 
-                LAYER.background.addChild(info);
+                LAYER.info.addChild(info);
 
             }
 
         }
-
-        LAYER.world.addChild(LAYER.background);
 
         callback();
 
@@ -161,7 +135,11 @@ window.LAYER = {
 
             if (xhr.readyState === xhr.DONE && xhr.status === 200) {
 
-                LAYER.road = new PIXI.Container();
+                let style = {
+                    fontFamily: 'EuropeExt Normal',
+                    fontSize: 12,
+                    fill: '#aaaaaa'
+                };
 
                 JSON.parse(xhr.responseText).forEach(road => {
 
@@ -172,9 +150,14 @@ window.LAYER = {
 
                     LAYER.road.addChild(sprite);
 
-                });
+                    let info = new PIXI.Text(road.t, style);
 
-                LAYER.world.addChild(LAYER.road);
+                    info.anchor.set(0, 1);
+                    info.position.set(sprite.x + 125, sprite.y - 80);
+
+                    LAYER.info.addChild(info);
+
+                });
 
                 callback();
 
@@ -183,41 +166,6 @@ window.LAYER = {
         };
 
         xhr.send();
-
-    },
-
-    initTarget: (callback) => {
-
-        LAYER.target = new PIXI.Container();
-
-        LAYER.world.addChild(LAYER.target);
-
-        // сортировка целей по Y
-        GAME.application.ticker.add(() => {
-
-            LAYER.target.children.sort((a, b) => a.y > b.y ? 1 : (b.y > a.y ? -1 : 0));
-
-        });
-
-        callback();
-
-    },
-
-    initMarker: (callback) => {
-
-        LAYER.marker = new PIXI.Container();
-
-        LAYER.world.addChild(LAYER.marker);
-
-        callback();
-
-    },
-
-    initHUD: (callback) => {
-
-        LAYER.hud = new PIXI.Container();
-
-        callback();
 
     }
 

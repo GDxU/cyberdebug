@@ -14,8 +14,8 @@ window.TEXTURE = {
 
         PIXI.loader.add('/client/image/road/small_cross.png');
         PIXI.loader.add('/client/image/road/small_line.png');
-        PIXI.loader.add('/client/image/road/small_t_a.png');
-        PIXI.loader.add('/client/image/road/small_t_b.png');
+        PIXI.loader.add('/client/image/road/small_t.png');
+        // PIXI.loader.add('/client/image/road/small_t_b.png');
 
         // hud
 
@@ -64,11 +64,15 @@ window.TEXTURE = {
 
             TEXTURE['road_small_cross'] = PIXI.loader.resources['/client/image/road/small_cross.png'].texture;
             TEXTURE['road_small_line_a'] = PIXI.loader.resources['/client/image/road/small_line.png'].texture;
-            TEXTURE['road_small_line_b'] = new PIXI.Texture(TEXTURE['road_small_line_a'], frame, null, null, 8);
-            TEXTURE['road_small_t_a'] = PIXI.loader.resources['/client/image/road/small_t_a.png'].texture;
-            TEXTURE['road_small_t_b'] = PIXI.loader.resources['/client/image/road/small_t_b.png'].texture;
+            TEXTURE['road_small_line_b'] = new PIXI.Texture(TEXTURE['road_small_line_a'], frame, null, null, 2);
+            TEXTURE['road_small_t_a'] = PIXI.loader.resources['/client/image/road/small_t.png'].texture;
+            TEXTURE['road_small_t_b'] = new PIXI.Texture(TEXTURE['road_small_t_a'], frame, null, null, 2);
             TEXTURE['road_small_t_c'] = new PIXI.Texture(TEXTURE['road_small_t_a'], frame, null, null, 4);
-            TEXTURE['road_small_t_d'] = new PIXI.Texture(TEXTURE['road_small_t_b'], frame, null, null, 4);
+            TEXTURE['road_small_t_d'] = new PIXI.Texture(TEXTURE['road_small_t_a'], frame, null, null, 6);
+
+            // TEXTURE['road_small_t_b'] = PIXI.loader.resources['/client/image/road/small_t_b.png'].texture;
+            // TEXTURE['road_small_t_c'] = new PIXI.Texture(TEXTURE['road_small_t_a'], frame, null, null, 4);
+            // TEXTURE['road_small_t_d'] = new PIXI.Texture(TEXTURE['road_small_t_b'], frame, null, null, 4);
 
         },
 

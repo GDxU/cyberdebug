@@ -5,6 +5,8 @@ window.CAMERA = {
 
     init: () => {
 
+        if (DEBUG) CAMERA.scales.unshift(0.125, 0.25, 0.5);
+
         document.addEventListener('mousewheel', e => {
 
             let i = CAMERA.scales.indexOf(CAMERA.scale);

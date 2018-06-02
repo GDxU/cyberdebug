@@ -1,4 +1,5 @@
 window.DEBUG = true;
+// window.DEBUG = false;
 
 window.addEventListener('load', () => {
 

@@ -130,7 +130,7 @@ TARGET.appendUser = ws => {
         contract: undefined,
         hunter: 0,
         last: undefined,
-        speed: 5,
+        speed: 2,
         morph: 0,
         teleport: 0,
         glitch: 0,

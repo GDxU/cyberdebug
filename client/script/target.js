@@ -30,7 +30,7 @@ window.TARGET = {
             // target.sprite.cursor = 'hover';
             target.sprite.interactive = true;
             target.sprite.on('pointerover', e => {
-                e.currentTarget.filters = USER.contract || USER.hunter ? [new PIXI.filters.OutlineFilter(1, 0xffff00, 1)] : undefined;
+                e.currentTarget.filters = USER.contract || USER.hunter ? [new PIXI.filters.OutlineFilter(1 * CAMERA.scale, 0xffff00, 1)] : undefined;
                 e.currentTarget.cursor = USER.contract || USER.hunter ? 'hover' : 'default';
             });
             target.sprite.on('pointerout', e => e.currentTarget.filters = undefined);

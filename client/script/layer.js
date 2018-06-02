@@ -3,12 +3,12 @@ window.LAYER = {
     init: (callback) => {
 
         LAYER.world = new PIXI.Container();
-        LAYER.bgdown = LAYER.world.addChild(new PIXI.Container());
-        LAYER.road   = LAYER.world.addChild(new PIXI.Container());
-        LAYER.target = LAYER.world.addChild(new PIXI.Container());
-        LAYER.marker = LAYER.world.addChild(new PIXI.Container());
-        LAYER.bgup   = LAYER.world.addChild(new PIXI.Container());
-        LAYER.bginfo = LAYER.world.addChild(new PIXI.Container());
+        if (DEBUG) LAYER.bgdown = LAYER.world.addChild(new PIXI.Container());
+        LAYER.road              = LAYER.world.addChild(new PIXI.Container());
+        LAYER.target            = LAYER.world.addChild(new PIXI.Container());
+        LAYER.marker            = LAYER.world.addChild(new PIXI.Container());
+        if (DEBUG) LAYER.bgup   = LAYER.world.addChild(new PIXI.Container());
+        if (DEBUG) LAYER.bginfo = LAYER.world.addChild(new PIXI.Container());
         LAYER.hud = new PIXI.Container();
 
         LAYER.initWorld(() => {
@@ -39,98 +39,59 @@ window.LAYER = {
         LAYER.world.x = CAMERA.getX(- 10000);
         LAYER.world.y = CAMERA.getY(- 10000);
 
-        LAYER.world.interactive = true;
-
-        LAYER.world.on('pointerdown', e => {
-
-            let message = undefined;
-
-            if (e.target.target && (USER.hunter || USER.contract)) {
-
-                let id = e.target.target.id;
-
-                ACTION.follow(id);
-                message = JSON.stringify({action: {id: id}});
-
-            } else {
-
-                let point = {
-                    x: Math.floor(e.data.global.x - LAYER.world.x),
-                    y: Math.floor(e.data.global.y - LAYER.world.y)
-                };
-
-                ACTION.goto(point);
-                message = JSON.stringify({action: point});
-
-            }
-
-            if (WS.client.readyState === WebSocket.OPEN) {
-
-                WS.client.send(message);
-                console.log('WS send ' + message);
-
-            }
-
-        });
-
-        LAYER.world.on('mousemove', e => {
-
-            LAYER.world.mouse = {
-                x: e.data.global.x - LAYER.world.x,
-                y: e.data.global.y - LAYER.world.y
-            };
-
-        });
-
         callback();
 
     },
 
     initBackground: (callback) => {
 
-        let width = 480;
-        let height = 241;
-        let style = {
-            fontFamily: 'EuropeExt Normal',
-            fontSize: 12,
-            fill: '#ffffff'
-        };
+        if (DEBUG) {
 
-        LAYER.bgup.alpha = 0.1;
+            let width = 480;
+            let height = 241;
+            let style = {
+                fontFamily: 'EuropeExt Normal',
+                fontSize: 12,
+                fill: '#ffffff'
+            };
 
-        for (let y = 0; y < 20000 / (height - 1); y++) {
+            LAYER.bgup.alpha = 0.1;
 
-            for (let x = 0; x < 20000 / width * 2; x++) {
+            for (let y = 0; y < 20000 / (height - 1); y++) {
 
-                let X = x * (height - 1);
-                let Y = y * (height - 1) + (x % 2 ? Math.floor((height - 1) / 2) : 0);
+                for (let x = 0; x < 20000 / width * 2; x++) {
 
-                // down
+                    let X = x * (height - 1);
+                    let Y = y * (height - 1) + (x % 2 ? Math.floor((height - 1) / 2) : 0);
 
-                let down = new PIXI.Sprite(PIXI.loader.resources.bgdown.texture);
+                    // down
 
-                down.anchor.set(0, 1);
-                down.position.set(X, Y);
+                    let down = new PIXI.Sprite(PIXI.loader.resources.bgdown.texture);
 
-                LAYER.bgdown.addChild(down);
+                    down.anchor.set(0, 1);
+                    down.position.set(X, Y);
 
-                // up
+                    LAYER.bgdown.addChild(down);
 
-                let up = new PIXI.Sprite(PIXI.loader.resources.bgup.texture);
+                    // up
 
-                up.anchor.set(0, 1);
-                up.position.set(X, Y);
+                    let up = new PIXI.Sprite(PIXI.loader.resources.bgup.texture);
 
-                LAYER.bgup.addChild(up);
+                    up.anchor.set(0, 1);
+                    up.position.set(X, Y);
 
-                // info
+                    LAYER.bgup.addChild(up);
 
-                let info = new PIXI.Text(X + ', ' + Y, style);
+                    // info
 
-                info.anchor.set(0, 1);
-                info.position.set(X + 125, Y - 65);
+                    let info = new PIXI.Text(X + ', ' + Y, style);
 
-                LAYER.bginfo.addChild(info);
+                    info.anchor.set(0.5, 0);
+                    info.position.set(X + 240, Y - 120);
+
+                    LAYER.bginfo.addChild(info);
+
+                }
 
             }
 
@@ -169,12 +130,16 @@ window.LAYER = {
 
                         LAYER.road.addChild(sprite);
 
-                        let info = new PIXI.Text(tile.t, style);
+                        if (DEBUG) {
 
-                        info.anchor.set(0, 1);
-                        info.position.set(tile.x + 125, tile.y - 80);
+                            let info = new PIXI.Text(tile.t, style);
 
-                        LAYER.bginfo.addChild(info);
+                            info.anchor.set(0.5, 0);
+                            info.position.set(tile.x + 240, tile.y - 140);
+
+                            LAYER.bginfo.addChild(info);
+
+                        }
 
                     });
 

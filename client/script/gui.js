@@ -33,6 +33,8 @@ window.GUI = {
 
                 HUD.init();
                 WS.init();
+                CAMERA.init();
+                ACTION.init();
 
                 GUI.tool.visible(true);
 
@@ -276,12 +278,13 @@ window.GUI = {
 
                 // мышка
 
-                if (LAYER.world.mouse) {
+                let mouse = GAME.application.renderer.plugins.interaction.mouse.global;
 
-                    GUI.total.mouse.innerHTML = '<span>X:</span> ' + LAYER.world.mouse.x +
-                        '<span style="margin-left: 8px;">Y:</span> ' + LAYER.world.mouse.y;
+                let x = Math.floor(mouse.x / CAMERA.scale) - LAYER.world.x;
+                let y = Math.floor(mouse.y / CAMERA.scale) - LAYER.world.y;
 
-                }
+                GUI.total.mouse.innerHTML = '<span>X:</span> ' + x +
+                    '<span style="margin-left: 8px;">Y:</span> ' + y;
 
             }
 

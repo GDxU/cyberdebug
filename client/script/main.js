@@ -1,3 +1,5 @@
+window.DEBUG = true;
+
 window.addEventListener('load', () => {
 
     GAME.init();

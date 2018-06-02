@@ -11,11 +11,43 @@ window.ACTION = {
         ACTION.pin.visible = false;
         LAYER.marker.addChild(ACTION.pin);
 
+        GAME.application.stage.interactive = true;
+
+        GAME.application.stage.on('pointerdown', e => {
+
+            let message = undefined;
+
+            if (e.target.target && (USER.hunter || USER.contract)) {
+
+                let id = e.target.target.id;
+
+                ACTION.follow(id);
+                message = JSON.stringify({action: {id: id}});
+
+            } else {
+
+                let point = {
+                    x: Math.floor(e.data.global.x / CAMERA.scale - LAYER.world.x),
+                    y: Math.floor(e.data.global.y / CAMERA.scale - LAYER.world.y)
+                };
+
+                ACTION.goto(point);
+                message = JSON.stringify({action: point});
+
+            }
+
+            if (WS.client.readyState === WebSocket.OPEN) {
+
+                WS.client.send(message);
+                console.log('WS send ' + message);
+
+            }
+
+        });
+
     },
 
     sync: () => {
-
-        if (!ACTION.pin) ACTION.init();
 
         if (ACTION.pin && ACTION.pin.visible && USER.target) {
 

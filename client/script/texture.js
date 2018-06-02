@@ -8,14 +8,23 @@ window.TEXTURE = {
 
         // background
 
-        PIXI.loader.add('background', '/client/image/background.png');
+        PIXI.loader.add('bgup', '/client/image/background/up.png');
+        PIXI.loader.add('bgdown', '/client/image/background/down.png');
 
         // road
 
         PIXI.loader.add('/client/image/road/small_cross.png');
         PIXI.loader.add('/client/image/road/small_line.png');
         PIXI.loader.add('/client/image/road/small_t.png');
-        // PIXI.loader.add('/client/image/road/small_t_b.png');
+
+        PIXI.loader.add('/client/image/road/medium_cross.png');
+        PIXI.loader.add('/client/image/road/medium_line.png');
+        PIXI.loader.add('/client/image/road/medium_t.png');
+
+        PIXI.loader.add('/client/image/road/large_cross.png');
+        PIXI.loader.add('/client/image/road/large_line.png');
+        PIXI.loader.add('/client/image/road/large_t.png');
+        PIXI.loader.add('/client/image/road/large_channel.png');
 
         // hud
 
@@ -63,16 +72,42 @@ window.TEXTURE = {
             let frame = new PIXI.Rectangle(0, 0, 480, 241);
 
             TEXTURE['road_small_cross'] = PIXI.loader.resources['/client/image/road/small_cross.png'].texture;
+
             TEXTURE['road_small_line_a'] = PIXI.loader.resources['/client/image/road/small_line.png'].texture;
             TEXTURE['road_small_line_b'] = new PIXI.Texture(TEXTURE['road_small_line_a'], frame, null, null, 2);
+
             TEXTURE['road_small_t_a'] = PIXI.loader.resources['/client/image/road/small_t.png'].texture;
             TEXTURE['road_small_t_b'] = new PIXI.Texture(TEXTURE['road_small_t_a'], frame, null, null, 2);
             TEXTURE['road_small_t_c'] = new PIXI.Texture(TEXTURE['road_small_t_a'], frame, null, null, 4);
             TEXTURE['road_small_t_d'] = new PIXI.Texture(TEXTURE['road_small_t_a'], frame, null, null, 6);
 
-            // TEXTURE['road_small_t_b'] = PIXI.loader.resources['/client/image/road/small_t_b.png'].texture;
-            // TEXTURE['road_small_t_c'] = new PIXI.Texture(TEXTURE['road_small_t_a'], frame, null, null, 4);
-            // TEXTURE['road_small_t_d'] = new PIXI.Texture(TEXTURE['road_small_t_b'], frame, null, null, 4);
+            TEXTURE['road_medium_cross_a'] = PIXI.loader.resources['/client/image/road/medium_cross.png'].texture;
+            TEXTURE['road_medium_cross_b'] = new PIXI.Texture(TEXTURE['road_medium_cross_a'], frame, null, null, 2);
+            TEXTURE['road_medium_cross_c'] = new PIXI.Texture(TEXTURE['road_medium_cross_a'], frame, null, null, 4);
+            TEXTURE['road_medium_cross_d'] = new PIXI.Texture(TEXTURE['road_medium_cross_a'], frame, null, null, 6);
+
+            TEXTURE['road_medium_line_a'] = PIXI.loader.resources['/client/image/road/medium_line.png'].texture;
+            TEXTURE['road_medium_line_b'] = new PIXI.Texture(TEXTURE['road_medium_line_a'], frame, null, null, 2);
+            TEXTURE['road_medium_line_c'] = new PIXI.Texture(TEXTURE['road_medium_line_a'], frame, null, null, 4);
+            TEXTURE['road_medium_line_d'] = new PIXI.Texture(TEXTURE['road_medium_line_a'], frame, null, null, 6);
+
+            TEXTURE['road_medium_t_a'] = PIXI.loader.resources['/client/image/road/medium_t.png'].texture;
+            TEXTURE['road_medium_t_b'] = new PIXI.Texture(TEXTURE['road_medium_t_a'], frame, null, null, 2);
+            TEXTURE['road_medium_t_c'] = new PIXI.Texture(TEXTURE['road_medium_t_a'], frame, null, null, 4);
+            TEXTURE['road_medium_t_d'] = new PIXI.Texture(TEXTURE['road_medium_t_a'], frame, null, null, 6);
+
+            TEXTURE['road_large_cross'] = PIXI.loader.resources['/client/image/road/large_cross.png'].texture;
+
+            TEXTURE['road_large_line_a'] = PIXI.loader.resources['/client/image/road/large_line.png'].texture;
+            TEXTURE['road_large_line_b'] = new PIXI.Texture(TEXTURE['road_large_line_a'], frame, null, null, 2);
+
+            TEXTURE['road_large_t_a'] = PIXI.loader.resources['/client/image/road/large_t.png'].texture;
+            TEXTURE['road_large_t_b'] = new PIXI.Texture(TEXTURE['road_large_t_a'], frame, null, null, 2);
+            TEXTURE['road_large_t_c'] = new PIXI.Texture(TEXTURE['road_large_t_a'], frame, null, null, 4);
+            TEXTURE['road_large_t_d'] = new PIXI.Texture(TEXTURE['road_large_t_a'], frame, null, null, 6);
+
+            TEXTURE['road_large_channel_a'] = PIXI.loader.resources['/client/image/road/large_channel.png'].texture;
+            TEXTURE['road_large_channel_b'] = new PIXI.Texture(TEXTURE['road_large_channel_a'], frame, null, null, 2);
 
         },
 

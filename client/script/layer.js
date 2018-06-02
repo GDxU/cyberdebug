@@ -3,11 +3,12 @@ window.LAYER = {
     init: (callback) => {
 
         LAYER.world = new PIXI.Container();
-        LAYER.background = LAYER.world.addChild(new PIXI.Container());
-        LAYER.road       = LAYER.world.addChild(new PIXI.Container());
-        LAYER.info       = LAYER.world.addChild(new PIXI.Container());
-        LAYER.target     = LAYER.world.addChild(new PIXI.Container());
-        LAYER.marker     = LAYER.world.addChild(new PIXI.Container());
+        LAYER.bgdown = LAYER.world.addChild(new PIXI.Container());
+        LAYER.road   = LAYER.world.addChild(new PIXI.Container());
+        LAYER.target = LAYER.world.addChild(new PIXI.Container());
+        LAYER.marker = LAYER.world.addChild(new PIXI.Container());
+        LAYER.bgup   = LAYER.world.addChild(new PIXI.Container());
+        LAYER.bginfo = LAYER.world.addChild(new PIXI.Container());
         LAYER.hud = new PIXI.Container();
 
         LAYER.initWorld(() => {
@@ -87,35 +88,49 @@ window.LAYER = {
 
     initBackground: (callback) => {
 
-        // 480
-        let width = PIXI.loader.resources.background.texture.width;
-
-        // 241
-        let height = PIXI.loader.resources.background.texture.height;
-
+        let width = 480;
+        let height = 241;
         let style = {
             fontFamily: 'EuropeExt Normal',
             fontSize: 12,
             fill: '#ffffff'
         };
 
+        LAYER.bgup.alpha = 0.1;
+
         for (let y = 0; y < 20000 / (height - 1); y++) {
 
             for (let x = 0; x < 20000 / width * 2; x++) {
 
-                let tile = new PIXI.Sprite(PIXI.loader.resources.background.texture);
+                let X = x * (height - 1);
+                let Y = y * (height - 1) + (x % 2 ? Math.floor((height - 1) / 2) : 0);
 
-                tile.anchor.set(0, 1);
-                tile.position.set(x * (height - 1), y * (height - 1) + (x % 2 ? Math.floor((height - 1) / 2) : 0));
+                // down
 
-                LAYER.background.addChild(tile);
+                let down = new PIXI.Sprite(PIXI.loader.resources.bgdown.texture);
 
-                let info = new PIXI.Text(tile.x + ', ' + tile.y, style);
+                down.anchor.set(0, 1);
+                down.position.set(X, Y);
+
+                LAYER.bgdown.addChild(down);
+
+                // up
+
+                let up = new PIXI.Sprite(PIXI.loader.resources.bgup.texture);
+
+                up.anchor.set(0, 1);
+                up.position.set(X, Y);
+
+                LAYER.bgup.addChild(up);
+
+                // info
+
+                let info = new PIXI.Text(X + ', ' + Y, style);
 
                 info.anchor.set(0, 1);
-                info.position.set(tile.x + 125, tile.y - 65);
+                info.position.set(X + 125, Y - 65);
 
-                LAYER.info.addChild(info);
+                LAYER.bginfo.addChild(info);
 
             }
 
@@ -141,21 +156,27 @@ window.LAYER = {
                     fill: '#aaaaaa'
                 };
 
-                JSON.parse(xhr.responseText).forEach(road => {
+                let streets = JSON.parse(xhr.responseText);
 
-                    let sprite = new PIXI.Sprite(TEXTURE[road.t]);
+                Object.keys(streets).forEach(street => {
 
-                    sprite.anchor.set(0, 1);
-                    sprite.position.set(road.x, road.y);
+                    streets[street].forEach(tile => {
 
-                    LAYER.road.addChild(sprite);
+                        let sprite = new PIXI.Sprite(TEXTURE[tile.t]);
 
-                    let info = new PIXI.Text(road.t, style);
+                        sprite.anchor.set(0, 1);
+                        sprite.position.set(tile.x, tile.y);
 
-                    info.anchor.set(0, 1);
-                    info.position.set(sprite.x + 125, sprite.y - 80);
+                        LAYER.road.addChild(sprite);
 
-                    LAYER.info.addChild(info);
+                        let info = new PIXI.Text(tile.t, style);
+
+                        info.anchor.set(0, 1);
+                        info.position.set(tile.x + 125, tile.y - 80);
+
+                        LAYER.bginfo.addChild(info);
+
+                    });
 
                 });
 

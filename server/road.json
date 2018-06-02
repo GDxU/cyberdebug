@@ -1,9 +1,76 @@
-[
-  {"t":"road_small_cross","x":8880,"y":9720},
-  {"t":"road_small_line_a","x":9360,"y":9720},
-  {"t":"road_small_line_b","x":9360,"y":9960},
-  {"t":"road_small_t_a","x":9840,"y":9720},
-  {"t":"road_small_t_b","x":9840,"y":9960},
-  {"t":"road_small_t_c","x":9840,"y":10200},
-  {"t":"road_small_t_d","x":9840,"y":10440}
-]
+{
+
+  "v": [
+
+    {"t":"road_medium_cross_c","x":9840,"y":9960},
+    {"t":"road_large_t_c","x":10080,"y":10080},
+    {"t":"road_medium_cross_b","x":10320,"y":10200},
+
+    {"t":"road_large_t_d","x":9600,"y":10080},
+    {"t":"road_large_cross","x":9840,"y":10200},
+    {"t":"road_large_t_b","x":10080,"y":10320},
+
+    {"t":"road_medium_cross_d","x":9360,"y":10200},
+    {"t":"road_large_t_a","x":9600,"y":10320},
+    {"t":"road_medium_cross_a","x":9840,"y":10440},
+
+    {"t":"road_medium_line_c","x":9120,"y":10320},
+    {"t":"road_large_line_a","x":9360,"y":10440},
+    {"t":"road_medium_line_a","x":9600,"y":10560},
+
+    {"t":"road_medium_line_c","x":8880,"y":10440},
+    {"t":"road_large_line_a","x":9120,"y":10560},
+    {"t":"road_medium_line_a","x":9360,"y":10680},
+
+    {"t":"road_medium_line_c","x":8640,"y":10560},
+    {"t":"road_large_line_a","x":8880,"y":10680},
+    {"t":"road_medium_line_a","x":9120,"y":10800},
+
+    {"t":"road_medium_t_c","x":8400,"y":10680},
+    {"t":"road_large_channel_a","x":8640,"y":10800},
+    {"t":"road_medium_t_a","x":8880,"y":10920}
+
+  ],
+
+  "v+1": [
+
+    {"t":"road_medium_t_b","x":11520,"y":10800},
+    {"t":"road_large_channel_b","x":11280,"y":10920},
+    {"t":"road_medium_t_d","x":11040,"y":11040},
+    {"t":"road_small_line_a","x":10800,"y":11160},
+    {"t":"road_small_line_a","x":10560,"y":11280},
+    {"t":"road_small_line_a","x":10320,"y":11400},
+    {"t":"road_small_cross","x":10080,"y":11520}
+
+  ],
+
+  "h": [
+
+    {"t":"road_medium_line_b","x":10560,"y":10320},
+    {"t":"road_large_line_b","x":10320,"y":10440},
+    {"t":"road_medium_line_d","x":10080,"y":10560},
+
+    {"t":"road_medium_line_b","x":10800,"y":10440},
+    {"t":"road_large_line_b","x":10560,"y":10560},
+    {"t":"road_medium_line_d","x":10320,"y":10680},
+
+    {"t":"road_medium_line_b","x":11040,"y":10560},
+    {"t":"road_large_line_b","x":10800,"y":10680},
+    {"t":"road_medium_line_d","x":10560,"y":10800},
+
+    {"t":"road_medium_line_b","x":11280,"y":10680},
+    {"t":"road_large_line_b","x":11040,"y":10800},
+    {"t":"road_medium_line_d","x":10800,"y":10920}
+
+  ],
+
+  "h+1": [
+
+    {"t":"road_small_line_b","x":9120,"y":11040},
+    {"t":"road_small_line_b","x":9360,"y":11160},
+    {"t":"road_small_line_b","x":9600,"y":11280},
+    {"t":"road_small_line_b","x":9840,"y":11400}
+
+  ]
+
+}

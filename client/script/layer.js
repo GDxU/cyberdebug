@@ -3,12 +3,12 @@ window.LAYER = {
     init: callback => {
 
         LAYER.world = new PIXI.Container();
-        if (DEBUG) LAYER.bottom = LAYER.world.addChild(new PIXI.Container());
+        if (CONFIG.debug) LAYER.bottom = LAYER.world.addChild(new PIXI.Container());
         LAYER.road              = LAYER.world.addChild(new PIXI.Container());
         LAYER.object            = LAYER.world.addChild(new PIXI.Container());
         LAYER.marker            = LAYER.world.addChild(new PIXI.Container());
-        if (DEBUG) LAYER.top    = LAYER.world.addChild(new PIXI.Container());
-        if (DEBUG) LAYER.info   = LAYER.world.addChild(new PIXI.Container());
+        if (CONFIG.debug) LAYER.top    = LAYER.world.addChild(new PIXI.Container());
+        if (CONFIG.debug) LAYER.info   = LAYER.world.addChild(new PIXI.Container());
         LAYER.hud = new PIXI.Container();
 
         LAYER.initWorld(() => {
@@ -47,7 +47,7 @@ window.LAYER = {
 
     initBackground: callback => {
 
-        if (DEBUG) {
+        if (CONFIG.debug) {
 
             let width = 480;
             let height = 241;
@@ -132,7 +132,7 @@ window.LAYER = {
 
                         LAYER.road.addChild(sprite);
 
-                        if (DEBUG) {
+                        if (CONFIG.debug) {
 
                             let info = new PIXI.Text(tile.t, style);
 
@@ -186,7 +186,7 @@ window.LAYER = {
 
                         LAYER.object.addChild(sprite);
 
-                        if (DEBUG) {
+                        if (CONFIG.debug) {
 
                             let info = new PIXI.Text(tile.t, style);
 

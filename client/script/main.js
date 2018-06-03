@@ -1,5 +1,8 @@
-window.DEBUG = true;
-// window.DEBUG = false;
+window.CONFIG = {
+
+    debug: true
+
+};
 
 window.addEventListener('load', () => {
 

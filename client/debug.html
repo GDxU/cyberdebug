@@ -52,7 +52,7 @@
             let x = Math.floor(window.innerWidth / 2);
             let y = Math.floor(window.innerHeight / 2);
 
-            let center = new PIXI.Sprite(PIXI.loader.resources['pin'].texture);
+            let center = new PIXI.Sprite(TEXTURE['marker_pin']);
 
             center.anchor.set(0.5);
             center.x = x;
@@ -74,7 +74,7 @@
 
                     if (y * 250 + (x % 2 ? 125 : 0) < 20000 - 125) {
 
-                        let sprite = new PIXI.Sprite(PIXI.loader.resources.background.texture);
+                        let sprite = new PIXI.Sprite(TEXTU);
 
                         sprite.x = x * 250;
                         sprite.y = y * 250 + (x % 2 ? 125 : 0);

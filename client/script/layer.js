@@ -1,40 +1,42 @@
 window.LAYER = {
 
-    init: (callback) => {
+    init: callback => {
 
         LAYER.world = new PIXI.Container();
-        if (DEBUG) LAYER.bgdown = LAYER.world.addChild(new PIXI.Container());
+        if (DEBUG) LAYER.bottom = LAYER.world.addChild(new PIXI.Container());
         LAYER.road              = LAYER.world.addChild(new PIXI.Container());
-        LAYER.target            = LAYER.world.addChild(new PIXI.Container());
+        LAYER.object            = LAYER.world.addChild(new PIXI.Container());
         LAYER.marker            = LAYER.world.addChild(new PIXI.Container());
-        if (DEBUG) LAYER.bgup   = LAYER.world.addChild(new PIXI.Container());
-        if (DEBUG) LAYER.bginfo = LAYER.world.addChild(new PIXI.Container());
+        if (DEBUG) LAYER.top    = LAYER.world.addChild(new PIXI.Container());
+        if (DEBUG) LAYER.info   = LAYER.world.addChild(new PIXI.Container());
         LAYER.hud = new PIXI.Container();
 
         LAYER.initWorld(() => {
             LAYER.initBackground(() => {
                 LAYER.initRoad(() => {
+                    LAYER.initBuilding(() => {
 
-                    // сортировка целей по Y
-                    GAME.application.ticker.add(() => {
+                        // сортировка целей по Y
+                        GAME.application.ticker.add(() => {
 
-                        LAYER.target.children.sort((a, b) => a.y > b.y ? 1 : (b.y > a.y ? -1 : 0));
+                            LAYER.object.children.sort((a, b) => a.y > b.y ? 1 : (b.y > a.y ? -1 : 0));
+
+                        });
+
+                        // добавление слоёв в отрисовщик
+                        GAME.application.stage.addChild(LAYER.world);
+                        GAME.application.stage.addChild(LAYER.hud);
+
+                        callback();
 
                     });
-
-                    // добавление слоёв в отрисовщик
-                    GAME.application.stage.addChild(LAYER.world);
-                    GAME.application.stage.addChild(LAYER.hud);
-
-                    callback();
-
                 });
             });
         });
 
     },
 
-    initWorld: (callback) => {
+    initWorld: callback => {
 
         LAYER.world.x = CAMERA.getX(- 10000);
         LAYER.world.y = CAMERA.getY(- 10000);
@@ -43,7 +45,7 @@ window.LAYER = {
 
     },
 
-    initBackground: (callback) => {
+    initBackground: callback => {
 
         if (DEBUG) {
 
@@ -55,7 +57,7 @@ window.LAYER = {
                 fill: '#ffffff'
             };
 
-            LAYER.bgup.alpha = 0.1;
+            LAYER.top.alpha = 0.1;
 
             for (let y = 0; y < 20000 / (height - 1); y++) {
 
@@ -64,23 +66,23 @@ window.LAYER = {
                     let X = x * (height - 1);
                     let Y = y * (height - 1) + (x % 2 ? Math.floor((height - 1) / 2) : 0);
 
-                    // down
+                    // bottom
 
-                    let down = new PIXI.Sprite(PIXI.loader.resources.bgdown.texture);
+                    let bottom = new PIXI.Sprite(TEXTURE['background_bottom']);
 
-                    down.anchor.set(0, 1);
-                    down.position.set(X, Y);
+                    bottom.anchor.set(0, 1);
+                    bottom.position.set(X, Y);
 
-                    LAYER.bgdown.addChild(down);
+                    LAYER.bottom.addChild(bottom);
 
                     // up
 
-                    let up = new PIXI.Sprite(PIXI.loader.resources.bgup.texture);
+                    let top = new PIXI.Sprite(TEXTURE['background_top']);
 
-                    up.anchor.set(0, 1);
-                    up.position.set(X, Y);
+                    top.anchor.set(0, 1);
+                    top.position.set(X, Y);
 
-                    LAYER.bgup.addChild(up);
+                    LAYER.top.addChild(top);
 
                     // info
 
@@ -89,7 +91,7 @@ window.LAYER = {
                     info.anchor.set(0.5, 0);
                     info.position.set(X + 240, Y - 120);
 
-                    LAYER.bginfo.addChild(info);
+                    LAYER.info.addChild(info);
 
                 }
 
@@ -101,11 +103,11 @@ window.LAYER = {
 
     },
 
-    initRoad: (callback) => {
+    initRoad: callback => {
 
         let xhr = new XMLHttpRequest();
 
-        xhr.open('GET', '/server/road.json', true);
+        xhr.open('GET', '/data/road.json', true);
 
         xhr.onreadystatechange = () => {
 
@@ -117,11 +119,11 @@ window.LAYER = {
                     fill: '#aaaaaa'
                 };
 
-                let streets = JSON.parse(xhr.responseText);
+                let groups = JSON.parse(xhr.responseText);
 
-                Object.keys(streets).forEach(street => {
+                Object.keys(groups).forEach(group => {
 
-                    streets[street].forEach(tile => {
+                    groups[group].forEach(tile => {
 
                         let sprite = new PIXI.Sprite(TEXTURE[tile.t]);
 
@@ -137,7 +139,61 @@ window.LAYER = {
                             info.anchor.set(0.5, 0);
                             info.position.set(tile.x + 240, tile.y - 140);
 
-                            LAYER.bginfo.addChild(info);
+                            LAYER.info.addChild(info);
+
+                        }
+
+                    });
+
+                });
+
+                callback();
+
+            }
+
+        };
+
+        xhr.send();
+
+    },
+
+    initBuilding: callback => {
+
+        let xhr = new XMLHttpRequest();
+
+        xhr.open('GET', '/data/building.json', true);
+
+        xhr.onreadystatechange = () => {
+
+            if (xhr.readyState === xhr.DONE && xhr.status === 200) {
+
+                let style = {
+                    fontFamily: 'EuropeExt Normal',
+                    fontSize: 12,
+                    fill: '#aaaaaa'
+                };
+
+                let groups = JSON.parse(xhr.responseText);
+
+                Object.keys(groups).forEach(group => {
+
+                    groups[group].forEach(tile => {
+
+                        let sprite = new PIXI.Sprite(TEXTURE[tile.t]);
+
+                        sprite.anchor.set(0, 1);
+                        sprite.position.set(tile.x, tile.y);
+
+                        LAYER.object.addChild(sprite);
+
+                        if (DEBUG) {
+
+                            let info = new PIXI.Text(tile.t, style);
+
+                            info.anchor.set(0.5, 0);
+                            info.position.set(tile.x + 240, tile.y - 140);
+
+                            LAYER.info.addChild(info);
 
                         }
 

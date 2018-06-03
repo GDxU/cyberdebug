@@ -4,12 +4,12 @@ window.TEXTURE = {
 
         // marker
 
-        PIXI.loader.add('pin', '/client/image/cursor/pin.png');
+        PIXI.loader.add('/client/image/cursor/pin.png');
 
         // background
 
-        PIXI.loader.add('bgup', '/client/image/background/up.png');
-        PIXI.loader.add('bgdown', '/client/image/background/down.png');
+        PIXI.loader.add('/client/image/background/top.png');
+        PIXI.loader.add('/client/image/background/bottom.png');
 
         // road
 
@@ -50,18 +50,52 @@ window.TEXTURE = {
 
             TEXTURE.character.store.forEach(character => PIXI.loader.add('/client/image/character/' + character + '.png'));
 
-            PIXI.loader.load(() => {
+            // building
 
-                TEXTURE.road.init();
-                TEXTURE.hud.init();
-                TEXTURE.weapon.init();
-                TEXTURE.character.init();
+            TEXTURE.building.load(() => {
 
-                callback();
+                TEXTURE.building.store.forEach(building => PIXI.loader.add('/client/image/building/' + building + '.png'));
+
+                // start loading
+
+                PIXI.loader.load(() => {
+
+                    TEXTURE.marker.init();
+                    TEXTURE.background.init();
+                    TEXTURE.road.init();
+                    TEXTURE.hud.init();
+                    TEXTURE.weapon.init();
+                    TEXTURE.character.init();
+                    TEXTURE.building.init();
+
+                    callback();
+
+                });
 
             });
 
         });
+
+    },
+
+    marker: {
+
+        init: () => {
+
+            TEXTURE['marker_pin'] = PIXI.loader.resources['/client/image/cursor/pin.png'].texture;
+
+        }
+
+    },
+
+    background: {
+
+        init: () => {
+
+            TEXTURE['background_top']    = PIXI.loader.resources['/client/image/background/top.png'].texture;
+            TEXTURE['background_bottom'] = PIXI.loader.resources['/client/image/background/bottom.png'].texture;
+
+        }
 
     },
 
@@ -253,7 +287,7 @@ window.TEXTURE = {
             let w = 15;
             let h = 45;
 
-            TEXTURE.character.store.forEach((character, c) => {
+            TEXTURE.character.store.forEach(character => {
 
                 let texture = PIXI.loader.resources['/client/image/character/' + character + '.png'].texture;
 
@@ -677,6 +711,42 @@ window.TEXTURE = {
             let character = TEXTURE.character.store[model % TEXTURE.character.store.length];
 
             return TEXTURE['character_' + character];
+
+        }
+
+    },
+
+    building: {
+
+        load: (callback) => {
+
+            let xhr = new XMLHttpRequest();
+
+            xhr.open('GET', '/building', true);
+
+            xhr.onreadystatechange = () => {
+
+                if (xhr.readyState === xhr.DONE && xhr.status === 200) {
+
+                    TEXTURE.building.store = JSON.parse(xhr.responseText);
+
+                    callback();
+
+                }
+
+            };
+
+            xhr.send();
+
+        },
+
+        init: () => {
+
+            TEXTURE.building.store.forEach(building => {
+
+                TEXTURE['building_' + building] = PIXI.loader.resources['/client/image/building/' + building + '.png'].texture;
+
+            });
 
         }
 

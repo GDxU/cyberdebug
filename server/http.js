@@ -58,6 +58,33 @@ HTTP.query = {
 
     },
 
+    building: res => {
+
+        fs.readdir('./client/image/building/', (error, files) => {
+
+            if (error) {
+
+                res.statusCode = 404;
+                res.end(http.STATUS_CODES[404]);
+
+            } else {
+
+                let buildings = [];
+
+                files.forEach(file => buildings.push(file.slice(0, -4)));
+
+                res.writeHead(200, {
+                    'Content-Type': HTTP.types['json']
+                });
+
+                res.end(JSON.stringify(buildings));
+
+            }
+
+        });
+
+    },
+
     debug: res => {
 
         fs.readFile('./client/debug.html', (error, data) => {

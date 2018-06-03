@@ -19,14 +19,14 @@ let height = 1080;
 let delta = 2;
 TARGET.botCount = Math.floor(width * height * delta / 10000);
 
-TARGET.botCount = 3;
+TARGET.botCount = 0;
 width = Math.ceil(Math.sqrt(TARGET.botCount * 10000 / delta));
 height = width;
 
 let x = Math.floor(width / 2);
 let y = Math.floor(height / 2);
 
-TARGET.generateId = () => TARGET.id++;
+TARGET.generateId = () => 't' + (TARGET.id++).toString(36);
 TARGET.generateX = () => 10000 + TOOL.getRandomInt(-x, x);
 TARGET.generateY = () => 10000 + TOOL.getRandomInt(-y, y);
 TARGET.generateSide = () => ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'][TOOL.getRandomInt(7)];
@@ -130,7 +130,7 @@ TARGET.appendUser = ws => {
         contract: undefined,
         hunter: 0,
         last: undefined,
-        speed: 2,
+        speed: 5,
         morph: 0,
         teleport: 0,
         glitch: 0,

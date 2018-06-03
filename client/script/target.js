@@ -23,7 +23,7 @@ window.TARGET = {
         target.sprite.play();
 
         TARGET.store.push(target);
-        LAYER.target.addChild(target.sprite);
+        LAYER.object.addChild(target.sprite);
 
         if (USER.id !== target.id) {
             // target.sprite.cursor = 'hover';
@@ -145,7 +145,7 @@ window.TARGET = {
 
         if (target) {
 
-            LAYER.target.removeChild(target.sprite);
+            LAYER.object.removeChild(target.sprite);
             target.sprite.destroy();
 
             TARGET.store.splice(TARGET.store.indexOf(target), 1);

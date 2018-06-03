@@ -17,9 +17,9 @@ window.ACTION = {
 
             let message = undefined;
 
-            if (e.target.target && (USER.hunter || USER.contract)) {
+            if (e.target.class === 'TARGET' && (USER.hunter || USER.contract)) {
 
-                let id = e.target.target.id;
+                let id = e.target.data.id;
 
                 ACTION.follow(id);
                 message = JSON.stringify({action: {id: id}});
@@ -39,7 +39,8 @@ window.ACTION = {
             if (WS.client.readyState === WebSocket.OPEN) {
 
                 WS.client.send(message);
-                console.log('WS send ' + message);
+
+                if (CONFIG.debug) console.log('WS send ' + message);
 
             }
 

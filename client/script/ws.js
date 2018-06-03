@@ -9,7 +9,7 @@ window.WS = {
 
         WS.client.addEventListener('open', () => {
 
-            console.log('WS open');
+            if (CONFIG.debug) console.log('WS open');
 
             let message = {
                 user: {
@@ -23,25 +23,23 @@ window.WS = {
 
             WS.client.send(JSON.stringify(message));
 
-            console.log('WS message', message);
+            if (CONFIG.debug) console.log('WS message', message);
 
         });
 
         WS.client.addEventListener('close', () => {
 
-            console.log('WS close');
+            if (CONFIG.debug) console.log('WS close');
 
         });
 
         WS.client.addEventListener('error', () => {
 
-            console.log('WS error');
+            if (CONFIG.debug) console.log('WS error');
 
         });
 
         WS.client.addEventListener('message', message => {
-
-            // console.log('WS message', message);
 
             WS.data = JSON.parse(message.data);
 

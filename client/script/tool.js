@@ -79,6 +79,47 @@ window.TOOL = {
 
         return inside;
 
+    },
+
+    isTargetOverBuilding: (target, building) => {
+
+        return target.y > building.y ||
+
+            TOOL.isPointInPoligon(target, [
+                {x: building.x -   8, y: building.y      },
+                {x: building.x -   8, y: building.y - 120},
+                {x: building.x      , y: building.y - 120},
+                {x: building.x + 239, y: building.y      }
+            ]) ||
+
+            TOOL.isPointInPoligon(target, [
+                {x: building.x + 240, y: building.y      },
+                {x: building.x + 479, y: building.y - 120},
+                {x: building.x + 487, y: building.y - 120},
+                {x: building.x + 487, y: building.y      }
+            ]);
+
+    },
+
+    sortObjectLayer: () => {
+
+        LAYER.object.children.sort((a, b) => {
+            if (a.class === b.class) return a.y > b.y ? 1 : (b.y > a.y ? -1 : 0);
+            else {
+
+                if (a.class === 'TARGET') {
+
+                    return TOOL.isTargetOverBuilding(a, b) ? 1 : -1;
+
+                } else {
+
+                    return TOOL.isTargetOverBuilding(b, a) ? -1 : 1;
+
+                }
+
+            }
+        });
+
     }
 
 };

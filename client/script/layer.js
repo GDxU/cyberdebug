@@ -17,11 +17,7 @@ window.LAYER = {
                     LAYER.initBuilding(() => {
 
                         // сортировка целей по Y
-                        GAME.application.ticker.add(() => {
-
-                            LAYER.object.children.sort((a, b) => a.y > b.y ? 1 : (b.y > a.y ? -1 : 0));
-
-                        });
+                        GAME.application.ticker.add(() => TOOL.sortObjectLayer());
 
                         // добавление слоёв в отрисовщик
                         GAME.application.stage.addChild(LAYER.world);
@@ -123,21 +119,22 @@ window.LAYER = {
 
                 Object.keys(groups).forEach(group => {
 
-                    groups[group].forEach(tile => {
+                    groups[group].forEach(data => {
 
-                        let sprite = new PIXI.Sprite(TEXTURE[tile.t]);
+                        let sprite = new PIXI.Sprite(TEXTURE[data.t]);
 
+                        sprite.class = 'ROAD';
                         sprite.anchor.set(0, 1);
-                        sprite.position.set(tile.x, tile.y);
+                        sprite.position.set(data.x, data.y);
 
                         LAYER.road.addChild(sprite);
 
                         if (CONFIG.debug) {
 
-                            let info = new PIXI.Text(tile.t, style);
+                            let info = new PIXI.Text(data.t, style);
 
                             info.anchor.set(0.5, 0);
-                            info.position.set(tile.x + 240, tile.y - 140);
+                            info.position.set(data.x + 240, data.y - 140);
 
                             LAYER.info.addChild(info);
 
@@ -177,21 +174,22 @@ window.LAYER = {
 
                 Object.keys(groups).forEach(group => {
 
-                    groups[group].forEach(tile => {
+                    groups[group].forEach(data => {
 
-                        let sprite = new PIXI.Sprite(TEXTURE[tile.t]);
+                        let sprite = new PIXI.Sprite(TEXTURE[data.t]);
 
+                        sprite.class = 'BUILDING';
                         sprite.anchor.set(0, 1);
-                        sprite.position.set(tile.x, tile.y);
+                        sprite.position.set(data.x, data.y);
 
                         LAYER.object.addChild(sprite);
 
                         if (CONFIG.debug) {
 
-                            let info = new PIXI.Text(tile.t, style);
+                            let info = new PIXI.Text(data.t, style);
 
                             info.anchor.set(0.5, 0);
-                            info.position.set(tile.x + 240, tile.y - 140);
+                            info.position.set(data.x + 240, data.y - 140);
 
                             LAYER.info.addChild(info);
 

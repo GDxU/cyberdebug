@@ -1,9 +1,3 @@
-window.CONFIG = {
-
-    debug: true
-
-};
-
 window.addEventListener('load', () => {
 
     GAME.init();

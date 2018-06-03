@@ -81,44 +81,37 @@ window.TOOL = {
 
     },
 
-    isTargetOverBuilding: (target, building) => {
+    getDistance: (a, b) => {
 
-        return target.y > building.y ||
+        let dx = b.x - a.x;
+        let dy = b.y - a.y;
 
-            TOOL.isPointInPoligon(target, [
-                {x: building.x -   8, y: building.y      },
-                {x: building.x -   8, y: building.y - 120},
-                {x: building.x      , y: building.y - 120},
-                {x: building.x + 239, y: building.y      }
-            ]) ||
-
-            TOOL.isPointInPoligon(target, [
-                {x: building.x + 240, y: building.y      },
-                {x: building.x + 479, y: building.y - 120},
-                {x: building.x + 487, y: building.y - 120},
-                {x: building.x + 487, y: building.y      }
-            ]);
+        return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
 
     },
 
-    sortObjectLayer: () => {
+    getClosestPointToLine: (point, line) => {
 
-        LAYER.object.children.sort((a, b) => {
-            if (a.class === b.class) return a.y > b.y ? 1 : (b.y > a.y ? -1 : 0);
-            else {
+        let a = line[0];
+        let b = line[1];
+        let p = point;
 
-                if (a.class === 'TARGET') {
+        let dx = b.x - a.x;
+        let dy = b.y - a.y;
 
-                    return TOOL.isTargetOverBuilding(a, b) ? 1 : -1;
+        let d = Math.pow(dx, 2) + Math.pow(dy, 2);
 
-                } else {
+        if (d === 0) return a;
 
-                    return TOOL.isTargetOverBuilding(b, a) ? -1 : 1;
+        let t = ((p.x - a.x) * (b.x - a.x) + (p.y - a.y) * (b.y - a.y)) / d;
 
-                }
+        if (t < 0) return a;
+        if (t > 1) return b;
 
-            }
-        });
+        return {
+            x: a.x + t * (b.x - a.x),
+            y: a.y + t * (b.y - a.y)
+        };
 
     }
 

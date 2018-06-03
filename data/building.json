@@ -2,7 +2,16 @@
 
   "b+1+1": [
 
-    {"t":"building_block","x":9840,"y":10680}
+    {"t":"building_large","x":9840,"y":10680},
+    {"t":"building_block","x":9600,"y":10800},
+    {"t":"building_large","x":9360,"y":10920},
+    {"t":"building_block","x":9600,"y":11040},
+    {"t":"building_large","x":9840,"y":11160},
+    {"t":"building_block","x":10080,"y":11280},
+    {"t":"building_large","x":10320,"y":11160},
+    {"t":"building_block","x":10560,"y":11040},
+    {"t":"building_large","x":10320,"y":10920},
+    {"t":"building_block","x":10080,"y":10800}
 
   ]
 

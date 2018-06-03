@@ -14,7 +14,7 @@ window.TARGET = {
             sprite: new PIXI.extras.AnimatedSprite(TEXTURE.character.get(t.model, t.action, t.side))
         };
 
-        target.sprite.anchor.set(0.5, 0.5);
+        target.sprite.anchor.set(0.5, 1);
         target.sprite.target = target;
         target.sprite.x = t.x;
         target.sprite.y = t.y;

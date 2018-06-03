@@ -41,7 +41,7 @@ window.CAMERA = {
         if (USER.target) {
 
             LAYER.world.x = CAMERA.getX(- USER.target.sprite.x);
-            LAYER.world.y = CAMERA.getY(- USER.target.sprite.y);
+            LAYER.world.y = CAMERA.getY(- USER.target.sprite.y) + 22;
 
         }
 

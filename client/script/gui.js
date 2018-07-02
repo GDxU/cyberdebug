@@ -37,6 +37,7 @@ window.GUI = {
                 ACTION.init();
 
                 GUI.tool.visible(true);
+                GUI.total.visible(true);
 
             });
             GUI.menu.about.addEventListener('click', () => {

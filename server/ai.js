@@ -25,17 +25,17 @@ AI.move = () => {
                 y: bot.y
             };
 
-            if (i % 5 === 0) b.x += Math.floor(delta * 2);
+            if (i % 5 === 0) b.x += delta;
 
             if (i % 5 === 1) b.y += delta;
 
             if (i % 5 === 2) {
-                b.x += Math.floor(delta * 2);
+                b.x += delta;
                 b.y -= delta;
             }
 
             if (i % 5 === 3) {
-                b.x -= Math.floor(delta * 2);
+                b.x -= delta;
                 b.y += delta;
             }
 

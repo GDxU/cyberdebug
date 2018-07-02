@@ -20,6 +20,8 @@ window.GAME = {
             transparent: true
         });
 
+        GAME.application.stage.scale.set(CAMERA.scale);
+
         // Отлючение интерполяции пикселей
         GAME.application.renderer.roundPixels = true;
 

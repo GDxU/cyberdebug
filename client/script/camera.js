@@ -1,11 +1,9 @@
 window.CAMERA = {
 
     scale: 1,
-    scales: [1, 2, 3, 4],
+    scales: [1, 2, 3],
 
     init: () => {
-
-        if (CONFIG.debug) CAMERA.scales.unshift(0.125, 0.25, 0.5);
 
         document.addEventListener('mousewheel', e => {
 

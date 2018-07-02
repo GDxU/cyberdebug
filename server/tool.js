@@ -61,12 +61,12 @@ TOOL.move = (a, b) => {
 
     if (a && b && a.speed) {
 
-        if (a.x < b.x) a.x += Math.floor(a.speed * 2);
-        if (a.x > b.x) a.x -= Math.floor(a.speed * 2);
+        if (a.x < b.x) a.x += a.speed;
+        if (a.x > b.x) a.x -= a.speed;
         if (a.y < b.y) a.y += a.speed;
         if (a.y > b.y) a.y -= a.speed;
 
-        if (Math.abs(a.x - b.x) < Math.floor(a.speed * 2)) a.x = b.x;
+        if (Math.abs(a.x - b.x) < a.speed) a.x = b.x;
         if (Math.abs(a.y - b.y) < a.speed) a.y = b.y;
 
         move = a.x === b.x && a.y === b.y;

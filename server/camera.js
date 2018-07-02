@@ -9,8 +9,8 @@ CAMERA.sync = (ws, data) => {
 
         if (!isNaN(w) && !isNaN(h)) {
 
-            if (w > 4000) w = 4000;
-            if (h > 4000) h = 4000;
+            if (w > 1000) w = 1000;
+            if (h > 1000) h = 1000;
 
             ws.camera = {
                 w: w,

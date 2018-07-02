@@ -6,26 +6,6 @@ window.TEXTURE = {
 
         PIXI.loader.add('/client/image/cursor/pin.png');
 
-        // background
-
-        PIXI.loader.add('/client/image/background/top.png');
-        PIXI.loader.add('/client/image/background/bottom.png');
-
-        // road
-
-        PIXI.loader.add('/client/image/road/small_cross.png');
-        PIXI.loader.add('/client/image/road/small_line.png');
-        PIXI.loader.add('/client/image/road/small_t.png');
-
-        PIXI.loader.add('/client/image/road/medium_cross.png');
-        PIXI.loader.add('/client/image/road/medium_line.png');
-        PIXI.loader.add('/client/image/road/medium_t.png');
-
-        PIXI.loader.add('/client/image/road/large_cross.png');
-        PIXI.loader.add('/client/image/road/large_line.png');
-        PIXI.loader.add('/client/image/road/large_t.png');
-        PIXI.loader.add('/client/image/road/large_channel.png');
-
         // hud
 
         PIXI.loader.add('/client/image/hud/radar.png');
@@ -50,27 +30,16 @@ window.TEXTURE = {
 
             TEXTURE.character.store.forEach(character => PIXI.loader.add('/client/image/character/' + character + '.png'));
 
-            // building
+            // start loading
 
-            TEXTURE.building.load(() => {
+            PIXI.loader.load(() => {
 
-                TEXTURE.building.store.forEach(building => PIXI.loader.add('/client/image/building/' + building + '.png'));
+                TEXTURE.marker.init();
+                TEXTURE.hud.init();
+                TEXTURE.weapon.init();
+                TEXTURE.character.init();
 
-                // start loading
-
-                PIXI.loader.load(() => {
-
-                    TEXTURE.marker.init();
-                    TEXTURE.background.init();
-                    TEXTURE.road.init();
-                    TEXTURE.hud.init();
-                    TEXTURE.weapon.init();
-                    TEXTURE.character.init();
-                    TEXTURE.building.init();
-
-                    callback();
-
-                });
+                callback();
 
             });
 
@@ -85,65 +54,6 @@ window.TEXTURE = {
             TEXTURE['marker_pin'] = PIXI.loader.resources['/client/image/cursor/pin.png'].texture;
 
         }
-
-    },
-
-    background: {
-
-        init: () => {
-
-            TEXTURE['background_top']    = PIXI.loader.resources['/client/image/background/top.png'].texture;
-            TEXTURE['background_bottom'] = PIXI.loader.resources['/client/image/background/bottom.png'].texture;
-
-        }
-
-    },
-
-    road: {
-
-        init: () => {
-
-            let frame = new PIXI.Rectangle(0, 0, 480, 241);
-
-            TEXTURE['road_small_cross'] = PIXI.loader.resources['/client/image/road/small_cross.png'].texture;
-
-            TEXTURE['road_small_line_a'] = PIXI.loader.resources['/client/image/road/small_line.png'].texture;
-            TEXTURE['road_small_line_b'] = new PIXI.Texture(TEXTURE['road_small_line_a'], frame, null, null, 2);
-
-            TEXTURE['road_small_t_a'] = PIXI.loader.resources['/client/image/road/small_t.png'].texture;
-            TEXTURE['road_small_t_b'] = new PIXI.Texture(TEXTURE['road_small_t_a'], frame, null, null, 2);
-            TEXTURE['road_small_t_c'] = new PIXI.Texture(TEXTURE['road_small_t_a'], frame, null, null, 4);
-            TEXTURE['road_small_t_d'] = new PIXI.Texture(TEXTURE['road_small_t_a'], frame, null, null, 6);
-
-            TEXTURE['road_medium_cross_a'] = PIXI.loader.resources['/client/image/road/medium_cross.png'].texture;
-            TEXTURE['road_medium_cross_b'] = new PIXI.Texture(TEXTURE['road_medium_cross_a'], frame, null, null, 2);
-            TEXTURE['road_medium_cross_c'] = new PIXI.Texture(TEXTURE['road_medium_cross_a'], frame, null, null, 4);
-            TEXTURE['road_medium_cross_d'] = new PIXI.Texture(TEXTURE['road_medium_cross_a'], frame, null, null, 6);
-
-            TEXTURE['road_medium_line_a'] = PIXI.loader.resources['/client/image/road/medium_line.png'].texture;
-            TEXTURE['road_medium_line_b'] = new PIXI.Texture(TEXTURE['road_medium_line_a'], frame, null, null, 2);
-            TEXTURE['road_medium_line_c'] = new PIXI.Texture(TEXTURE['road_medium_line_a'], frame, null, null, 4);
-            TEXTURE['road_medium_line_d'] = new PIXI.Texture(TEXTURE['road_medium_line_a'], frame, null, null, 6);
-
-            TEXTURE['road_medium_t_a'] = PIXI.loader.resources['/client/image/road/medium_t.png'].texture;
-            TEXTURE['road_medium_t_b'] = new PIXI.Texture(TEXTURE['road_medium_t_a'], frame, null, null, 2);
-            TEXTURE['road_medium_t_c'] = new PIXI.Texture(TEXTURE['road_medium_t_a'], frame, null, null, 4);
-            TEXTURE['road_medium_t_d'] = new PIXI.Texture(TEXTURE['road_medium_t_a'], frame, null, null, 6);
-
-            TEXTURE['road_large_cross'] = PIXI.loader.resources['/client/image/road/large_cross.png'].texture;
-
-            TEXTURE['road_large_line_a'] = PIXI.loader.resources['/client/image/road/large_line.png'].texture;
-            TEXTURE['road_large_line_b'] = new PIXI.Texture(TEXTURE['road_large_line_a'], frame, null, null, 2);
-
-            TEXTURE['road_large_t_a'] = PIXI.loader.resources['/client/image/road/large_t.png'].texture;
-            TEXTURE['road_large_t_b'] = new PIXI.Texture(TEXTURE['road_large_t_a'], frame, null, null, 2);
-            TEXTURE['road_large_t_c'] = new PIXI.Texture(TEXTURE['road_large_t_a'], frame, null, null, 4);
-            TEXTURE['road_large_t_d'] = new PIXI.Texture(TEXTURE['road_large_t_a'], frame, null, null, 6);
-
-            TEXTURE['road_large_channel_a'] = PIXI.loader.resources['/client/image/road/large_channel.png'].texture;
-            TEXTURE['road_large_channel_b'] = new PIXI.Texture(TEXTURE['road_large_channel_a'], frame, null, null, 2);
-
-        },
 
     },
 
@@ -711,42 +621,6 @@ window.TEXTURE = {
             let character = TEXTURE.character.store[model % TEXTURE.character.store.length];
 
             return TEXTURE['character_' + character];
-
-        }
-
-    },
-
-    building: {
-
-        load: (callback) => {
-
-            let xhr = new XMLHttpRequest();
-
-            xhr.open('GET', '/building', true);
-
-            xhr.onreadystatechange = () => {
-
-                if (xhr.readyState === xhr.DONE && xhr.status === 200) {
-
-                    TEXTURE.building.store = JSON.parse(xhr.responseText);
-
-                    callback();
-
-                }
-
-            };
-
-            xhr.send();
-
-        },
-
-        init: () => {
-
-            TEXTURE.building.store.forEach(building => {
-
-                TEXTURE['building_' + building] = PIXI.loader.resources['/client/image/building/' + building + '.png'].texture;
-
-            });
 
         }
 

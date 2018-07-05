@@ -9,8 +9,8 @@ window.LAYER = {
         LAYER.marker                 = LAYER.world.addChild(new PIXI.Container());
         LAYER.hud = new PIXI.Container();
 
-        LAYER.world.x = CAMERA.getX(- 10000 - 125);
-        LAYER.world.y = CAMERA.getY(- 10000 + 125 + 22);
+        LAYER.world.x = CAMERA.getX(- 10000);
+        LAYER.world.y = CAMERA.getY(- 10000 + 22);
 
         BACKGROUND.init(() => {
             ROAD.init(() => {

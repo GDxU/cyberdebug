@@ -12,7 +12,7 @@ window.ROAD = {
 
                 let sprite = new PIXI.Sprite(TEXTURE[r[0]]);
 
-                sprite.anchor.set(0, 1);
+                sprite.anchor.set(0, 0);
                 sprite.position.set(r[1], r[2]);
 
                 ROAD.store.push(sprite);

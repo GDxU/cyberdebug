@@ -113,6 +113,26 @@ window.TOOL = {
             y: a.y + t * (b.y - a.y)
         };
 
+    },
+
+    getJSON: (url, callback) => {
+
+        let xhr = new XMLHttpRequest();
+
+        xhr.open('GET', url, true);
+
+        xhr.onreadystatechange = () => {
+
+            if (xhr.readyState === xhr.DONE && xhr.status === 200) {
+
+                callback(JSON.parse(xhr.responseText));
+
+            }
+
+        };
+
+        xhr.send();
+
     }
 
 };

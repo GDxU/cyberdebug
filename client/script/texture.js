@@ -24,6 +24,16 @@ window.TEXTURE = {
         PIXI.loader.add('/client/image/sfx/miss.png');
         PIXI.loader.add('/client/image/sfx/stunned.png');
 
+        // road
+
+        PIXI.loader.add('/client/image/road/small_cross.png');
+        PIXI.loader.add('/client/image/road/small_line.png');
+        PIXI.loader.add('/client/image/road/small_t.png');
+
+        PIXI.loader.add('/client/image/road/medium_cross.png');
+        PIXI.loader.add('/client/image/road/medium_line.png');
+        PIXI.loader.add('/client/image/road/medium_t.png');
+
         // character
 
         TEXTURE.character.load(() => {
@@ -38,6 +48,7 @@ window.TEXTURE = {
                 TEXTURE.hud.init();
                 TEXTURE.weapon.init();
                 TEXTURE.character.init();
+                TEXTURE.road.init();
 
                 callback();
 
@@ -163,6 +174,54 @@ window.TEXTURE = {
             TEXTURE['weapon_taser_ne'] = new PIXI.Texture(texture, diagonal, null, null, 2);
             TEXTURE['weapon_taser_n']  = new PIXI.Texture(texture, horizontal, htrim, htrim, 2);
             TEXTURE['weapon_taser_nw'] = new PIXI.Texture(texture, diagonal, null, null, 4);
+
+        }
+
+    },
+
+    road: {
+
+        init: () => {
+
+            TEXTURE.road.initSmall();
+            TEXTURE.road.initMedium();
+
+        },
+
+        initSmall: () => {
+
+            let r = new PIXI.Rectangle(0, 0, 250, 250);
+
+            TEXTURE['road_small_cross'] = PIXI.loader.resources['/client/image/road/small_cross.png'].texture;
+
+            TEXTURE['road_small_vertical'] = PIXI.loader.resources['/client/image/road/small_line.png'].texture;
+            TEXTURE['road_small_horizontal'] = new PIXI.Texture(TEXTURE['road_small_vertical'], r, null, null, 2);
+
+            TEXTURE['road_small_south'] = PIXI.loader.resources['/client/image/road/small_t.png'].texture;
+            TEXTURE['road_small_east'] = new PIXI.Texture(TEXTURE['road_small_south'], r, null, null, 2);
+            TEXTURE['road_small_north'] = new PIXI.Texture(TEXTURE['road_small_south'], r, null, null, 4);
+            TEXTURE['road_small_west'] = new PIXI.Texture(TEXTURE['road_small_south'], r, null, null, 6);
+
+        },
+
+        initMedium: () => {
+
+            let r = new PIXI.Rectangle(0, 0, 250, 250);
+
+            TEXTURE['road_medium_cross_se'] = PIXI.loader.resources['/client/image/road/medium_cross.png'].texture;
+            TEXTURE['road_medium_cross_ne'] = new PIXI.Texture(TEXTURE['road_medium_cross_se'], r, null, null, 2);
+            TEXTURE['road_medium_cross_nw'] = new PIXI.Texture(TEXTURE['road_medium_cross_se'], r, null, null, 4);
+            TEXTURE['road_medium_cross_sw'] = new PIXI.Texture(TEXTURE['road_medium_cross_se'], r, null, null, 6);
+
+            TEXTURE['road_medium_vertical_east'] = PIXI.loader.resources['/client/image/road/medium_line.png'].texture;
+            TEXTURE['road_medium_horizontal_north'] = new PIXI.Texture(TEXTURE['road_medium_vertical_east'], r, null, null, 2);
+            TEXTURE['road_medium_vertical_west'] = new PIXI.Texture(TEXTURE['road_medium_vertical_east'], r, null, null, 4);
+            TEXTURE['road_medium_horizontal_south'] = new PIXI.Texture(TEXTURE['road_medium_vertical_east'], r, null, null, 6);
+
+            TEXTURE['road_medium_south'] = PIXI.loader.resources['/client/image/road/medium_t.png'].texture;
+            TEXTURE['road_medium_east'] = new PIXI.Texture(TEXTURE['road_medium_south'], r, null, null, 2);
+            TEXTURE['road_medium_north'] = new PIXI.Texture(TEXTURE['road_medium_south'], r, null, null, 4);
+            TEXTURE['road_medium_west'] = new PIXI.Texture(TEXTURE['road_medium_south'], r, null, null, 6);
 
         }
 

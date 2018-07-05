@@ -1,1 +1,26 @@
-[]
+[
+  ["road_small_cross",9000,10000],
+
+  ["road_small_vertical",9300,10000],
+  ["road_small_horizontal",9600,10000],
+
+  ["road_small_south",9900,10000],
+  ["road_small_east",10200,10000],
+  ["road_small_north",10500,10000],
+  ["road_small_west",10800,10000],
+
+  ["road_medium_cross_se", 9000, 10300],
+  ["road_medium_cross_ne", 9300, 10300],
+  ["road_medium_cross_nw", 9600, 10300],
+  ["road_medium_cross_sw", 9900, 10300],
+
+  ["road_medium_vertical_east", 9000, 10600],
+  ["road_medium_horizontal_north", 9300, 10600],
+  ["road_medium_vertical_west", 9600, 10600],
+  ["road_medium_horizontal_south", 9900, 10600],
+
+  ["road_medium_south", 9000, 10900],
+  ["road_medium_east", 9300, 10900],
+  ["road_medium_north", 9600, 10900],
+  ["road_medium_west", 9900, 10900]
+]

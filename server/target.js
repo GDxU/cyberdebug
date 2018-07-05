@@ -16,7 +16,7 @@ TARGET.bots = [];
 
 let width = 10000;
 let height = 10000;
-let delta = 2;
+let delta = 1;
 TARGET.botCount = Math.floor(width * height * delta / 10000);
 
 // TARGET.botCount = 0;
@@ -118,11 +118,12 @@ TARGET.appendUser = ws => {
         name: '',
         model: TARGET.model++,
         action: 'stand',
-        side: TARGET.generateSide(),
+        // side: TARGET.generateSide(),
+        side: 's',
         // x: TARGET.generateX(),
-        x: 10000,
+        x: 10000 + 125,
         // y: TARGET.generateY(),
-        y: 10000,
+        y: 10000 - 125,
         kill: 0,
         stun: 0,
         die: 0,
@@ -130,7 +131,8 @@ TARGET.appendUser = ws => {
         contract: undefined,
         hunter: 0,
         last: undefined,
-        speed: 5,
+        // speed: 2,
+        speed: 100,
         morph: 0,
         teleport: 0,
         glitch: 0,

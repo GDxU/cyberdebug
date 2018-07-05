@@ -1,63 +1,49 @@
 window.BUILDING = {
 
-    store: [],
-
-    info: [],
-
     init: callback => {
 
-        let xhr = new XMLHttpRequest();
+        TOOL.getJSON('/data/building.json', data => {
 
-        xhr.open('GET', '/data/building.json', true);
+            BUILDING.data = data;
 
-        xhr.onreadystatechange = () => {
+            data.forEach(item => {
 
-            if (xhr.readyState === xhr.DONE && xhr.status === 200) {
+                let isRoadOver = false;
 
-                let style = {
-                    fontFamily: 'EuropeExt Normal',
-                    fontSize: 12,
-                    fill: '#aaaaaa'
-                };
+                ROAD.data.forEach(road => {if (road[1] === item[1] && road[2] === item[2] - 250) isRoadOver = true;});
 
-                let groups = JSON.parse(xhr.responseText);
+                if (isRoadOver) {
 
-                Object.keys(groups).forEach(group => {
+                    let down = new PIXI.Sprite(TEXTURE[item[0] + '_down']);
 
-                    groups[group].forEach(data => {
+                    down.anchor.set(0, 1);
+                    down.position.set(item[1], item[2] + 250);
 
-                        let sprite = new PIXI.Sprite(TEXTURE[data.t]);
+                    LAYER.building.down.addChild(down);
 
-                        sprite.class = 'BUILDING';
-                        sprite.anchor.set(0, 1);
-                        sprite.position.set(data.x, data.y);
+                    let up = new PIXI.Sprite(TEXTURE[item[0] + '_up']);
 
-                        BUILDING.store.push(sprite);
-                        LAYER.object.addChild(sprite);
+                    up.anchor.set(0, 1);
+                    up.position.set(item[1], item[2]);
 
-                        if (CONFIG.debug) {
+                    LAYER.building.up.addChild(up);
 
-                            let info = new PIXI.Text(data.t, style);
+                } else {
 
-                            info.anchor.set(0.5, 0);
-                            info.position.set(data.x + 240, data.y - 140);
+                    let sprite = new PIXI.Sprite(TEXTURE[item[0]]);
 
-                            BUILDING.info.push(info);
-                            LAYER.info.addChild(info);
+                    sprite.anchor.set(0, 1);
+                    sprite.position.set(item[1], item[2] + 250);
 
-                        }
+                    LAYER.building.down.addChild(sprite);
 
-                    });
+                }
 
-                });
+            });
 
-                callback();
+            callback();
 
-            }
-
-        };
-
-        xhr.send();
+        });
 
     }
 

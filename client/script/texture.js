@@ -2,67 +2,38 @@ window.TEXTURE = {
 
     init: callback => {
 
-        // marker
+        TEXTURE.marker.import();
+        TEXTURE.hud.import();
+        TEXTURE.weapon.import();
+        TEXTURE.road.import();
+        TEXTURE.character.import(() => {
+            TEXTURE.building.import(() => {
 
-        PIXI.loader.add('/client/image/cursor/pin.png');
+                PIXI.loader.load(() => {
 
-        // hud
+                    TEXTURE.marker.init();
+                    TEXTURE.hud.init();
+                    TEXTURE.weapon.init();
+                    TEXTURE.road.init();
+                    TEXTURE.character.init();
+                    TEXTURE.building.init();
 
-        PIXI.loader.add('/client/image/hud/radar.png');
-        PIXI.loader.add('/client/image/hud/detector.png');
-        PIXI.loader.add('/client/image/hud/line.png');
-        PIXI.loader.add('/client/image/hud/frame.png');
+                    callback();
 
-        // weapon
-
-        PIXI.loader.add('/client/image/weapon/katana.png');
-        PIXI.loader.add('/client/image/weapon/taser.png');
-
-        // sfx
-
-        PIXI.loader.add('/client/image/sfx/blood.png');
-        PIXI.loader.add('/client/image/sfx/miss.png');
-        PIXI.loader.add('/client/image/sfx/stunned.png');
-
-        // road
-
-        PIXI.loader.add('/client/image/road/small_cross.png');
-        PIXI.loader.add('/client/image/road/small_line.png');
-        PIXI.loader.add('/client/image/road/small_t.png');
-
-        PIXI.loader.add('/client/image/road/medium_cross.png');
-        PIXI.loader.add('/client/image/road/medium_line.png');
-        PIXI.loader.add('/client/image/road/medium_t.png');
-
-        PIXI.loader.add('/client/image/road/large_cross.png');
-        PIXI.loader.add('/client/image/road/large_line.png');
-        PIXI.loader.add('/client/image/road/large_t.png');
-
-        // character
-
-        TEXTURE.character.load(() => {
-
-            TEXTURE.character.store.forEach(character => PIXI.loader.add('/client/image/character/' + character + '.png'));
-
-            // start loading
-
-            PIXI.loader.load(() => {
-
-                TEXTURE.marker.init();
-                TEXTURE.hud.init();
-                TEXTURE.weapon.init();
-                TEXTURE.character.init();
-                TEXTURE.road.init();
-
-                callback();
+                });
 
             });
-
         });
 
     },
 
     marker: {
+
+        import: () => {
+
+            PIXI.loader.add('/client/image/cursor/pin.png');
+
+        },
 
         init: () => {
 
@@ -73,6 +44,15 @@ window.TEXTURE = {
     },
 
     hud: {
+
+        import: () => {
+
+            PIXI.loader.add('/client/image/hud/radar.png');
+            PIXI.loader.add('/client/image/hud/detector.png');
+            PIXI.loader.add('/client/image/hud/line.png');
+            PIXI.loader.add('/client/image/hud/frame.png');
+
+        },
 
         init: () => {
 
@@ -135,6 +115,13 @@ window.TEXTURE = {
         // 0 grad (0), 90 grad (2), 180 grad (4), 270 grad (6)
         // Mirrors: vertical (8), main diagonal (10), horizontal (12), reverse diagonal (14)
 
+        import: () => {
+
+            PIXI.loader.add('/client/image/weapon/katana.png');
+            PIXI.loader.add('/client/image/weapon/taser.png');
+
+        },
+
         init: () => {
 
             TEXTURE.weapon.initKatana();
@@ -184,6 +171,22 @@ window.TEXTURE = {
     },
 
     road: {
+
+        import: () => {
+
+            PIXI.loader.add('/client/image/road/small_cross.png');
+            PIXI.loader.add('/client/image/road/small_line.png');
+            PIXI.loader.add('/client/image/road/small_t.png');
+
+            PIXI.loader.add('/client/image/road/medium_cross.png');
+            PIXI.loader.add('/client/image/road/medium_line.png');
+            PIXI.loader.add('/client/image/road/medium_t.png');
+
+            PIXI.loader.add('/client/image/road/large_cross.png');
+            PIXI.loader.add('/client/image/road/large_line.png');
+            PIXI.loader.add('/client/image/road/large_t.png');
+
+        },
 
         init: () => {
 
@@ -250,25 +253,21 @@ window.TEXTURE = {
 
     character: {
 
-        load: (callback) => {
+        import: callback => {
 
-            let xhr = new XMLHttpRequest();
+            PIXI.loader.add('/client/image/sfx/blood.png');
+            PIXI.loader.add('/client/image/sfx/miss.png');
+            PIXI.loader.add('/client/image/sfx/stunned.png');
 
-            xhr.open('GET', '/character', true);
+            TOOL.getJSON('/character', data => {
 
-            xhr.onreadystatechange = () => {
+                data.forEach(character => PIXI.loader.add('/client/image/character/' + character + '.png'));
 
-                if (xhr.readyState === xhr.DONE && xhr.status === 200) {
+                TEXTURE.character.store = data;
 
-                    TEXTURE.character.store = JSON.parse(xhr.responseText);
+                callback();
 
-                    callback();
-
-                }
-
-            };
-
-            xhr.send();
+            });
 
         },
 
@@ -701,6 +700,41 @@ window.TEXTURE = {
             let character = TEXTURE.character.store[model % TEXTURE.character.store.length];
 
             return TEXTURE['character_' + character];
+
+        }
+
+    },
+
+    building: {
+
+        import: callback => {
+
+            TOOL.getJSON('/building', data => {
+
+                data.forEach(building => PIXI.loader.add('/client/image/building/' + building + '.png'));
+
+                TEXTURE.building.store = data;
+
+                callback();
+
+            });
+
+        },
+
+        init: () => {
+
+            let up = new PIXI.Rectangle(0, 0, 250, 750);
+            let down = new PIXI.Rectangle(0, 750, 250, 250);
+
+            TEXTURE.building.store.forEach(building => {
+
+                let texture = PIXI.loader.resources['/client/image/building/' + building + '.png'].texture;
+
+                TEXTURE['building_' + building] = texture;
+                TEXTURE['building_' + building + '_up'] = new PIXI.Texture(texture, up);
+                TEXTURE['building_' + building + '_down'] = new PIXI.Texture(texture, down);
+
+            });
 
         }
 

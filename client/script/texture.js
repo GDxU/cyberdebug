@@ -723,8 +723,8 @@ window.TEXTURE = {
 
         init: () => {
 
-            let up = new PIXI.Rectangle(0, 0, 250, 750);
-            let down = new PIXI.Rectangle(0, 750, 250, 250);
+            let up = new PIXI.Rectangle(0, 0, 250, 250);
+            let down = new PIXI.Rectangle(0, 250, 250, 250);
 
             TEXTURE.building.store.forEach(building => {
 

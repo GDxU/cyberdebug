@@ -1,7 +1,7 @@
 window.CAMERA = {
 
-    scale: 1,
-    scales: [0.0625, 0.125, 0.25, 0.5, 1, 2, 3, 4, 5],
+    scale: 2,
+    scales: [1, 2, 3],
 
     init: () => {
 

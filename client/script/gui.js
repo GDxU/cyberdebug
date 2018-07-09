@@ -53,8 +53,8 @@ window.GUI = {
 
             if (typeof v === 'boolean') {
 
-                GUI.menu.panel.style.left = v ? CAMERA.getX(- Math.floor(GUI.menu.panel.offsetWidth / 2)) + 'px' : '';
-                GUI.menu.panel.style.top = v ? CAMERA.getY(- Math.floor(GUI.menu.panel.offsetHeight / 2)) + 'px' : '';
+                GUI.menu.panel.style.left = v ? Math.floor(window.innerWidth / 2) - Math.floor(GUI.menu.panel.offsetWidth / 2) + 'px' : '';
+                GUI.menu.panel.style.top = v ? Math.floor(window.innerHeight / 2) - Math.floor(GUI.menu.panel.offsetHeight / 2) + 'px' : '';
 
             } else return !!GUI.menu.panel.style.left;
 
@@ -84,8 +84,8 @@ window.GUI = {
 
             if (typeof v === 'boolean') {
 
-                GUI.about.panel.style.left = v ? CAMERA.getX(- Math.floor(GUI.about.panel.offsetWidth / 2)) + 'px' : '';
-                GUI.about.panel.style.top = v ? CAMERA.getY(- Math.floor(GUI.about.panel.offsetHeight / 2)) + 'px' : '';
+                GUI.about.panel.style.left = v ? Math.floor(window.innerWidth / 2) - Math.floor(GUI.about.panel.offsetWidth / 2) + 'px' : '';
+                GUI.about.panel.style.top = v ? Math.floor(window.innerHeight / 2) - Math.floor(GUI.about.panel.offsetHeight / 2) + 'px' : '';
 
             } else return !!GUI.about.panel.style.left;
 

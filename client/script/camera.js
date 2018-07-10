@@ -5,6 +5,8 @@ window.CAMERA = {
 
     init: () => {
 
+        if (CONFIG.debug) for (let i = 1; i < 6; i++) CAMERA.scales.unshift(1 / Math.pow(2, i));
+
         document.addEventListener('wheel', e => {
 
             let i = CAMERA.scales.indexOf(CAMERA.scale);

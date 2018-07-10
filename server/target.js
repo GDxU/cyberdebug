@@ -7,29 +7,27 @@ TARGET.model = 0;
 TARGET.users = [];
 TARGET.bots = [];
 
-/**
- * Генерация ботов
- * @width {integer} ширина поля генерации ботов
- * @height {integer} высота поля генерации ботов
- * @delta {integer} количество ботов на квадрат 100х100
- */
-
-let width = 10000;
-let height = 10000;
-let delta = 1;
-TARGET.botCount = Math.floor(width * height * delta / 10000);
-
-// TARGET.botCount = 0;
-// width = Math.ceil(Math.sqrt(TARGET.botCount * 10000 / delta));
-// height = width;
-
-let x = Math.floor(width / 2);
-let y = Math.floor(height / 2);
+TARGET.botCount = 10000;
 
 TARGET.generateId = () => 't' + (TARGET.id++).toString(36);
-TARGET.generateX = () => 10000 + TOOL.getRandomInt(-x, x);
-TARGET.generateY = () => 10000 + TOOL.getRandomInt(-y, y);
 TARGET.generateSide = () => ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'][TOOL.getRandomInt(7)];
+TARGET.generateCoordinates = () => {
+
+    let a = {
+        x: 0,
+        y: 0
+    };
+
+    while (TOOL.collision(a)) {
+
+        a.x = TOOL.getRandomInt(1500, 18750);
+        a.y = TOOL.getRandomInt(1250, 20000);
+
+    }
+
+    return a;
+
+};
 
 TARGET.get = id => TARGET.bots.concat(TARGET.users).filter(target => target.id === id)[0];
 
@@ -113,17 +111,16 @@ TARGET.appendUser = ws => {
         h: 100
     };
 
+    let coordinates = TARGET.generateCoordinates();
+
     ws.user = {
         id: TARGET.generateId(),
         name: '',
         model: TARGET.model++,
         action: 'stand',
-        // side: TARGET.generateSide(),
-        side: 's',
-        // x: TARGET.generateX(),
-        x: 10000 + 125,
-        // y: TARGET.generateY(),
-        y: 10000 + 625,
+        side: TARGET.generateSide(),
+        x: coordinates.x,
+        y: coordinates.y,
         kill: 0,
         stun: 0,
         die: 0,
@@ -131,8 +128,7 @@ TARGET.appendUser = ws => {
         contract: undefined,
         hunter: 0,
         last: undefined,
-        speed: 5,
-        // speed: 100,
+        speed: 3,
         morph: 0,
         teleport: 0,
         glitch: 0,
@@ -187,13 +183,15 @@ TARGET.initBot = data => {
 
     data = data || {};
 
+    let coordinates = TARGET.generateCoordinates();
+
     let bot = {
         id: TARGET.generateId(),
         model: data.model || 0,
         action: data.action || 'stand',
         side: data.side || TARGET.generateSide(),
-        x: data.x || TARGET.generateX(),
-        y: data.y || TARGET.generateY(),
+        x: data.x || coordinates.x,
+        y: data.y || coordinates.y,
         speed: 2
     };
 

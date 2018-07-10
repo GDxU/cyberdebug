@@ -1,4 +1,5 @@
 let os = require('os');
+let GRID = require('../data/grid');
 
 let TOOL = {};
 
@@ -61,19 +62,54 @@ TOOL.move = (a, b) => {
 
     if (a && b && a.speed) {
 
-        if (a.x < b.x) a.x += a.speed;
-        if (a.x > b.x) a.x -= a.speed;
-        if (a.y < b.y) a.y += a.speed;
-        if (a.y > b.y) a.y -= a.speed;
+        let c = {
+            x: a.x,
+            y: a.y
+        };
 
-        if (Math.abs(a.x - b.x) < a.speed) a.x = b.x;
-        if (Math.abs(a.y - b.y) < a.speed) a.y = b.y;
+        if (a.x < b.x) c.x = a.x + a.speed;
+        if (a.x > b.x) c.x = a.x - a.speed;
+        if (a.y < b.y) c.y = a.y + a.speed;
+        if (a.y > b.y) c.y = a.y - a.speed;
+
+        if (Math.abs(c.x - b.x) < a.speed) c.x = b.x;
+        if (Math.abs(c.y - b.y) < a.speed) c.y = b.y;
+
+        if (!TOOL.collision(c)) {
+
+            a.x = c.x;
+            a.y = c.y;
+
+        }
 
         move = a.x === b.x && a.y === b.y;
 
     }
 
     return move;
+
+};
+
+TOOL.collision = a => {
+
+    let collision = false;
+
+    for (let i = 0; i < GRID[0].length; i++) for (let j = 0; j < GRID[1].length; j++) {
+
+        let x = 250 * GRID[0][i];
+        let y = 250 * GRID[1][j];
+
+        if (
+            x <= a.x && a.x <= x + 250 &&
+            y <= a.y && a.y <= y + 250
+        ) {
+            collision = true;
+            break;
+        }
+
+    }
+
+    return collision;
 
 };
 

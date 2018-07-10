@@ -75,8 +75,10 @@ SKILL.store = {
 
             setTimeout(() => {
 
-                ws.user.x = TARGET.generateX();
-                ws.user.y = TARGET.generateY();
+                let coordinates = TARGET.generateCoordinates();
+
+                ws.user.x = coordinates.x;
+                ws.user.y = coordinates.y;
 
             }, 1000);
 

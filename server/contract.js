@@ -83,9 +83,11 @@ CONTRACT.kill = user => {
     let target = user.contract;
     setTimeout(() => {
 
+        let coordinates = TARGET.generateCoordinates();
+
         // респаун цели
-        target.x = TARGET.generateX();
-        target.y = TARGET.generateY();
+        target.x = coordinates.x;
+        target.y = coordinates.y;
 
         // смена типа на стоящий у цели
         target.action = 'stand';
@@ -179,9 +181,11 @@ CONTRACT.miss = (user, bot) => {
     // кулдаун 3 секунды
     setTimeout(() => {
 
+        let coordinates = TARGET.generateCoordinates();
+
         // респаун бота
-        bot.x = TARGET.generateX();
-        bot.y = TARGET.generateY();
+        target.x = coordinates.x;
+        target.y = coordinates.y;
 
         // смена типа на стоящий у бота
         bot.action = 'stand';

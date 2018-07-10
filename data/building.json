@@ -1,8 +1,22 @@
 [
-  ["building_yellow_cyberware", 9250, 11000],
-  ["building_yellow_weapon", 9500, 11000],
-  ["building_magenta_xxx", 10500, 11000],
-  ["building_magenta_flamingo", 10750, 11000],
-  ["building_cyan_bouling", 11000, 11000],
-  ["building_cyan_billiard", 11250, 11000]
+  [
+    1,  2,  3,  4,
+    6,  7,  8,  9,
+    11, 12, 13, 14,
+
+    18, 19, 20, 21,
+    23, 24, 25, 26,
+    28, 29, 30, 31
+  ],
+  [
+    1,  2,  3,
+    5,  6,  7,
+    9, 10, 11,
+    13, 14, 15,
+
+    19, 20, 21,
+    23, 24, 25,
+    27, 28, 29,
+    31, 32, 33
+  ]
 ]

@@ -2,16 +2,18 @@ window.BUILDING = {
 
     init: callback => {
 
-        TOOL.getJSON('/data/grid.json', data => {
+        TOOL.getJSON('/data/building.json', data => {
 
+            for (let i = 0; i < 3; i++)
+                for (let j = 0; j < 3; j++)
+                    for (let col = 0; col < data[0].length; col++)
+                        for (let row = 0; row < data[1].length; row++) {
 
-            for (let i = 0; i < data[0].length; i++) for (let j = 0; j < data[1].length; j++) {
-
-                let x = 250 * data[0][i];
-                let y = 250 * data[1][j];
+                let x = 250 * data[0][col] + i * 8250;
+                let y = 250 * data[1][row] + j * 8750;
                 let isRoadOver = false;
 
-                ROAD.data.forEach(road => {if (road[1] === x && road[2] === y - 250) isRoadOver = true;});
+                LAYER.road.children.forEach(road => {if (road.x === x && road.y === y - 250) isRoadOver = true;});
 
                 let building = 'building_' + TEXTURE.building.store[TOOL.getRandomInt(TEXTURE.building.store.length - 1)];
 
@@ -44,6 +46,37 @@ window.BUILDING = {
 
             }
 
+            if (CONFIG.debug) TOOL.getJSON('/data/collision.json', data => {
+
+                let f = (x, y, w, h) => {
+
+                    let graphics = new PIXI.Graphics();
+
+                    graphics.beginFill(0xff0000, 0.4);
+                    graphics.drawRect(x, y, w, h);
+
+                    LAYER.building.up.addChild(graphics);
+
+                };
+
+                for (let i = 0; i < 2; i++)
+                    for (let j = 0; j < 2; j++)
+                        for (let col = 0; col < data[0].length; col++)
+                            for (let row = 0; row < data[1].length; row++) {
+
+                    let x = data[0][col] + i * 8250;
+                    let y = data[1][row] + j * 8750;
+
+                    f(x, y, 1000, 750);
+
+                }
+
+                f(0, 0, 24750, 4000);
+                f(0, 22250, 24750, 4000);
+                f(0, 0, 3750, 26250);
+                f(21000, 0, 3750, 26250);
+
+            });
 
             callback();
 

@@ -1,5 +1,6 @@
 let os = require('os');
-let GRID = require('../data/grid');
+
+let COLLISION = require('./collision');
 
 let TOOL = {};
 
@@ -92,21 +93,16 @@ TOOL.move = (a, b) => {
 
 TOOL.collision = a => {
 
-    let collision = false;
+    let collision =
+        a.x < COLLISION.world.x1 || COLLISION.world.x2 <= a.x ||
+        a.y < COLLISION.world.y1 || COLLISION.world.y2 <= a.y;
 
-    for (let i = 0; i < GRID[0].length; i++) for (let j = 0; j < GRID[1].length; j++) {
-
-        let x = 250 * GRID[0][i];
-        let y = 250 * GRID[1][j];
-
-        if (
-            x <= a.x && a.x <= x + 250 &&
-            y <= a.y && a.y <= y + 250
-        ) {
-            collision = true;
-            break;
-        }
-
+    if (!collision) for (let i = 0; i < COLLISION.store.length; i++) if (
+        COLLISION.store[i].x1 <= a.x && a.x < COLLISION.store[i].x2 &&
+        COLLISION.store[i].y1 <= a.y && a.y < COLLISION.store[i].y2
+    ) {
+        collision = true;
+        break;
     }
 
     return collision;

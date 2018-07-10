@@ -1,3 +1,4 @@
+let COLLISION = require('./collision');
 let TOOL = require('./tool');
 
 let TARGET = {};
@@ -20,8 +21,8 @@ TARGET.generateCoordinates = () => {
 
     while (TOOL.collision(a)) {
 
-        a.x = TOOL.getRandomInt(1500, 18750);
-        a.y = TOOL.getRandomInt(1250, 20000);
+        a.x = TOOL.getRandomInt(COLLISION.world.x1, COLLISION.world.x2 - 1);
+        a.y = TOOL.getRandomInt(COLLISION.world.y1, COLLISION.world.y2 - 1);
 
     }
 
@@ -128,7 +129,8 @@ TARGET.appendUser = ws => {
         contract: undefined,
         hunter: 0,
         last: undefined,
-        speed: 3,
+        // speed: 3,
+        speed: 100,
         morph: 0,
         teleport: 0,
         glitch: 0,

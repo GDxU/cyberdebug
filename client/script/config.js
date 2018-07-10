@@ -1,5 +1,5 @@
 window.CONFIG = {
 
-    debug: true
+    // debug: true
 
 };

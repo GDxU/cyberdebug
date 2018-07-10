@@ -1,4 +1,6 @@
 [
+  ["building_yellow_cyberware", 9250, 11000],
+  ["building_yellow_weapon", 9500, 11000],
   ["building_magenta_xxx", 10500, 11000],
   ["building_magenta_flamingo", 10750, 11000],
   ["building_cyan_bouling", 11000, 11000],

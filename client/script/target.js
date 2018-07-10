@@ -2,6 +2,16 @@ window.TARGET = {
 
     store: [],
 
+    init: () => {
+
+        GAME.application.ticker.add(() => {
+
+            LAYER.target.children.sort((a, b) => {return a.y > b.y ? 1 : (b.y > a.y ? -1 : 0)});
+
+        });
+
+    },
+
     get: id => TARGET.store.filter(target => target.id === id)[0],
 
     append: t => {

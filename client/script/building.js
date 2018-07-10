@@ -46,86 +46,23 @@ window.BUILDING = {
 
             }
 
-            if (CONFIG.debug) TOOL.getJSON('/data/collision.json', data => {
+            // прозрачность крыш
+            GAME.application.ticker.add(() => {
 
-                let f = (x, y, w, h) => {
+                if (USER.target) LAYER.building.up.children.forEach(roof => {
 
-                    let graphics = new PIXI.Graphics();
+                    roof.alpha = USER.target.sprite.y < roof.y && TOOL.getDistance({
+                        x: roof.x + 125,
+                        y: roof.y
+                    }, USER.target.sprite) < 750 ? 0.4 : 1;
 
-                    graphics.beginFill(0xff0000, 0.4);
-                    graphics.drawRect(x, y, w, h);
-
-                    LAYER.building.up.addChild(graphics);
-
-                };
-
-                for (let i = 0; i < 2; i++)
-                    for (let j = 0; j < 2; j++)
-                        for (let col = 0; col < data[0].length; col++)
-                            for (let row = 0; row < data[1].length; row++) {
-
-                    let x = data[0][col] + i * 8250;
-                    let y = data[1][row] + j * 8750;
-
-                    f(x, y, 1000, 750);
-
-                }
-
-                f(0, 0, 24750, 4000);
-                f(0, 22250, 24750, 4000);
-                f(0, 0, 3750, 26250);
-                f(21000, 0, 3750, 26250);
+                });
 
             });
 
             callback();
 
         });
-
-        /*
-        TOOL.getJSON('/data/building.json', data => {
-
-            BUILDING.data = data;
-
-            data.forEach(item => {
-
-                let isRoadOver = false;
-
-                ROAD.data.forEach(road => {if (road[1] === item[1] && road[2] === item[2] - 250) isRoadOver = true;});
-
-                if (isRoadOver) {
-
-                    let down = new PIXI.Sprite(TEXTURE[item[0] + '_down']);
-
-                    down.anchor.set(0, 1);
-                    down.position.set(item[1], item[2] + 250);
-
-                    LAYER.building.down.addChild(down);
-
-                    let up = new PIXI.Sprite(TEXTURE[item[0] + '_up']);
-
-                    up.anchor.set(0, 1);
-                    up.position.set(item[1], item[2]);
-
-                    LAYER.building.up.addChild(up);
-
-                } else {
-
-                    let sprite = new PIXI.Sprite(TEXTURE[item[0]]);
-
-                    sprite.anchor.set(0, 1);
-                    sprite.position.set(item[1], item[2] + 250);
-
-                    LAYER.building.down.addChild(sprite);
-
-                }
-
-            });
-
-            callback();
-
-        });
-        */
 
     }
 

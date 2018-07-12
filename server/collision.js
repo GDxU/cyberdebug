@@ -1,30 +1,67 @@
 let COLLISION = {};
 
-COLLISION.data = require('../data/collision');
+let CONFIG = require('./config');
 
-COLLISION.world = {
-    x1: 3750,
-    y1: 4000,
-    x2: 21000,
-    y2: 22250,
+COLLISION.building = require('../data/building');
+
+COLLISION.boundary = {
+    a: {
+        x: 3750,
+        y: 4000
+    },
+    b: {
+        x: CONFIG.world.width - 3750,
+        y: CONFIG.world.height - 4000
+    }
 };
 
-COLLISION.store = [];
+COLLISION.isPointInRectangle = (point, rectangle) => rectangle.a.x <= point.x && point.x < rectangle.b.x && rectangle.a.y <= point.y && point.y < rectangle.b.y;
 
-for (let i = 0; i < 2; i++)
-    for (let j = 0; j < 2; j++)
-        for (let col = 0; col < COLLISION.data[0].length; col++)
-            for (let row = 0; row < COLLISION.data[1].length; row++) {
+COLLISION.isCollision = a => {
 
-    let x = COLLISION.data[0][col] + i * 8250;
-    let y = COLLISION.data[1][row] + j * 8750;
+    let collision = !COLLISION.isPointInRectangle(a, COLLISION.boundary);
 
-    COLLISION.store.push({
-        x1: x,
-        y1: y,
-        x2: x + 1000,
-        y2: y + 750
-    });
+    if (!collision) for (let i = 0; i < COLLISION.quarter.length; i++) if (COLLISION.isPointInRectangle(a, COLLISION.quarter[i])) {
+        collision = true;
+        break;
+    }
+
+    return collision;
+
+};
+
+COLLISION.quarter = [];
+
+for (let worldX = 0; worldX < CONFIG.world.x; worldX++) {
+
+    for (let worldY = 0; worldY < CONFIG.world.y; worldY++) {
+
+        for (let buildingX = 0; buildingX < COLLISION.building[0].length; buildingX++) {
+
+            for (let buildingY = 0; buildingY < COLLISION.building[1].length; buildingY++) {
+
+                let x = CONFIG.district.width * worldX + CONFIG.tile.width * COLLISION.building[0][buildingX];
+                let y = CONFIG.district.height * worldY + CONFIG.tile.height * COLLISION.building[1][buildingY];
+
+                if (COLLISION.isPointInRectangle({x: x, y: y}, COLLISION.boundary)) COLLISION.quarter.push({
+
+                    a: {
+                        x: x,
+                        y: y
+                    },
+
+                    b: {
+                        x: x + CONFIG.quarter.width,
+                        y: y + CONFIG.quarter.height
+                    }
+
+                });
+
+            }
+
+        }
+
+    }
 
 }
 

@@ -1,3 +1,4 @@
+let CONFIG = require('./config');
 let COLLISION = require('./collision');
 let TOOL = require('./tool');
 
@@ -8,7 +9,7 @@ TARGET.model = 0;
 TARGET.users = [];
 TARGET.bots = [];
 
-TARGET.botCount = 10000;
+TARGET.botCount = CONFIG.world.x * CONFIG.world.y * 1000;
 
 TARGET.generateId = () => 't' + (TARGET.id++).toString(36);
 TARGET.generateSide = () => ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'][TOOL.getRandomInt(7)];
@@ -19,10 +20,10 @@ TARGET.generateCoordinates = () => {
         y: 0
     };
 
-    while (TOOL.collision(a)) {
+    while (COLLISION.isCollision(a)) {
 
-        a.x = TOOL.getRandomInt(COLLISION.world.x1, COLLISION.world.x2 - 1);
-        a.y = TOOL.getRandomInt(COLLISION.world.y1, COLLISION.world.y2 - 1);
+        a.x = TOOL.getRandomInt(COLLISION.boundary.a.x, COLLISION.boundary.b.x - 1);
+        a.y = TOOL.getRandomInt(COLLISION.boundary.a.y, COLLISION.boundary.b.y - 1);
 
     }
 
@@ -129,7 +130,7 @@ TARGET.appendUser = ws => {
         contract: undefined,
         hunter: 0,
         last: undefined,
-        speed: 3,
+        speed: 5,
         morph: 0,
         teleport: 0,
         glitch: 0,

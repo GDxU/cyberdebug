@@ -13,8 +13,8 @@ window.LAYER = {
         LAYER.marker        = LAYER.world.addChild(new PIXI.Container());
         LAYER.hud = new PIXI.Container();
 
-        LAYER.world.x = CAMERA.getX(-12375);
-        LAYER.world.y = CAMERA.getY(-13125);
+        LAYER.world.x = CAMERA.getX(- Math.floor(CONFIG.world.width / 2));
+        LAYER.world.y = CAMERA.getY(- Math.floor(CONFIG.world.height / 2));
 
         ROAD.init(() => {
             BUILDING.init(() => {

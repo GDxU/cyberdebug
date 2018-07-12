@@ -76,7 +76,7 @@ TOOL.move = (a, b) => {
         if (Math.abs(c.x - b.x) < a.speed) c.x = b.x;
         if (Math.abs(c.y - b.y) < a.speed) c.y = b.y;
 
-        if (!TOOL.collision(c)) {
+        if (!COLLISION.isCollision(c)) {
 
             a.x = c.x;
             a.y = c.y;
@@ -91,23 +91,7 @@ TOOL.move = (a, b) => {
 
 };
 
-TOOL.collision = a => {
-
-    let collision =
-        a.x < COLLISION.world.x1 || COLLISION.world.x2 <= a.x ||
-        a.y < COLLISION.world.y1 || COLLISION.world.y2 <= a.y;
-
-    if (!collision) for (let i = 0; i < COLLISION.store.length; i++) if (
-        COLLISION.store[i].x1 <= a.x && a.x < COLLISION.store[i].x2 &&
-        COLLISION.store[i].y1 <= a.y && a.y < COLLISION.store[i].y2
-    ) {
-        collision = true;
-        break;
-    }
-
-    return collision;
-
-};
+TOOL.isPointInRectangle = (point, rectangle) => rectangle.a.x <= point.x && point.x < rectangle.b.x && rectangle.a.y <= point.y && point.y < rectangle.b.y;
 
 TOOL.setSide = (a, b) => {
 

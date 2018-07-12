@@ -184,8 +184,8 @@ CONTRACT.miss = (user, bot) => {
         let coordinates = TARGET.generateCoordinates();
 
         // респаун бота
-        target.x = coordinates.x;
-        target.y = coordinates.y;
+        bot.x = coordinates.x;
+        bot.y = coordinates.y;
 
         // смена типа на стоящий у бота
         bot.action = 'stand';

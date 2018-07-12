@@ -24,10 +24,12 @@ window.COLLISION = {
 
             if (USER.target) {
 
-                COLLISION.N.alpha = 1 - (USER.target.sprite.y - 4000) / 100;
-                COLLISION.S.alpha = 1 - (CONFIG.world.height - USER.target.sprite.y - 4000) / 100;
-                COLLISION.W.alpha = 1 - (USER.target.sprite.x - 3750) / 100;
-                COLLISION.E.alpha = 1 - (CONFIG.world.width - USER.target.sprite.x - 3750) / 100;
+                let distance = 250;
+
+                COLLISION.N.alpha = 1 - (USER.target.sprite.y - 4000) / distance;
+                COLLISION.S.alpha = 1 - (CONFIG.world.height - USER.target.sprite.y - 4000) / distance;
+                COLLISION.W.alpha = 1 - (USER.target.sprite.x - 3750) / distance;
+                COLLISION.E.alpha = 1 - (CONFIG.world.width - USER.target.sprite.x - 3750) / distance;
 
             }
 

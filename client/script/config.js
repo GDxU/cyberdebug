@@ -1,6 +1,6 @@
 window.CONFIG = {
 
-    debug: true,
+    // debug: true,
 
     world: {},
     district: {},

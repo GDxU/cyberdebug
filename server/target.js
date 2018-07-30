@@ -129,7 +129,7 @@ TARGET.appendUser = ws => {
         contract: undefined,
         hunter: 0,
         last: undefined,
-        speed: 5,
+        speed: 3,
         morph: 0,
         teleport: 0,
         glitch: 0,
@@ -191,7 +191,7 @@ TARGET.appendBot = data => {
         side: data.side,
         x: data.x,
         y: data.y,
-        speed: TOOL.getRandomInt(2, 6)
+        speed: TOOL.getRandomInt(1, 4)
     };
 
     TARGET.bots.push(bot);

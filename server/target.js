@@ -1,3 +1,4 @@
+let AI = require('./ai');
 let CONFIG = require('./config');
 let COLLISION = require('./collision');
 let TOOL = require('./tool');
@@ -8,8 +9,6 @@ TARGET.id = 1;
 TARGET.model = 0;
 TARGET.users = [];
 TARGET.bots = [];
-
-TARGET.botCount = CONFIG.world.x * CONFIG.world.y * 1000;
 
 TARGET.generateId = () => 't' + (TARGET.id++).toString(36);
 TARGET.generateSide = () => ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'][TOOL.getRandomInt(7)];
@@ -171,8 +170,8 @@ TARGET.exportTargets = ws => {
             model: target.model,
             action: target.action,
             side: target.side,
-            x: target.x,
-            y: target.y
+            x: Math.round(target.x),
+            y: Math.round(target.y)
         });
 
     });
@@ -181,20 +180,18 @@ TARGET.exportTargets = ws => {
 
 };
 
-TARGET.initBot = data => {
+TARGET.appendBot = data => {
 
     data = data || {};
 
-    let coordinates = TARGET.generateCoordinates();
-
     let bot = {
         id: TARGET.generateId(),
-        model: data.model || 0,
-        action: data.action || 'stand',
-        side: data.side || TARGET.generateSide(),
-        x: data.x || coordinates.x,
-        y: data.y || coordinates.y,
-        speed: 2
+        model: 0,
+        action: 'walk',
+        side: data.side,
+        x: data.x,
+        y: data.y,
+        speed: TOOL.getRandomInt(2, 6)
     };
 
     TARGET.bots.push(bot);
@@ -203,14 +200,33 @@ TARGET.initBot = data => {
 
 };
 
-// создание ботов
-while (TARGET.bots.length < TARGET.botCount) TARGET.initBot();
+TARGET.initBots = () => {
+
+    for (let i = 0; i < 5000; i++) {
+
+        TARGET.appendBot({
+            x: TOOL.getRandomInt(AI.way.bot.X[i % AI.way.bot.X.length][0] + 5, AI.way.bot.X[i % AI.way.bot.X.length][1] - 5),
+            y: TOOL.getRandomInt(0, CONFIG.world.width),
+            side: TOOL.getRandomInt(1) ? 'n' : 's'
+        });
+
+        TARGET.appendBot({
+            x: TOOL.getRandomInt(0, CONFIG.world.height),
+            y: TOOL.getRandomInt(AI.way.bot.Y[i % AI.way.bot.Y.length][0] + 5, AI.way.bot.Y[i % AI.way.bot.Y.length][1] - 5),
+            side: TOOL.getRandomInt(1) ? 'e' : 'w'
+        });
+
+    }
+
+};
+
+TARGET.initBots();
 
 TARGET.updateBots = () => {
 
     let models = [];
     TARGET.users.forEach(user => models.push(user.model));
-    TARGET.bots.forEach((bot, i) => bot.model = models[i % models.length] || 0);
+    TARGET.bots.forEach(bot => bot.model = models[TOOL.getRandomInt(0, models.length - 1)]);
 
 };
 

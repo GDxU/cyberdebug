@@ -78,8 +78,6 @@ WS.ms = 1000 / WS.tr;
 
 setInterval(() => {
 
-    AI.move();
-
     let totals = TOTAL.export();
 
     WS.server.clients.forEach(ws => {
@@ -100,5 +98,7 @@ setInterval(() => {
     });
 
 }, WS.ms);
+
+AI.start();
 
 module.exports = WS;

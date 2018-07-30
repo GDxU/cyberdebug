@@ -1,51 +1,56 @@
-let TARGET = require('./target');
-let TOOL = require('./tool');
-
 let AI = {};
 
 AI.tr = 40;
 AI.ms = 1000 / AI.tr;
 
-let temp = [];
+AI.way = {
+    bot: require('../data/bot')
+};
 
-for (let i = 0; i < 16; i++) temp.push(0);
+AI.start = () => {
 
-AI.move = () => {
+    let CONFIG = require('./config');
+    let TARGET = require('./target');
 
-    for (let i = 0; i < temp.length; i++) temp[i] += (i + 1) / 200;
+    setInterval(() => {
 
-    TARGET.bots.forEach((bot, i) => {
+        if (TARGET.bots) TARGET.bots.forEach(bot => {
 
-        if (bot.action !== 'missed') {
+            if (bot.side === 'n') {
 
-            let delta = Math.round(Math.sin(temp[i % temp.length]));
+                bot.y -= bot.speed;
 
-            let b = {
-                x: bot.x,
-                y: bot.y
-            };
+                if (bot.y < 0) bot.y = CONFIG.world.height;
 
-            if (i % 5 === 0) b.x += delta;
-
-            if (i % 5 === 1) b.y += delta;
-
-            if (i % 5 === 2) {
-                b.x += delta;
-                b.y -= delta;
             }
 
-            if (i % 5 === 3) {
-                b.x -= delta;
-                b.y += delta;
+            if (bot.side === 's') {
+
+                bot.y += bot.speed;
+
+                if (bot.y > CONFIG.world.height) bot.y = 0;
+
             }
 
-            TOOL.setSide(bot, b);
-            TOOL.setAction(bot, b);
-            TOOL.move(bot, b);
+            if (bot.side === 'w') {
 
-        }
+                bot.x -= bot.speed;
 
-    });
+                if (bot.x < 0) bot.x = CONFIG.world.width;
+
+            }
+
+            if (bot.side === 'e') {
+
+                bot.x += bot.speed;
+
+                if (bot.x > CONFIG.world.width) bot.x = 0;
+
+            }
+
+        });
+
+    }, AI.ms);
 
 };
 

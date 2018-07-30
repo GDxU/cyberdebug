@@ -181,14 +181,12 @@ CONTRACT.miss = (user, bot) => {
     // кулдаун 3 секунды
     setTimeout(() => {
 
-        let coordinates = TARGET.generateCoordinates();
-
         // респаун бота
-        bot.x = coordinates.x;
-        bot.y = coordinates.y;
+        if (['n', 's'].includes(bot.side)) bot.y = 0;
+        if (['w', 'e'].includes(bot.side)) bot.x = 0;
 
         // смена типа на стоящий у бота
-        bot.action = 'stand';
+        bot.action = 'walk';
 
     }, 3000);
 

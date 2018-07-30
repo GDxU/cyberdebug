@@ -183,6 +183,7 @@ window.TEXTURE = {
             PIXI.loader.add('/client/image/road/medium_t.png');
 
             PIXI.loader.add('/client/image/road/large_cross.png');
+            PIXI.loader.add('/client/image/road/large_across.png');
             PIXI.loader.add('/client/image/road/large_line.png');
             PIXI.loader.add('/client/image/road/large_t.png');
 
@@ -238,6 +239,9 @@ window.TEXTURE = {
             let r = new PIXI.Rectangle(0, 0, 250, 250);
 
             TEXTURE['road_large_cross'] = PIXI.loader.resources['/client/image/road/large_cross.png'].texture;
+
+            TEXTURE['road_large_vertical_across'] = PIXI.loader.resources['/client/image/road/large_across.png'].texture;
+            TEXTURE['road_large_horizontal_across'] = new PIXI.Texture(TEXTURE['road_large_vertical_across'], r, null, null, 2);
 
             TEXTURE['road_large_vertical'] = PIXI.loader.resources['/client/image/road/large_line.png'].texture;
             TEXTURE['road_large_horizontal'] = new PIXI.Texture(TEXTURE['road_large_vertical'], r, null, null, 2);

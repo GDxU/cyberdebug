@@ -1,7 +1,7 @@
 {
-  "name": "pixel",
+  "name": "Cyberdebug",
   "version": "1.0.0",
-  "description": "pixel art multiplayer game",
+  "description": "Cyberdebug - pixel art multiplayer game",
   "main": "index.js",
   "dependencies": {
     "js-cookie": "^2.2.0",
@@ -10,16 +10,14 @@
     "pixi.js": "^4.7.3",
     "ws": "^5.1.1"
   },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Nanak1/pixel.git"
   },
   "keywords": [
+    "cyberdebug",
     "pixel",
+    "art",
     "game",
     "javascript",
     "nodejs",
@@ -30,5 +28,5 @@
   "bugs": {
     "url": "https://github.com/Nanak1/pixel/issues"
   },
-  "homepage": "https://nanak1.github.io/pixel"
+  "homepage": "http://cyberdebug.com"
 }

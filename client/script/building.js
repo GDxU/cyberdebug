@@ -4,43 +4,61 @@ window.BUILDING = {
 
         TOOL.getJSON('/data/building.json', data => {
 
-            for (let i = 0; i < 3; i++)
-                for (let j = 0; j < 3; j++)
-                    for (let col = 0; col < data[0].length; col++)
-                        for (let row = 0; row < data[1].length; row++) {
+            for (let worldX = 0; worldX < CONFIG.world.x; worldX++) {
 
-                let x = 250 * data[0][col] + i * 8250;
-                let y = 250 * data[1][row] + j * 8750;
-                let isRoadOver = false;
+                for (let worldY = 0; worldY < CONFIG.world.y; worldY++) {
 
-                LAYER.road.children.forEach(road => {if (road.x === x && road.y === y - 250) isRoadOver = true;});
+                    for (let buildingX = 0; buildingX < data[0].length; buildingX++) {
 
-                let building = 'building_' + TEXTURE.building.store[TOOL.getRandomInt(TEXTURE.building.store.length - 1)];
+                        for (let buildingY = 0; buildingY < data[1].length; buildingY++) {
 
-                if (isRoadOver) {
+                            for (let quarterX = 0; quarterX < CONFIG.quarter.x; quarterX++) {
 
-                    let down = new PIXI.Sprite(TEXTURE[building + '_down']);
+                                for (let quarterY = 0; quarterY < CONFIG.quarter.y; quarterY++) {
 
-                    down.anchor.set(0, 1);
-                    down.position.set(x, y + 250);
+                                    let x = CONFIG.district.width * worldX + CONFIG.tile.width * data[0][buildingX] + CONFIG.tile.width * quarterX;
+                                    let y = CONFIG.district.height * worldY + CONFIG.tile.height * data[1][buildingY] + CONFIG.tile.height * quarterY;
 
-                    LAYER.building.down.addChild(down);
+                                    let isRoadOver = false;
 
-                    let up = new PIXI.Sprite(TEXTURE[building + '_up']);
+                                    LAYER.road.children.forEach(road => {if (road.x === x && road.y === y - 250) isRoadOver = true;});
 
-                    up.anchor.set(0, 1);
-                    up.position.set(x, y);
+                                    let building = 'building_' + TEXTURE.building.store[TOOL.getRandomInt(TEXTURE.building.store.length - 1)];
 
-                    LAYER.building.up.addChild(up);
+                                    if (isRoadOver) {
 
-                } else {
+                                        let down = new PIXI.Sprite(TEXTURE[building + '_down']);
 
-                    let sprite = new PIXI.Sprite(TEXTURE[building]);
+                                        down.anchor.set(0, 1);
+                                        down.position.set(x, y + 250);
 
-                    sprite.anchor.set(0, 1);
-                    sprite.position.set(x, y + 250);
+                                        LAYER.building.down.addChild(down);
 
-                    LAYER.building.down.addChild(sprite);
+                                        let up = new PIXI.Sprite(TEXTURE[building + '_up']);
+
+                                        up.anchor.set(0, 1);
+                                        up.position.set(x, y);
+
+                                        LAYER.building.up.addChild(up);
+
+                                    } else {
+
+                                        let sprite = new PIXI.Sprite(TEXTURE[building]);
+
+                                        sprite.anchor.set(0, 1);
+                                        sprite.position.set(x, y + 250);
+
+                                        LAYER.building.down.addChild(sprite);
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
 
                 }
 

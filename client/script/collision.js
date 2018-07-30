@@ -15,19 +15,21 @@ window.COLLISION = {
 
         };
 
-        COLLISION.N = f(    0,     0, 24750,  4000);
-        COLLISION.S = f(    0, 22250, 24750,  4000);
-        COLLISION.W = f(    0,     0,  3750, 26250);
-        COLLISION.E = f(21000,     0,  3750, 26250);
+        COLLISION.N = f(    0,     0, CONFIG.world.width,  4000);
+        COLLISION.S = f(    0, CONFIG.world.height - 4000, CONFIG.world.width,  4000);
+        COLLISION.W = f(    0,     0,  3750, CONFIG.world.height);
+        COLLISION.E = f(CONFIG.world.width - 3750,     0,  3750, CONFIG.world.height);
 
         GAME.application.ticker.add(() => {
 
             if (USER.target) {
 
-                COLLISION.N.alpha = 1 - (USER.target.sprite.y - 4000) / 100;
-                COLLISION.S.alpha = 1 - (22250 - USER.target.sprite.y) / 100;
-                COLLISION.W.alpha = 1 - (USER.target.sprite.x - 3750) / 100;
-                COLLISION.E.alpha = 1 - (21000 - USER.target.sprite.x) / 100;
+                let distance = 250;
+
+                COLLISION.N.alpha = 1 - (USER.target.sprite.y - 4000) / distance;
+                COLLISION.S.alpha = 1 - (CONFIG.world.height - USER.target.sprite.y - 4000) / distance;
+                COLLISION.W.alpha = 1 - (USER.target.sprite.x - 3750) / distance;
+                COLLISION.E.alpha = 1 - (CONFIG.world.width - USER.target.sprite.x - 3750) / distance;
 
             }
 

@@ -6,16 +6,24 @@ window.ROAD = {
 
             ROAD.data = data;
 
-            for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) data.forEach(item => {
+            for (let worldX = 0; worldX < CONFIG.world.x; worldX++) {
 
-                let sprite = new PIXI.Sprite(TEXTURE[item[0]]);
+                for (let worldY = 0; worldY < CONFIG.world.y; worldY++) {
 
-                sprite.anchor.set(0, 0);
-                sprite.position.set(item[1] + i * 8250, item[2] + j * 8750);
+                    data.forEach(item => {
 
-                LAYER.road.addChild(sprite);
+                        let sprite = new PIXI.Sprite(TEXTURE[item[0]]);
 
-            });
+                        sprite.anchor.set(0, 0);
+                        sprite.position.set(item[1] + worldX * CONFIG.district.width, item[2] + worldY * CONFIG.district.height);
+
+                        LAYER.road.addChild(sprite);
+
+                    });
+
+                }
+
+            }
 
             callback();
 

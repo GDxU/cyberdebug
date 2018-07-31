@@ -194,6 +194,7 @@ window.GUI = {
             GUI.total.close = document.getElementById('total_close');
             GUI.total.table = document.getElementById('total_table');
             GUI.total.target = document.getElementById('total_target');
+            GUI.total.car = document.getElementById('total_car');
             GUI.total.info = document.getElementById('total_info');
             GUI.total.position = document.getElementById('total_position');
             GUI.total.mouse = document.getElementById('total_mouse');
@@ -244,9 +245,14 @@ window.GUI = {
 
                 // цели
 
-                GUI.total.target.innerHTML = '<span>Игроки: </span>' + WS.data.users +
-                    '<span style="margin-left: 8px;">Боты: </span>' + WS.data.bots +
+                GUI.total.target.innerHTML = '<span>Игроки: </span>' + WS.data.count.user +
+                    '<span style="margin-left: 8px;">Боты: </span>' + WS.data.count.bot +
                     '<span style="margin-left: 8px;">Здесь: </span>' + WS.data.targets.length;
+
+                // авто
+
+                GUI.total.car.innerHTML = '<span>Авто: </span>' + WS.data.count.car +
+                    '<span style="margin-left: 8px;">Здесь: </span>' + WS.data.cars.length;
 
                 // информация
 

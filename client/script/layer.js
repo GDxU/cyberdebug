@@ -7,6 +7,7 @@ window.LAYER = {
         LAYER.world = new PIXI.Container();
         LAYER.road          = LAYER.world.addChild(new PIXI.Container());
         LAYER.building.down = LAYER.world.addChild(new PIXI.Container());
+        LAYER.car           = LAYER.world.addChild(new PIXI.Container());
         LAYER.target        = LAYER.world.addChild(new PIXI.Container());
         LAYER.building.up   = LAYER.world.addChild(new PIXI.Container());
         LAYER.collision     = LAYER.world.addChild(new PIXI.Container());
@@ -19,6 +20,7 @@ window.LAYER = {
         ROAD.init(() => {
             BUILDING.init(() => {
 
+                // CAR.init();
                 TARGET.init();
                 COLLISION.init();
 

@@ -2,6 +2,7 @@ let WebSocket = require('ws');
 
 let TOOL = require('./tool');
 let TARGET = require('./target');
+let CAR = require('./car');
 let CAMERA = require('./camera');
 let TOTAL = require('./total');
 let AI = require('./ai');
@@ -85,11 +86,20 @@ setInterval(() => {
         if (ws.readyState === WebSocket.OPEN) {
 
             let message = {
+
                 user: TARGET.exportUser(ws),
+
                 targets: TARGET.exportTargets(ws),
+                cars: CAR.export(ws),
+
                 totals: totals,
-                users: TARGET.users.length,
-                bots: TARGET.bots.length
+
+                count: {
+                    user: TARGET.users.length,
+                    bot: TARGET.bots.length,
+                    car: CAR.store.length
+                }
+
             };
 
             ws.send(JSON.stringify(message));
@@ -100,5 +110,6 @@ setInterval(() => {
 }, WS.ms);
 
 AI.bot.start(TARGET.bots);
+AI.car.start(CAR.store);
 
 module.exports = WS;

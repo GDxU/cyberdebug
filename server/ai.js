@@ -1,3 +1,5 @@
+let CONFIG = require('./config');
+
 let AI = {};
 
 AI.tr = 40;
@@ -9,10 +11,8 @@ AI.bot = {
 
     start: bots => {
 
-        let CONFIG = require('./config');
-
-        let W = CONFIG.world.width;
-        let H = CONFIG.world.height;
+        let w = CONFIG.world.width;
+        let h = CONFIG.world.height;
 
         setInterval(() => {
 
@@ -22,7 +22,7 @@ AI.bot = {
 
                     bot.y -= bot.speed;
 
-                    if (bot.y < 0) bot.y = H;
+                    if (bot.y < 0) bot.y = h;
 
                 }
 
@@ -30,7 +30,7 @@ AI.bot = {
 
                     bot.y += bot.speed;
 
-                    if (bot.y > H) bot.y = 0;
+                    if (bot.y > h) bot.y = 0;
 
                 }
 
@@ -38,7 +38,7 @@ AI.bot = {
 
                     bot.x -= bot.speed;
 
-                    if (bot.x < 0) bot.x = W;
+                    if (bot.x < 0) bot.x = w;
 
                 }
 
@@ -46,7 +46,60 @@ AI.bot = {
 
                     bot.x += bot.speed;
 
-                    if (bot.x > W) bot.x = 0;
+                    if (bot.x > w) bot.x = 0;
+
+                }
+
+            });
+
+        }, AI.ms);
+
+    }
+
+};
+
+AI.car = {
+
+    way: require('../data/car'),
+
+    start: cars => {
+
+        let w = CONFIG.world.width;
+        let h = CONFIG.world.height;
+
+        setInterval(() => {
+
+            cars.forEach(car => {
+
+                if (car.side === 'n') {
+
+                    car.y -= car.speed;
+
+                    if (car.y < 0) car.y = h;
+
+                }
+
+                if (car.side === 's') {
+
+                    car.y += car.speed;
+
+                    if (car.y > h) car.y = 0;
+
+                }
+
+                if (car.side === 'w') {
+
+                    car.x -= car.speed;
+
+                    if (car.x < 0) car.x = w;
+
+                }
+
+                if (car.side === 'e') {
+
+                    car.x += car.speed;
+
+                    if (car.x > w) car.x = 0;
 
                 }
 

@@ -45,6 +45,7 @@ window.WS = {
 
             USER.sync();
             TARGET.sync();
+            CAR.sync();
             GUI.total.sync();
             GUI.tool.sync();
             CAMERA.sync();

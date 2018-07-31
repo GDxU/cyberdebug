@@ -745,6 +745,14 @@ window.TEXTURE = {
 
             });
 
+        },
+
+        get: (model, side) => {
+
+            let car = TEXTURE.car.store[model % TEXTURE.car.store.length];
+
+            return TEXTURE['car_' + car + '_' + side];
+
         }
 
     },

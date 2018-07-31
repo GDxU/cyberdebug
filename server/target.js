@@ -170,8 +170,8 @@ TARGET.exportTargets = ws => {
             model: target.model,
             action: target.action,
             side: target.side,
-            x: Math.round(target.x),
-            y: Math.round(target.y)
+            x: target.x,
+            y: target.y
         });
 
     });
@@ -204,17 +204,17 @@ TARGET.initBots = () => {
 
     let X = AI.bot.way.X;
     let Y = AI.bot.way.Y;
-    let W = CONFIG.world.width;
-    let H = CONFIG.world.height;
+    let w = CONFIG.world.width;
+    let h = CONFIG.world.height;
 
     for (let i = 0; i < 10000; i++) {
 
         TARGET.appendBot(TOOL.getRandomInt(1) ? {
             x: TOOL.getRandomInt(X[i % X.length][0] + 5, X[i % X.length][1] - 5),
-            y: TOOL.getRandomInt(0, W),
+            y: TOOL.getRandomInt(0, h),
             side: TOOL.getRandomInt(1) ? 'n' : 's'
         } : {
-            x: TOOL.getRandomInt(0, H),
+            x: TOOL.getRandomInt(0, w),
             y: TOOL.getRandomInt(Y[i % Y.length][0] + 5, Y[i % Y.length][1] - 5),
             side: TOOL.getRandomInt(1) ? 'e' : 'w'
         });

@@ -202,17 +202,20 @@ TARGET.appendBot = data => {
 
 TARGET.initBots = () => {
 
-    for (let i = 0; i < 5000; i++) {
+    let X = AI.bot.way.X;
+    let Y = AI.bot.way.Y;
+    let W = CONFIG.world.width;
+    let H = CONFIG.world.height;
 
-        TARGET.appendBot({
-            x: TOOL.getRandomInt(AI.way.bot.X[i % AI.way.bot.X.length][0] + 5, AI.way.bot.X[i % AI.way.bot.X.length][1] - 5),
-            y: TOOL.getRandomInt(0, CONFIG.world.width),
+    for (let i = 0; i < 10000; i++) {
+
+        TARGET.appendBot(TOOL.getRandomInt(1) ? {
+            x: TOOL.getRandomInt(X[i % X.length][0] + 5, X[i % X.length][1] - 5),
+            y: TOOL.getRandomInt(0, W),
             side: TOOL.getRandomInt(1) ? 'n' : 's'
-        });
-
-        TARGET.appendBot({
-            x: TOOL.getRandomInt(0, CONFIG.world.height),
-            y: TOOL.getRandomInt(AI.way.bot.Y[i % AI.way.bot.Y.length][0] + 5, AI.way.bot.Y[i % AI.way.bot.Y.length][1] - 5),
+        } : {
+            x: TOOL.getRandomInt(0, H),
+            y: TOOL.getRandomInt(Y[i % Y.length][0] + 5, Y[i % Y.length][1] - 5),
             side: TOOL.getRandomInt(1) ? 'e' : 'w'
         });
 

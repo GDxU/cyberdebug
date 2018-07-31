@@ -99,6 +99,6 @@ setInterval(() => {
 
 }, WS.ms);
 
-AI.start();
+AI.bot.start(TARGET.bots);
 
 module.exports = WS;

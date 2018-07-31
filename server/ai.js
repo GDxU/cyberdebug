@@ -3,54 +3,58 @@ let AI = {};
 AI.tr = 40;
 AI.ms = 1000 / AI.tr;
 
-AI.way = {
-    bot: require('../data/bot')
-};
+AI.bot = {
 
-AI.start = () => {
+    way: require('../data/bot'),
 
-    let CONFIG = require('./config');
-    let TARGET = require('./target');
+    start: bots => {
 
-    setInterval(() => {
+        let CONFIG = require('./config');
 
-        if (TARGET.bots) TARGET.bots.forEach(bot => {
+        let W = CONFIG.world.width;
+        let H = CONFIG.world.height;
 
-            if (bot.side === 'n') {
+        setInterval(() => {
 
-                bot.y -= bot.speed;
+            bots.forEach(bot => {
 
-                if (bot.y < 0) bot.y = CONFIG.world.height;
+                if (bot.side === 'n') {
 
-            }
+                    bot.y -= bot.speed;
 
-            if (bot.side === 's') {
+                    if (bot.y < 0) bot.y = H;
 
-                bot.y += bot.speed;
+                }
 
-                if (bot.y > CONFIG.world.height) bot.y = 0;
+                if (bot.side === 's') {
 
-            }
+                    bot.y += bot.speed;
 
-            if (bot.side === 'w') {
+                    if (bot.y > H) bot.y = 0;
 
-                bot.x -= bot.speed;
+                }
 
-                if (bot.x < 0) bot.x = CONFIG.world.width;
+                if (bot.side === 'w') {
 
-            }
+                    bot.x -= bot.speed;
 
-            if (bot.side === 'e') {
+                    if (bot.x < 0) bot.x = W;
 
-                bot.x += bot.speed;
+                }
 
-                if (bot.x > CONFIG.world.width) bot.x = 0;
+                if (bot.side === 'e') {
 
-            }
+                    bot.x += bot.speed;
 
-        });
+                    if (bot.x > W) bot.x = 0;
 
-    }, AI.ms);
+                }
+
+            });
+
+        }, AI.ms);
+
+    }
 
 };
 

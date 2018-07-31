@@ -40,7 +40,7 @@ SKILL.store = {
 
         if (!ws.user.morph) {
 
-            let distance = 250;
+            let distance = 500;
 
             TARGET.bots.forEach(bot => {
 

@@ -7,22 +7,29 @@ window.TEXTURE = {
         TEXTURE.weapon.import();
         TEXTURE.road.import();
         TEXTURE.character.import(() => {
-            TEXTURE.building.import(() => {
 
-                PIXI.loader.load(() => {
+            TEXTURE.car.import(() => {
 
-                    TEXTURE.marker.init();
-                    TEXTURE.hud.init();
-                    TEXTURE.weapon.init();
-                    TEXTURE.road.init();
-                    TEXTURE.character.init();
-                    TEXTURE.building.init();
+                TEXTURE.building.import(() => {
 
-                    callback();
+                    PIXI.loader.load(() => {
+
+                        TEXTURE.marker.init();
+                        TEXTURE.hud.init();
+                        TEXTURE.weapon.init();
+                        TEXTURE.road.init();
+                        TEXTURE.character.init();
+                        TEXTURE.car.init();
+                        TEXTURE.building.init();
+
+                        callback();
+
+                    });
 
                 });
 
             });
+
         });
 
     },
@@ -704,6 +711,39 @@ window.TEXTURE = {
             let character = TEXTURE.character.store[model % TEXTURE.character.store.length];
 
             return TEXTURE['character_' + character];
+
+        }
+
+    },
+
+    car: {
+
+        import: callback => {
+
+            TOOL.getJSON('/car', data => {
+
+                data.forEach(car => PIXI.loader.add('/client/image/car/' + car + '.png'));
+
+                TEXTURE.car.store = data;
+
+                callback();
+
+            });
+
+        },
+
+        init: () => {
+
+            TEXTURE.car.store.forEach(car => {
+
+                let texture = PIXI.loader.resources['/client/image/car/' + car + '.png'].texture;
+
+                TEXTURE['car_' + car + '_s'] = new PIXI.Texture(texture, new PIXI.Rectangle(0, 0, 75, 100));
+                TEXTURE['car_' + car + '_n'] = new PIXI.Texture(texture, new PIXI.Rectangle(75, 0, 75, 100));
+                TEXTURE['car_' + car + '_w'] = new PIXI.Texture(texture, new PIXI.Rectangle(150, 0, 150, 100));
+                TEXTURE['car_' + car + '_e'] = new PIXI.Texture(texture, new PIXI.Rectangle(150, 0, 150, 100), null, null, 12);
+
+            });
 
         }
 

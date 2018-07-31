@@ -19,6 +19,33 @@ HTTP.types = {
     json: 'application/json'
 };
 
+HTTP.getImagesList = (res, type) => {
+
+    fs.readdir('./client/image/' + type + '/', (error, files) => {
+
+        if (error) {
+
+            res.statusCode = 404;
+            res.end(http.STATUS_CODES[404]);
+
+        } else {
+
+            let images = [];
+
+            files.forEach(file => images.push(file.slice(0, -4)));
+
+            res.writeHead(200, {
+                'Content-Type': HTTP.types['json']
+            });
+
+            res.end(JSON.stringify(images));
+
+        }
+
+    });
+
+};
+
 HTTP.query = {
 
     banned: res => {
@@ -28,60 +55,6 @@ HTTP.query = {
         });
 
         res.end(JSON.stringify(HTTP.banned));
-
-    },
-
-    character: res => {
-
-        fs.readdir('./client/image/character/', (error, files) => {
-
-            if (error) {
-
-                res.statusCode = 404;
-                res.end(http.STATUS_CODES[404]);
-
-            } else {
-
-                let characters = [];
-
-                files.forEach(file => characters.push(file.slice(0, -4)));
-
-                res.writeHead(200, {
-                    'Content-Type': HTTP.types['json']
-                });
-
-                res.end(JSON.stringify(characters));
-
-            }
-
-        });
-
-    },
-
-    building: res => {
-
-        fs.readdir('./client/image/building/', (error, files) => {
-
-            if (error) {
-
-                res.statusCode = 404;
-                res.end(http.STATUS_CODES[404]);
-
-            } else {
-
-                let buildings = [];
-
-                files.forEach(file => buildings.push(file.slice(0, -4)));
-
-                res.writeHead(200, {
-                    'Content-Type': HTTP.types['json']
-                });
-
-                res.end(JSON.stringify(buildings));
-
-            }
-
-        });
 
     },
 
@@ -106,7 +79,13 @@ HTTP.query = {
 
         });
 
-    }
+    },
+
+    character: res => HTTP.getImagesList(res, 'character'),
+
+    car: res => HTTP.getImagesList(res, 'car'),
+
+    building: res => HTTP.getImagesList(res, 'building')
 
 };
 

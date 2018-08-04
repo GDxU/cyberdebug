@@ -3,6 +3,7 @@ let WebSocket = require('ws');
 let TOOL = require('./tool');
 let TARGET = require('./target');
 let CAR = require('./car');
+let TRAFFIC = require('./traffic');
 let CAMERA = require('./camera');
 let TOTAL = require('./total');
 let AI = require('./ai');
@@ -80,6 +81,12 @@ WS.ms = 1000 / WS.tr;
 setInterval(() => {
 
     let totals = TOTAL.export();
+    let traffic = TRAFFIC.status();
+    let count = {
+        user: TARGET.users.length,
+        bot: TARGET.bots.length,
+        car: CAR.store.length
+    };
 
     WS.server.clients.forEach(ws => {
 
@@ -92,13 +99,11 @@ setInterval(() => {
                 targets: TARGET.exportTargets(ws),
                 cars: CAR.export(ws),
 
+                traffic: traffic,
+
                 totals: totals,
 
-                count: {
-                    user: TARGET.users.length,
-                    bot: TARGET.bots.length,
-                    car: CAR.store.length
-                }
+                count: count
 
             };
 
@@ -111,5 +116,6 @@ setInterval(() => {
 
 AI.bot.start(TARGET.bots);
 AI.car.start(CAR.store);
+TRAFFIC.next();
 
 module.exports = WS;

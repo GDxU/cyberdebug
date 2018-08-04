@@ -1,4 +1,5 @@
 let CONFIG = require('./config');
+let TRAFFIC = require('./traffic');
 
 let AI = {};
 
@@ -20,33 +21,89 @@ AI.bot = {
 
                 if (bot.side === 'n') {
 
-                    bot.y -= bot.speed;
+                    if (TRAFFIC.isCross(bot)) {
 
-                    if (bot.y < 0) bot.y = h;
+                        bot.y -= bot.speed;
+
+                        if (bot.y < 0) bot.y = h;
+
+                    } else {
+
+                        if (!(TRAFFIC.isCross({x: bot.x, y: bot.y - bot.speed}) && TRAFFIC.status() !== 'PEDESTRIAN')) {
+
+                            bot.y -= bot.speed;
+
+                            if (bot.y < 0) bot.y = h;
+
+                        }
+
+                    }
 
                 }
 
                 if (bot.side === 's') {
 
-                    bot.y += bot.speed;
+                    if (TRAFFIC.isCross(bot)) {
 
-                    if (bot.y > h) bot.y = 0;
+                        bot.y += bot.speed;
+
+                        if (bot.y > h) bot.y = 0;
+
+                    } else {
+
+                        if (!(TRAFFIC.isCross({x: bot.x, y: bot.y + bot.speed}) && TRAFFIC.status() !== 'PEDESTRIAN')) {
+
+                            bot.y += bot.speed;
+
+                            if (bot.y > h) bot.y = 0;
+
+                        }
+
+                    }
 
                 }
 
                 if (bot.side === 'w') {
 
-                    bot.x -= bot.speed;
+                    if (TRAFFIC.isCross(bot)) {
 
-                    if (bot.x < 0) bot.x = w;
+                        bot.x -= bot.speed;
+
+                        if (bot.x < 0) bot.x = w;
+
+                    } else {
+
+                        if (!(TRAFFIC.isCross({x: bot.x - bot.speed, y: bot.y}) && TRAFFIC.status() !== 'PEDESTRIAN')) {
+
+                            bot.x -= bot.speed;
+
+                            if (bot.x < 0) bot.x = w;
+
+                        }
+
+                    }
 
                 }
 
                 if (bot.side === 'e') {
 
-                    bot.x += bot.speed;
+                    if (TRAFFIC.isCross(bot)) {
 
-                    if (bot.x > w) bot.x = 0;
+                        bot.x += bot.speed;
+
+                        if (bot.x > w) bot.x = 0;
+
+                    } else {
+
+                        if (!(TRAFFIC.isCross({x: bot.x + bot.speed, y: bot.y}) && TRAFFIC.status() !== 'PEDESTRIAN')) {
+
+                            bot.x += bot.speed;
+
+                            if (bot.x > w) bot.x = 0;
+
+                        }
+
+                    }
 
                 }
 
@@ -73,33 +130,89 @@ AI.car = {
 
                 if (car.side === 'n') {
 
-                    car.y -= car.speed;
+                    let success = true;
 
-                    if (car.y < 0) car.y = h;
+                    for (let i = 0; i < cars.length && success; i++) success = !(
+                        cars[i].x === car.x &&
+                        cars[i].y > car.y - 110 &&
+                        cars[i].y < car.y
+                    );
+
+                    if (
+                        success && (
+                            TRAFFIC.isCross({x: car.x, y: car.y - 100}) ||
+                            !(TRAFFIC.isCross({x: car.x, y: car.y - car.speed - 100}) && TRAFFIC.status() !== 'VERTICAL')
+                        )
+                    ) {
+                        car.y -= car.speed;
+                        if (car.y < 0) car.y = h;
+                    }
 
                 }
 
                 if (car.side === 's') {
 
-                    car.y += car.speed;
+                    let success = true;
 
-                    if (car.y > h) car.y = 0;
+                    for (let i = 0; i < cars.length && success; i++) success = !(
+                        cars[i].x === car.x &&
+                        cars[i].y < car.y + 110 &&
+                        cars[i].y > car.y
+                    );
+
+                    if (
+                        success && (
+                            TRAFFIC.isCross(car) ||
+                            !(TRAFFIC.isCross({x: car.x, y: car.y + car.speed}) && TRAFFIC.status() !== 'VERTICAL')
+                        )
+                    ) {
+                        car.y += car.speed;
+                        if (car.y > h) car.y = 0;
+                    }
 
                 }
 
                 if (car.side === 'w') {
 
-                    car.x -= car.speed;
+                    let success = true;
 
-                    if (car.x < 0) car.x = w;
+                    for (let i = 0; i < cars.length && success; i++) success = !(
+                        cars[i].y === car.y &&
+                        cars[i].x > car.x - 160 &&
+                        cars[i].x < car.x
+                    );
+
+                    if (
+                        success && (
+                            TRAFFIC.isCross(car) ||
+                            !(TRAFFIC.isCross({x: car.x - car.speed, y: car.y}) && TRAFFIC.status() !== 'HORIZONTAL')
+                        )
+                    ) {
+                        car.x -= car.speed;
+                        if (car.x < 0) car.x = w;
+                    }
 
                 }
 
                 if (car.side === 'e') {
 
-                    car.x += car.speed;
+                    let success = true;
 
-                    if (car.x > w) car.x = 0;
+                    for (let i = 0; i < cars.length && success; i++) success = !(
+                        cars[i].y === car.y &&
+                        cars[i].x < car.x + 160 &&
+                        cars[i].x > car.x
+                    );
+
+                    if (
+                        success && (
+                            TRAFFIC.isCross({x: car.x + 100, y: car.y}) ||
+                            !(TRAFFIC.isCross({x: car.x + car.speed + 150, y: car.y}) && TRAFFIC.status() !== 'HORIZONTAL')
+                        )
+                    ) {
+                        car.x += car.speed;
+                        if (car.x > w) car.x = 0;
+                    }
 
                 }
 

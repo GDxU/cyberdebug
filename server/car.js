@@ -18,7 +18,8 @@ CAR.append = data => {
         side: data.side,
         x: data.x,
         y: data.y,
-        speed: TOOL.getRandomInt(5, 8)
+        // speed: TOOL.getRandomInt(5, 8)
+        speed: TOOL.getRandomInt(500, 800) / 100
     };
 
     CAR.store.push(car);

@@ -7,10 +7,9 @@ TRAFFIC.x = TRAFFIC.map[0].length;
 TRAFFIC.y = TRAFFIC.map.length;
 
 TRAFFIC.timeout = {
-    YELLOW: 3000,
-    VERTICAL: 5000,
-    HORIZONTAL: 5000,
-    PEDESTRIAN: 7000
+    YELLOW: 5000,
+    VERTICAL: 10000,
+    HORIZONTAL: 10000
 };
 
 TRAFFIC.schedule = [

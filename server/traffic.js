@@ -17,9 +17,7 @@ TRAFFIC.schedule = [
     'YELLOW',
     'VERTICAL',
     'YELLOW',
-    'HORIZONTAL',
-    'YELLOW',
-    'PEDESTRIAN'
+    'HORIZONTAL'
 ];
 
 TRAFFIC.isCross = a => {

@@ -21,89 +21,53 @@ AI.bot = {
 
                 if (bot.side === 'n') {
 
-                    if (TRAFFIC.isCross(bot)) {
-
+                    if (
+                        TRAFFIC.isCross(bot) ||
+                        !(TRAFFIC.isCross({x: bot.x, y: bot.y - bot.speed}) && TRAFFIC.status() !== 'VERTICAL')
+                    ) {
                         bot.y -= bot.speed;
-
                         if (bot.y < 0) bot.y = h;
-
-                    } else {
-
-                        if (!(TRAFFIC.isCross({x: bot.x, y: bot.y - bot.speed}) && TRAFFIC.status() !== 'PEDESTRIAN')) {
-
-                            bot.y -= bot.speed;
-
-                            if (bot.y < 0) bot.y = h;
-
-                        }
-
-                    }
+                        bot.action = 'walk';
+                    } else bot.action = 'stand';
 
                 }
 
                 if (bot.side === 's') {
 
-                    if (TRAFFIC.isCross(bot)) {
-
+                    if (
+                        TRAFFIC.isCross(bot) ||
+                        !(TRAFFIC.isCross({x: bot.x, y: bot.y + bot.speed}) && TRAFFIC.status() !== 'VERTICAL')
+                    ) {
                         bot.y += bot.speed;
-
                         if (bot.y > h) bot.y = 0;
-
-                    } else {
-
-                        if (!(TRAFFIC.isCross({x: bot.x, y: bot.y + bot.speed}) && TRAFFIC.status() !== 'PEDESTRIAN')) {
-
-                            bot.y += bot.speed;
-
-                            if (bot.y > h) bot.y = 0;
-
-                        }
-
-                    }
+                        bot.action = 'walk';
+                    } else bot.action = 'stand';
 
                 }
 
                 if (bot.side === 'w') {
 
-                    if (TRAFFIC.isCross(bot)) {
-
+                    if (
+                        TRAFFIC.isCross(bot) ||
+                        !(TRAFFIC.isCross({x: bot.x - bot.speed, y: bot.y}) && TRAFFIC.status() !== 'HORIZONTAL')
+                    ) {
                         bot.x -= bot.speed;
-
                         if (bot.x < 0) bot.x = w;
-
-                    } else {
-
-                        if (!(TRAFFIC.isCross({x: bot.x - bot.speed, y: bot.y}) && TRAFFIC.status() !== 'PEDESTRIAN')) {
-
-                            bot.x -= bot.speed;
-
-                            if (bot.x < 0) bot.x = w;
-
-                        }
-
-                    }
+                        bot.action = 'walk';
+                    } else bot.action = 'stand';
 
                 }
 
                 if (bot.side === 'e') {
 
-                    if (TRAFFIC.isCross(bot)) {
-
+                    if (
+                        TRAFFIC.isCross(bot) ||
+                        !(TRAFFIC.isCross({x: bot.x + bot.speed, y: bot.y}) && TRAFFIC.status() !== 'HORIZONTAL')
+                    ) {
                         bot.x += bot.speed;
-
                         if (bot.x > w) bot.x = 0;
-
-                    } else {
-
-                        if (!(TRAFFIC.isCross({x: bot.x + bot.speed, y: bot.y}) && TRAFFIC.status() !== 'PEDESTRIAN')) {
-
-                            bot.x += bot.speed;
-
-                            if (bot.x > w) bot.x = 0;
-
-                        }
-
-                    }
+                        bot.action = 'walk';
+                    } else bot.action = 'stand';
 
                 }
 

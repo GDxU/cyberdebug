@@ -18,8 +18,8 @@ CAR.append = data => {
         side: data.side,
         x: data.x,
         y: data.y,
-        // speed: TOOL.getRandomInt(5, 8)
-        speed: TOOL.getRandomInt(500, 800) / 100
+        speed: TOOL.getRandomInt(500, 800) / 100,
+        cooldown: TOOL.getRandomInt(1, 100)
     };
 
     CAR.store.push(car);
@@ -69,34 +69,6 @@ CAR.init = () => {
         }
 
     }
-
-    /*
-
-    for (let i = 0; i < N.length; i++) CAR.append({
-        x: N[i],
-        y: TOOL.getRandomInt(0, h),
-        side: 'n'
-    });
-
-    for (let i = 0; i < S.length; i++) CAR.append({
-        x: S[i],
-        y: TOOL.getRandomInt(0, h),
-        side: 's'
-    });
-
-    for (let i = 0; i < W.length; i++) CAR.append({
-        x: TOOL.getRandomInt(0, w),
-        y: W[i],
-        side: 'w'
-    });
-
-    for (let i = 0; i < E.length; i++) CAR.append({
-        x: TOOL.getRandomInt(0, w),
-        y: E[i],
-        side: 'e'
-    });
-
-    */
 
 };
 

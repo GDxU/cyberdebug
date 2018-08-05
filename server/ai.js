@@ -1,5 +1,6 @@
 let CONFIG = require('./config');
 let TRAFFIC = require('./traffic');
+let TOOL = require('./tool');
 
 let AI = {};
 
@@ -18,6 +19,15 @@ AI.bot = {
         setInterval(() => {
 
             bots.forEach(bot => {
+
+                bot.cooldown--;
+
+                if (bot.cooldown === 0) {
+
+                    bot.cooldown = 100;
+                    bot.speed = TOOL.getRandomInt(200, 500) / 100;
+
+                }
 
                 if (bot.side === 'n') {
 
@@ -91,6 +101,15 @@ AI.car = {
         setInterval(() => {
 
             cars.forEach(car => {
+
+                car.cooldown--;
+
+                if (car.cooldown === 0) {
+
+                    car.cooldown = 100;
+                    car.speed = TOOL.getRandomInt(500, 800) / 100;
+
+                }
 
                 if (car.side === 'n') {
 

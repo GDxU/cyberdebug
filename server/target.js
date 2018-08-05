@@ -191,8 +191,8 @@ TARGET.appendBot = data => {
         side: data.side,
         x: data.x,
         y: data.y,
-        // speed: TOOL.getRandomInt(1, 4)
-        speed: TOOL.getRandomInt(200, 500) / 100
+        speed: TOOL.getRandomInt(200, 500) / 100,
+        cooldown: TOOL.getRandomInt(1, 100)
     };
 
     TARGET.bots.push(bot);

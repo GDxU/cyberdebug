@@ -25,7 +25,7 @@ AI.bot = {
                 if (bot.cooldown === 0) {
 
                     bot.cooldown = 100;
-                    bot.speed = TOOL.getRandomInt(200, 500) / 100;
+                    bot.speed = TOOL.getRandomInt(200, 400) / 100;
 
                 }
 

@@ -18,7 +18,7 @@ CAR.append = data => {
         side: data.side,
         x: data.x,
         y: data.y,
-        speed: TOOL.getRandomInt(500, 800) / 100,
+        speed: TOOL.getRandomInt(500, 1200) / 100,
         cooldown: TOOL.getRandomInt(1, 100)
     };
 

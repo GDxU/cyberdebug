@@ -23,7 +23,7 @@ AI.bot = {
 
                     if (
                         TRAFFIC.isCross(bot) ||
-                        !(TRAFFIC.isCross({x: bot.x, y: bot.y - bot.speed}) && TRAFFIC.status() !== 'VERTICAL')
+                        !(TRAFFIC.isCross({x: bot.x, y: bot.y - bot.speed}) && TRAFFIC.status() !== 'vertical')
                     ) {
                         bot.y -= bot.speed;
                         if (bot.y < 0) bot.y = h;
@@ -36,7 +36,7 @@ AI.bot = {
 
                     if (
                         TRAFFIC.isCross(bot) ||
-                        !(TRAFFIC.isCross({x: bot.x, y: bot.y + bot.speed}) && TRAFFIC.status() !== 'VERTICAL')
+                        !(TRAFFIC.isCross({x: bot.x, y: bot.y + bot.speed}) && TRAFFIC.status() !== 'vertical')
                     ) {
                         bot.y += bot.speed;
                         if (bot.y > h) bot.y = 0;
@@ -49,7 +49,7 @@ AI.bot = {
 
                     if (
                         TRAFFIC.isCross(bot) ||
-                        !(TRAFFIC.isCross({x: bot.x - bot.speed, y: bot.y}) && TRAFFIC.status() !== 'HORIZONTAL')
+                        !(TRAFFIC.isCross({x: bot.x - bot.speed, y: bot.y}) && TRAFFIC.status() !== 'horizontal')
                     ) {
                         bot.x -= bot.speed;
                         if (bot.x < 0) bot.x = w;
@@ -62,7 +62,7 @@ AI.bot = {
 
                     if (
                         TRAFFIC.isCross(bot) ||
-                        !(TRAFFIC.isCross({x: bot.x + bot.speed, y: bot.y}) && TRAFFIC.status() !== 'HORIZONTAL')
+                        !(TRAFFIC.isCross({x: bot.x + bot.speed, y: bot.y}) && TRAFFIC.status() !== 'horizontal')
                     ) {
                         bot.x += bot.speed;
                         if (bot.x > w) bot.x = 0;
@@ -105,7 +105,7 @@ AI.car = {
                     if (
                         success && (
                             TRAFFIC.isCross({x: car.x, y: car.y - 100}) ||
-                            !(TRAFFIC.isCross({x: car.x, y: car.y - car.speed - 100}) && TRAFFIC.status() !== 'VERTICAL')
+                            !(TRAFFIC.isCross({x: car.x, y: car.y - car.speed - 100}) && TRAFFIC.status() !== 'vertical')
                         )
                     ) {
                         car.y -= car.speed;
@@ -127,7 +127,7 @@ AI.car = {
                     if (
                         success && (
                             TRAFFIC.isCross(car) ||
-                            !(TRAFFIC.isCross({x: car.x, y: car.y + car.speed}) && TRAFFIC.status() !== 'VERTICAL')
+                            !(TRAFFIC.isCross({x: car.x, y: car.y + car.speed}) && TRAFFIC.status() !== 'vertical')
                         )
                     ) {
                         car.y += car.speed;
@@ -149,7 +149,7 @@ AI.car = {
                     if (
                         success && (
                             TRAFFIC.isCross(car) ||
-                            !(TRAFFIC.isCross({x: car.x - car.speed, y: car.y}) && TRAFFIC.status() !== 'HORIZONTAL')
+                            !(TRAFFIC.isCross({x: car.x - car.speed, y: car.y}) && TRAFFIC.status() !== 'horizontal')
                         )
                     ) {
                         car.x -= car.speed;
@@ -171,7 +171,7 @@ AI.car = {
                     if (
                         success && (
                             TRAFFIC.isCross({x: car.x + 100, y: car.y}) ||
-                            !(TRAFFIC.isCross({x: car.x + car.speed + 150, y: car.y}) && TRAFFIC.status() !== 'HORIZONTAL')
+                            !(TRAFFIC.isCross({x: car.x + car.speed + 150, y: car.y}) && TRAFFIC.status() !== 'horizontal')
                         )
                     ) {
                         car.x += car.speed;

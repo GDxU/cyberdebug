@@ -9,6 +9,7 @@ window.LAYER = {
         LAYER.building.down = LAYER.world.addChild(new PIXI.Container());
         LAYER.car           = LAYER.world.addChild(new PIXI.Container());
         LAYER.target        = LAYER.world.addChild(new PIXI.Container());
+        LAYER.traffic       = LAYER.world.addChild(new PIXI.Container());
         LAYER.building.up   = LAYER.world.addChild(new PIXI.Container());
         LAYER.collision     = LAYER.world.addChild(new PIXI.Container());
         LAYER.marker        = LAYER.world.addChild(new PIXI.Container());
@@ -23,6 +24,7 @@ window.LAYER = {
                 // CAR.init();
                 TARGET.init();
                 COLLISION.init();
+                TRAFFIC.init();
 
                 // добавление слоёв в отрисовщик
                 GAME.application.stage.addChild(LAYER.world);

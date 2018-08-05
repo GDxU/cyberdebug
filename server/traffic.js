@@ -7,16 +7,16 @@ TRAFFIC.x = TRAFFIC.map[0].length;
 TRAFFIC.y = TRAFFIC.map.length;
 
 TRAFFIC.timeout = {
-    YELLOW: 5000,
-    VERTICAL: 10000,
-    HORIZONTAL: 10000
+    yellow: 5000,
+    vertical: 10000,
+    horizontal: 10000
 };
 
 TRAFFIC.schedule = [
-    'YELLOW',
-    'VERTICAL',
-    'YELLOW',
-    'HORIZONTAL'
+    'yellow',
+    'vertical',
+    'yellow',
+    'horizontal'
 ];
 
 TRAFFIC.isCross = a => {

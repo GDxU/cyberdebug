@@ -3,6 +3,7 @@ window.TEXTURE = {
     init: callback => {
 
         TEXTURE.marker.import();
+        TEXTURE.traffic.import();
         TEXTURE.hud.import();
         TEXTURE.weapon.import();
         TEXTURE.road.import();
@@ -15,6 +16,7 @@ window.TEXTURE = {
                     PIXI.loader.load(() => {
 
                         TEXTURE.marker.init();
+                        TEXTURE.traffic.init();
                         TEXTURE.hud.init();
                         TEXTURE.weapon.init();
                         TEXTURE.road.init();
@@ -45,6 +47,33 @@ window.TEXTURE = {
         init: () => {
 
             TEXTURE['marker_pin'] = PIXI.loader.resources['/client/image/cursor/pin.png'].texture;
+
+        }
+
+    },
+
+    traffic: {
+
+
+        import: () => {
+
+            PIXI.loader.add('/client/image/traffic/yellow.png');
+            PIXI.loader.add('/client/image/traffic/vertical.png');
+            PIXI.loader.add('/client/image/traffic/horizontal.png');
+
+        },
+
+        init: () => {
+
+            TEXTURE['traffic_yellow']     = PIXI.loader.resources['/client/image/traffic/yellow.png'].texture;
+            TEXTURE['traffic_vertical']   = PIXI.loader.resources['/client/image/traffic/vertical.png'].texture;
+            TEXTURE['traffic_horizontal'] = PIXI.loader.resources['/client/image/traffic/horizontal.png'].texture;
+
+        },
+
+        get: type => {
+
+            return TEXTURE['traffic_' + type];
 
         }
 

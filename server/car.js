@@ -38,7 +38,7 @@ CAR.init = () => {
     let w = CONFIG.world.width;
     let h = CONFIG.world.height;
 
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 500; i++) {
 
         switch (TOOL.getRandomInt(3)) {
 

@@ -208,7 +208,7 @@ TARGET.initBots = () => {
     let w = CONFIG.world.width;
     let h = CONFIG.world.height;
 
-    for (let i = 0; i < 10000; i++) {
+    for (let i = 0; i < 5000; i++) {
 
         TARGET.appendBot(TOOL.getRandomInt(1) ? {
             x: TOOL.getRandomInt(X[i % X.length][0] + 5, X[i % X.length][1] - 5),

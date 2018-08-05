@@ -650,12 +650,10 @@ window.TEXTURE = {
 
         get: (model, action, side) => {
 
-            let character = TEXTURE.character.store[model % TEXTURE.character.store.length];
-
             if (action === 'stand') {
 
                 return [
-                    TEXTURE['character_' + character + '_stand_' + side]
+                    TEXTURE['character_' + model + '_stand_' + side]
                 ]
 
             }
@@ -663,10 +661,10 @@ window.TEXTURE = {
             if (['walk', 'run'].includes(action)) {
 
                 return [
-                    TEXTURE['character_' + character + '_stand_' + side],
-                    TEXTURE['character_' + character + '_walk1_' + side],
-                    TEXTURE['character_' + character + '_stand_' + side],
-                    TEXTURE['character_' + character + '_walk2_' + side]
+                    TEXTURE['character_' + model + '_stand_' + side],
+                    TEXTURE['character_' + model + '_walk1_' + side],
+                    TEXTURE['character_' + model + '_stand_' + side],
+                    TEXTURE['character_' + model + '_walk2_' + side]
                 ]
 
             }
@@ -674,8 +672,8 @@ window.TEXTURE = {
             if (action === 'kill') {
 
                 return [
-                    TEXTURE['character_' + character + '_kill1_' + side],
-                    TEXTURE['character_' + character + '_kill2_' + side]
+                    TEXTURE['character_' + model + '_kill1_' + side],
+                    TEXTURE['character_' + model + '_kill2_' + side]
                 ]
 
             }
@@ -683,10 +681,10 @@ window.TEXTURE = {
             if (action === 'killed') {
 
                 return [
-                    TEXTURE['character_' + character + '_killed1_' + side],
-                    TEXTURE['character_' + character + '_killed2_' + side],
-                    TEXTURE['character_' + character + '_killed3_' + side],
-                    TEXTURE['character_' + character + '_killed4_' + side]
+                    TEXTURE['character_' + model + '_killed1_' + side],
+                    TEXTURE['character_' + model + '_killed2_' + side],
+                    TEXTURE['character_' + model + '_killed3_' + side],
+                    TEXTURE['character_' + model + '_killed4_' + side]
                 ]
 
             }
@@ -694,8 +692,8 @@ window.TEXTURE = {
             if (action === 'stun') {
 
                 return [
-                    TEXTURE['character_' + character + '_stun1_' + side],
-                    TEXTURE['character_' + character + '_stun2_' + side]
+                    TEXTURE['character_' + model + '_stun1_' + side],
+                    TEXTURE['character_' + model + '_stun2_' + side]
                 ]
 
             }
@@ -703,10 +701,10 @@ window.TEXTURE = {
             if (action === 'stunned') {
 
                 return [
-                    TEXTURE['character_' + character + '_stunned1_' + side],
-                    TEXTURE['character_' + character + '_stunned2_' + side],
-                    TEXTURE['character_' + character + '_stunned3_' + side],
-                    TEXTURE['character_' + character + '_stunned4_' + side]
+                    TEXTURE['character_' + model + '_stunned1_' + side],
+                    TEXTURE['character_' + model + '_stunned2_' + side],
+                    TEXTURE['character_' + model + '_stunned3_' + side],
+                    TEXTURE['character_' + model + '_stunned4_' + side]
                 ]
 
             }
@@ -714,10 +712,10 @@ window.TEXTURE = {
             if (action === 'miss') {
 
                 return [
-                    TEXTURE['character_' + character + '_miss1_' + side],
-                    TEXTURE['character_' + character + '_miss2_' + side],
-                    TEXTURE['character_' + character + '_miss3_' + side],
-                    TEXTURE['character_' + character + '_miss4_' + side]
+                    TEXTURE['character_' + model + '_miss1_' + side],
+                    TEXTURE['character_' + model + '_miss2_' + side],
+                    TEXTURE['character_' + model + '_miss3_' + side],
+                    TEXTURE['character_' + model + '_miss4_' + side]
                 ]
 
             }
@@ -725,10 +723,10 @@ window.TEXTURE = {
             if (action === 'missed') {
 
                 return [
-                    TEXTURE['character_' + character + '_missed1_' + side],
-                    TEXTURE['character_' + character + '_missed2_' + side],
-                    TEXTURE['character_' + character + '_missed3_' + side],
-                    TEXTURE['character_' + character + '_missed2_' + side]
+                    TEXTURE['character_' + model + '_missed1_' + side],
+                    TEXTURE['character_' + model + '_missed2_' + side],
+                    TEXTURE['character_' + model + '_missed3_' + side],
+                    TEXTURE['character_' + model + '_missed2_' + side]
                 ]
 
             }
@@ -737,9 +735,7 @@ window.TEXTURE = {
 
         preview: model => {
 
-            let character = TEXTURE.character.store[model % TEXTURE.character.store.length];
-
-            return TEXTURE['character_' + character];
+            return TEXTURE['character_' + model];
 
         }
 

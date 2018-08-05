@@ -1,3 +1,5 @@
+let fs = require('fs');
+
 let AI = require('./ai');
 let CONFIG = require('./config');
 let COLLISION = require('./collision');
@@ -6,12 +8,13 @@ let TOOL = require('./tool');
 let TARGET = {};
 
 TARGET.id = 1;
-TARGET.model = 0;
 TARGET.users = [];
 TARGET.bots = [];
 
 TARGET.generateId = () => 't' + (TARGET.id++).toString(36);
+
 TARGET.generateSide = () => ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'][TOOL.getRandomInt(7)];
+
 TARGET.generateCoordinates = () => {
 
     let a = {
@@ -27,6 +30,31 @@ TARGET.generateCoordinates = () => {
     }
 
     return a;
+
+};
+
+TARGET.generateModel = () => {
+
+    // поиск изображений моделей в директории на сервере
+    let files = fs.readdirSync('./client/image/character/');
+
+    // список моделей
+    let models = [];
+
+    // наполняем названиями моделей и обнуляем количество задействованных
+    files.forEach(file => models.push({
+        name: file.slice(0, -4),
+        count: 0
+    }));
+
+    // пересчитываем количество задействованных моделей
+    TARGET.users.forEach(user => models.find(model => model.name === user.model).count++);
+
+    // сортируем список моделей по возрастанию в количестве использований
+    models.sort((a, b) => a.count - b.count);
+
+    // возвращаем самую наименее используемую модель
+    return models[0].name;
 
 };
 
@@ -117,7 +145,7 @@ TARGET.appendUser = ws => {
     ws.user = {
         id: TARGET.generateId(),
         name: '',
-        model: TARGET.model++,
+        model: TARGET.generateModel(),
         action: 'stand',
         side: TARGET.generateSide(),
         x: coordinates.x,
@@ -170,8 +198,8 @@ TARGET.exportTargets = ws => {
             model: target.model,
             action: target.action,
             side: target.side,
-            x: target.x,
-            y: target.y
+            x: Math.round(target.x),
+            y: Math.round(target.y)
         });
 
     });
@@ -186,7 +214,6 @@ TARGET.appendBot = data => {
 
     let bot = {
         id: TARGET.generateId(),
-        model: 0,
         action: 'walk',
         side: data.side,
         x: data.x,
@@ -230,7 +257,7 @@ TARGET.updateBots = () => {
 
     let models = [];
     TARGET.users.forEach(user => models.push(user.model));
-    TARGET.bots.forEach(bot => bot.model = models[TOOL.getRandomInt(0, models.length - 1)]);
+    TARGET.bots.forEach(bot => bot.model = models[TOOL.getRandomInt(models.length - 1)]);
 
 };
 

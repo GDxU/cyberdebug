@@ -95,7 +95,7 @@
                     for (let s = 0; s < sides.length; s++) {
 
                         let i = new PIXI.extras.AnimatedSprite(TEXTURE.character.get(
-                            c,
+                            TEXTURE.character.store[c],
                             Object.keys(actions)[a],
                             sides[s]
                         ));

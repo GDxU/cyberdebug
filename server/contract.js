@@ -235,7 +235,8 @@ CONTRACT.stun = (user, hunter) => {
     ACTION.removeByUser(hunter);
 
     // штраф за обнаружение
-    if (hunter.score >= CONTRACT.score.stunned) hunter.score -= CONTRACT.score.stunned;
+    // if (hunter.score >= CONTRACT.score.stunned) hunter.score -= CONTRACT.score.stunned;
+    hunter.score -= CONTRACT.score.stunned;
 
     // оповещение об оглушенности целью
     ALERT.send(hunter.ws, 'stunned');

@@ -2,8 +2,8 @@ window.RAIN = {
 
     sync: () => {
 
-        let power = WS.data ? WS.data.rain.power : 0.1;
-        let wind = WS.data ? WS.data.rain.wind : 0;
+        let power = WS.data.rain ? WS.data.rain.power : 0.1;
+        let wind = WS.data.rain ? WS.data.rain.wind : 0;
         let count = Math.floor(window.innerWidth * window.innerHeight / 1000 * power);
 
         while (LAYER.rain.children.length !== count) {

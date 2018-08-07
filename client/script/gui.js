@@ -286,8 +286,8 @@ window.GUI = {
                     '<tr><td>Задержка</td><td>' + GUI.total.ms.toFixed(2) + '</td>' +
                     '<tr><td>Тикрейт</td><td>' + GUI.total.tr.toFixed(2) + '</td>' +
                     '<tr><th>Позиция</th>' +
-                    '<tr><td>X</td><td>' + USER.target.sprite.x + '</td>' +
-                    '<tr><td>Y</td><td>' + USER.target.sprite.y + '</td>' +
+                    '<tr><td>X</td><td>' + (USER.target ? USER.target.sprite.x : '?') + '</td>' +
+                    '<tr><td>Y</td><td>' + (USER.target ? USER.target.sprite.y : '?') + '</td>' +
                     '<tr><th>Курсор</th>' +
                     '<tr><td>X</td><td>' + x + '</td>' +
                     '<tr><td>Y</td><td>' + y + '</td>';

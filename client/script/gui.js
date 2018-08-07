@@ -192,12 +192,8 @@ window.GUI = {
 
             GUI.total.panel = document.getElementById('total');
             GUI.total.close = document.getElementById('total_close');
-            GUI.total.table = document.getElementById('total_table');
-            GUI.total.target = document.getElementById('total_target');
-            GUI.total.car = document.getElementById('total_car');
+            GUI.total.score = document.getElementById('total_score');
             GUI.total.info = document.getElementById('total_info');
-            GUI.total.position = document.getElementById('total_position');
-            GUI.total.mouse = document.getElementById('total_mouse');
 
             GUI.total.visible(false);
 
@@ -241,18 +237,7 @@ window.GUI = {
 
                 });
 
-                GUI.total.table.innerHTML = html;
-
-                // цели
-
-                GUI.total.target.innerHTML = '<span>Игроки: </span>' + WS.data.count.user +
-                    '<span style="margin-left: 8px;">Боты: </span>' + WS.data.count.bot +
-                    '<span style="margin-left: 8px;">Здесь: </span>' + WS.data.targets.length;
-
-                // авто
-
-                GUI.total.car.innerHTML = '<span>Авто: </span>' + WS.data.count.car +
-                    '<span style="margin-left: 8px;">Здесь: </span>' + WS.data.cars.length;
+                GUI.total.score.innerHTML = html;
 
                 // информация
 
@@ -271,27 +256,41 @@ window.GUI = {
 
                 }
 
-                GUI.total.info.innerHTML = '<span>Задержка:</span> ' + GUI.total.ms.toFixed(2) +
-                    '<span style="margin-left: 8px;">Тикрейт:</span> ' + GUI.total.tr.toFixed(2);
-
-                // позиция
-
-                if (USER.target) {
-
-                    GUI.total.position.innerHTML = '<span>X:</span> ' + USER.target.sprite.x +
-                        '<span style="margin-left: 8px;">Y:</span> ' + USER.target.sprite.y;
-
-                }
-
-                // мышка
-
                 let mouse = GAME.application.renderer.plugins.interaction.mouse.global;
 
                 let x = Math.floor(mouse.x / CAMERA.scale) - LAYER.world.x;
                 let y = Math.floor(mouse.y / CAMERA.scale) - LAYER.world.y;
 
-                GUI.total.mouse.innerHTML = '<span>X:</span> ' + x +
-                    '<span style="margin-left: 8px;">Y:</span> ' + y;
+                let wind = [
+                    '□□□□',
+                    '■□□□',
+                    '■■□□',
+                    '■■■□',
+                    '■■■■'
+                ];
+
+                GUI.total.info.innerHTML = '' +
+                    '<tr><th style="width: 40%">Цели</th>' +
+                    '<tr><td>Игроки</td><td>' + WS.data.count.user + '</td>' +
+                    '<tr><td>Боты</td><td>' + WS.data.count.bot + '</td>' +
+                    '<tr><td>Здесь</td><td>' + WS.data.targets.length + '</td>' +
+                    '<tr><td>Всего</td><td>' + (WS.data.count.user + WS.data.count.bot) + '</td>' +
+                    '<tr><th>Авто</th>' +
+                    '<tr><td>Здесь</td><td>' + WS.data.cars.length + '</td>' +
+                    '<tr><td>Всего</td><td>' + WS.data.count.car + '</td>' +
+                    '<tr><th>Дождь</th>' +
+                    '<tr><td>Интенсивность</td><td>' + (WS.data.rain.power * 100).toFixed(2) + '%</td>' +
+                    '<tr><td>Капли</td><td>' + LAYER.rain.children.length + '</td>' +
+                    '<tr><td>Ветер</td><td>' + wind[WS.data.rain.wind] + '</td>' +
+                    '<tr><th>Соединение</th>' +
+                    '<tr><td>Задержка</td><td>' + GUI.total.ms.toFixed(2) + '</td>' +
+                    '<tr><td>Тикрейт</td><td>' + GUI.total.tr.toFixed(2) + '</td>' +
+                    '<tr><th>Позиция</th>' +
+                    '<tr><td>X</td><td>' + USER.target.sprite.x + '</td>' +
+                    '<tr><td>Y</td><td>' + USER.target.sprite.y + '</td>' +
+                    '<tr><th>Курсор</th>' +
+                    '<tr><td>X</td><td>' + x + '</td>' +
+                    '<tr><td>Y</td><td>' + y + '</td>';
 
             }
 

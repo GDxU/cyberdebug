@@ -61,6 +61,7 @@ div {
 table {
     border-collapse: collapse;
     margin-bottom: 8px;
+    width: 100%;
 }
 
 th {
@@ -253,10 +254,4 @@ button.close {
     color: rgba(255, 255, 255, 0.4) !important;
     cursor: url('/client/image/cursor/pin.png') 11 11, auto !important;
 
-}
-
-/* total */
-
-#total p {
-    text-align: center;
 }

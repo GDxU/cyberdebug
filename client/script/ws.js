@@ -52,6 +52,7 @@ window.WS = {
             CAMERA.sync();
             ACTION.sync();
             HUD.sync();
+            RAIN.sync();
 
         });
 

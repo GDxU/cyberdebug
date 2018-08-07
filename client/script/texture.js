@@ -4,6 +4,7 @@ window.TEXTURE = {
 
         TEXTURE.marker.import();
         TEXTURE.traffic.import();
+        TEXTURE.rain.import();
         TEXTURE.hud.import();
         TEXTURE.weapon.import();
         TEXTURE.road.import();
@@ -17,6 +18,7 @@ window.TEXTURE = {
 
                         TEXTURE.marker.init();
                         TEXTURE.traffic.init();
+                        TEXTURE.rain.init();
                         TEXTURE.hud.init();
                         TEXTURE.weapon.init();
                         TEXTURE.road.init();
@@ -76,6 +78,47 @@ window.TEXTURE = {
             return TEXTURE['traffic_' + type];
 
         }
+
+    },
+
+    rain: {
+
+        import: () => {
+
+            PIXI.loader.add('/client/image/sfx/rain.png');
+
+        },
+
+        init: () => {
+
+            TEXTURE['rain_4'] = new PIXI.Texture(
+                PIXI.loader.resources['/client/image/sfx/rain.png'].texture,
+                new PIXI.Rectangle(0, 0, 16, 16)
+            );
+
+            TEXTURE['rain_3'] = new PIXI.Texture(
+                PIXI.loader.resources['/client/image/sfx/rain.png'].texture,
+                new PIXI.Rectangle(16, 0, 12, 16)
+            );
+
+            TEXTURE['rain_2'] = new PIXI.Texture(
+                PIXI.loader.resources['/client/image/sfx/rain.png'].texture,
+                new PIXI.Rectangle(28, 0, 8, 16)
+            );
+
+            TEXTURE['rain_1'] = new PIXI.Texture(
+                PIXI.loader.resources['/client/image/sfx/rain.png'].texture,
+                new PIXI.Rectangle(36, 0, 4, 16)
+            );
+
+            TEXTURE['rain_0'] = new PIXI.Texture(
+                PIXI.loader.resources['/client/image/sfx/rain.png'].texture,
+                new PIXI.Rectangle(40, 0, 1, 16)
+            );
+
+        },
+
+        get: wind => TEXTURE['rain_' + wind]
 
     },
 

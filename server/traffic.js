@@ -50,4 +50,6 @@ TRAFFIC.next = () => {
 
 };
 
+TRAFFIC.start = () => TRAFFIC.next();
+
 module.exports = TRAFFIC;

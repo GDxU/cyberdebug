@@ -829,13 +829,54 @@ window.TEXTURE = {
 
         import: callback => {
 
-            TOOL.getJSON('/building', data => {
+            TOOL.getJSON('/building/base', data => {
 
-                data.forEach(building => PIXI.loader.add('/client/image/building/' + building + '.png'));
+                data.forEach(item => PIXI.loader.add('/client/image/building/base/' + item + '.png'));
+                TEXTURE.building.base = data;
 
-                TEXTURE.building.store = data;
+                TOOL.getJSON('/building/trash', data => {
 
-                callback();
+                    data.forEach(item => PIXI.loader.add('/client/image/building/trash/' + item + '.png'));
+                    TEXTURE.building.trash = data;
+
+                    TOOL.getJSON('/building/cyan', data => {
+
+                        data.forEach(item => PIXI.loader.add('/client/image/building/cyan/' + item + '.png'));
+                        TEXTURE.building.cyan = data;
+
+                        TOOL.getJSON('/building/magenta', data => {
+
+                            data.forEach(item => PIXI.loader.add('/client/image/building/magenta/' + item + '.png'));
+                            TEXTURE.building.magenta = data;
+
+                            TOOL.getJSON('/building/yellow', data => {
+
+                                data.forEach(item => PIXI.loader.add('/client/image/building/yellow/' + item + '.png'));
+                                TEXTURE.building.yellow = data;
+
+                                TOOL.getJSON('/building/cat', data => {
+
+                                    data.forEach(item => PIXI.loader.add('/client/image/building/cat/' + item + '.png'));
+                                    TEXTURE.building.cat = data;
+
+                                    TOOL.getJSON('/building/banner', data => {
+
+                                        data.forEach(item => PIXI.loader.add('/client/image/building/banner/' + item + '.png'));
+                                        TEXTURE.building.banner = data;
+
+                                        callback();
+
+                                    });
+
+                                });
+
+                            });
+
+                        });
+
+                    });
+
+                });
 
             });
 
@@ -846,13 +887,56 @@ window.TEXTURE = {
             let up = new PIXI.Rectangle(0, 0, 250, 250);
             let down = new PIXI.Rectangle(0, 250, 250, 250);
 
-            TEXTURE.building.store.forEach(building => {
+            TEXTURE.building.base.forEach(item => {
 
-                let texture = PIXI.loader.resources['/client/image/building/' + building + '.png'].texture;
+                let texture = PIXI.loader.resources['/client/image/building/base/' + item + '.png'].texture;
 
-                TEXTURE['building_' + building] = texture;
-                TEXTURE['building_' + building + '_up'] = new PIXI.Texture(texture, up);
-                TEXTURE['building_' + building + '_down'] = new PIXI.Texture(texture, down);
+                TEXTURE['building_base_' + item] = texture;
+                TEXTURE['building_base_' + item + '_up'] = new PIXI.Texture(texture, up);
+                TEXTURE['building_base_' + item + '_down'] = new PIXI.Texture(texture, down);
+
+            });
+
+            TEXTURE.building.trash.forEach(item => TEXTURE['building_trash_' + item] = PIXI.loader.resources['/client/image/building/trash/' + item + '.png'].texture);
+
+            TEXTURE.building.cyan.forEach(item => {
+
+                let texture = PIXI.loader.resources['/client/image/building/cyan/' + item + '.png'].texture;
+
+                TEXTURE['building_cyan_' + item] = texture;
+                TEXTURE['building_cyan_' + item + '_up'] = new PIXI.Texture(texture, up);
+                TEXTURE['building_cyan_' + item + '_down'] = new PIXI.Texture(texture, down);
+
+            });
+
+            TEXTURE.building.magenta.forEach(item => {
+
+                let texture = PIXI.loader.resources['/client/image/building/magenta/' + item + '.png'].texture;
+
+                TEXTURE['building_magenta_' + item] = texture;
+                TEXTURE['building_magenta_' + item + '_up'] = new PIXI.Texture(texture, up);
+                TEXTURE['building_magenta_' + item + '_down'] = new PIXI.Texture(texture, down);
+
+            });
+
+            TEXTURE.building.yellow.forEach(item => {
+
+                let texture = PIXI.loader.resources['/client/image/building/yellow/' + item + '.png'].texture;
+
+                TEXTURE['building_yellow_' + item] = texture;
+                TEXTURE['building_yellow_' + item + '_up'] = new PIXI.Texture(texture, up);
+                TEXTURE['building_yellow_' + item + '_down'] = new PIXI.Texture(texture, down);
+
+            });
+
+            TEXTURE.building.cat.forEach(item => TEXTURE['building_cat_' + item] = PIXI.loader.resources['/client/image/building/cat/' + item + '.png'].texture);
+
+            TEXTURE.building.banner.forEach(item => {
+
+                let texture = PIXI.loader.resources['/client/image/building/banner/' + item + '.png'].texture;
+
+                TEXTURE['building_banner_' + item + '_0'] = new PIXI.Texture(texture, new PIXI.Rectangle(0, 0, 108, 28));
+                TEXTURE['building_banner_' + item + '_1'] = new PIXI.Texture(texture, new PIXI.Rectangle(0, 28, 108, 28));
 
             });
 

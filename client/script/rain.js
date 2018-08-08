@@ -4,7 +4,7 @@ window.RAIN = {
 
         let power = WS.data.rain ? WS.data.rain.power : 0.1;
         let wind = WS.data.rain ? WS.data.rain.wind : 0;
-        let count = Math.floor(window.innerWidth * window.innerHeight / 1000 * power);
+        let count = Math.floor(window.innerWidth * window.innerHeight / 1024 * power);
 
         while (LAYER.rain.children.length !== count) {
 

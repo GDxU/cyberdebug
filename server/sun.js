@@ -1,6 +1,6 @@
 let SUN = {};
 
-SUN.i = 0;
+SUN.i = 60 * 12;
 
 SUN.min = 0.5;
 SUN.max = 1;
@@ -10,7 +10,7 @@ SUN.start = () => {
 
     setInterval(() => {
 
-        SUN.i += 60;
+        SUN.i += 1;
 
     }, 1000);
 

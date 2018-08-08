@@ -85,7 +85,13 @@ HTTP.query = {
 
     car: res => HTTP.getImagesList(res, 'car'),
 
-    building: res => HTTP.getImagesList(res, 'building')
+    'building/base': res => HTTP.getImagesList(res, 'building/base'),
+    'building/trash': res => HTTP.getImagesList(res, 'building/trash'),
+    'building/cyan': res => HTTP.getImagesList(res, 'building/cyan'),
+    'building/magenta': res => HTTP.getImagesList(res, 'building/magenta'),
+    'building/yellow': res => HTTP.getImagesList(res, 'building/yellow'),
+    'building/cat': res => HTTP.getImagesList(res, 'building/cat'),
+    'building/banner': res => HTTP.getImagesList(res, 'building/banner')
 
 };
 

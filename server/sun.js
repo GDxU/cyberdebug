@@ -10,9 +10,9 @@ SUN.start = () => {
 
     setInterval(() => {
 
-        SUN.i++;
+        SUN.i += 60;
 
-    }, 1);
+    }, 1000);
 
 };
 

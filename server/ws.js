@@ -5,6 +5,7 @@ let TARGET = require('./target');
 let CAR = require('./car');
 let TRAFFIC = require('./traffic');
 let RAIN = require('./rain');
+let SUN = require('./sun');
 let CAMERA = require('./camera');
 let TOTAL = require('./total');
 let AI = require('./ai');
@@ -83,6 +84,7 @@ setInterval(() => {
 
     let traffic = TRAFFIC.status();
     let rain = RAIN.export();
+    let sun = SUN.export();
 
     let totals = TOTAL.export();
 
@@ -105,6 +107,7 @@ setInterval(() => {
 
                 traffic: traffic,
                 rain: rain,
+                sun: sun,
 
                 totals: totals,
 
@@ -123,5 +126,6 @@ AI.bot.start(TARGET.bots);
 AI.car.start(CAR.store);
 TRAFFIC.start();
 RAIN.start();
+SUN.start();
 
 module.exports = WS;

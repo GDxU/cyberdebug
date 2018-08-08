@@ -14,7 +14,8 @@ SKILL.cooldown = {
 
     morph: 1000 * 20,
     teleport: 1000 * 40,
-    glitch: 1000 * 60
+    // glitch: 1000 * 60
+    glitch: 1000 * 5
 
 };
 
@@ -40,7 +41,7 @@ SKILL.store = {
 
         if (!ws.user.morph) {
 
-            let distance = 500;
+            let distance = 250;
 
             TARGET.bots.forEach(bot => {
 
@@ -104,7 +105,7 @@ SKILL.store = {
 
             TARGET.users.forEach(user => {
 
-                if (TOOL.getDistance(ws.user, user) < distance && ws.user.id !== user.id) {
+                if (TOOL.getDistance(ws.user, user) < distance /*&& ws.user.id !== user.id*/) {
 
                     user.sfx.push('glitch');
 

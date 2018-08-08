@@ -270,24 +270,34 @@ window.GUI = {
                 ];
 
                 GUI.total.info.innerHTML = '' +
+
                     '<tr><th style="width: 40%">Цели</th>' +
                     '<tr><td>Игроки</td><td>' + WS.data.count.user + '</td>' +
                     '<tr><td>Боты</td><td>' + WS.data.count.bot + '</td>' +
                     '<tr><td>Здесь</td><td>' + WS.data.targets.length + '</td>' +
                     '<tr><td>Всего</td><td>' + (WS.data.count.user + WS.data.count.bot) + '</td>' +
+
                     '<tr><th>Авто</th>' +
                     '<tr><td>Здесь</td><td>' + WS.data.cars.length + '</td>' +
                     '<tr><td>Всего</td><td>' + WS.data.count.car + '</td>' +
+
                     '<tr><th>Дождь</th>' +
                     '<tr><td>Интенсивность</td><td>' + (WS.data.rain.power * 100).toFixed(2) + '%</td>' +
                     '<tr><td>Капли</td><td>' + LAYER.rain.children.length + '</td>' +
                     '<tr><td>Ветер</td><td>' + wind[WS.data.rain.wind] + '</td>' +
+
+                    '<tr><th>Часы</th>' +
+                    '<tr><td>Время</td><td>' + WS.data.sun.now + '</td>' +
+                    '<tr><td>Солнце</td><td>' + Math.floor(WS.data.sun.value * 100) + '%</td>' +
+
                     '<tr><th>Соединение</th>' +
                     '<tr><td>Задержка</td><td>' + GUI.total.ms.toFixed(2) + '</td>' +
                     '<tr><td>Тикрейт</td><td>' + GUI.total.tr.toFixed(2) + '</td>' +
+
                     '<tr><th>Позиция</th>' +
                     '<tr><td>X</td><td>' + (USER.target ? USER.target.sprite.x : '?') + '</td>' +
                     '<tr><td>Y</td><td>' + (USER.target ? USER.target.sprite.y : '?') + '</td>' +
+
                     '<tr><th>Курсор</th>' +
                     '<tr><td>X</td><td>' + x + '</td>' +
                     '<tr><td>Y</td><td>' + y + '</td>';

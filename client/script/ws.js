@@ -53,6 +53,7 @@ window.WS = {
             ACTION.sync();
             HUD.sync();
             RAIN.sync();
+            SUN.sync();
 
         });
 

@@ -29,6 +29,8 @@ window.USER = {
 
             // включение эффектов
 
+            /*
+
             let sfx = [];
 
             if (!USER.sfx.glitch && WS.data.user.sfx.includes('glitch')) {
@@ -57,6 +59,8 @@ window.USER = {
                 USER.sfx.glitch = undefined;
 
             }
+
+            */
 
         }
 

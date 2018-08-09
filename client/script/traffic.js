@@ -16,6 +16,22 @@ window.TRAFFIC = {
 
         }
 
+        GAME.application.ticker.add(() => {
+
+            let boundary = CAMERA.getBoundary();
+
+            boundary.x1 -= 13;
+            boundary.y1 -= 13;
+            boundary.x2 += 13;
+            boundary.y2 += 13;
+
+            LAYER.traffic.children.forEach(item => item.visible = (
+                boundary.x1 <= item.x && item.x <= boundary.x2 &&
+                boundary.y1 <= item.y && item.y <= boundary.y2
+            ));
+
+        });
+
     },
 
     sync: () => {

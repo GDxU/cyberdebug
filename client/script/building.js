@@ -182,6 +182,20 @@ window.BUILDING = {
 
         });
 
+        GAME.application.ticker.add(() => {
+
+            let boundary = CAMERA.getBoundary();
+
+            boundary.x1 -= 250;
+            boundary.y2 += 500;
+
+            LAYER.building.up.children.concat(LAYER.building.down.children).forEach(item => item.visible = (
+                boundary.x1 <= item.x && item.x <= boundary.x2 &&
+                boundary.y1 <= item.y && item.y <= boundary.y2
+            ));
+
+        });
+
     }
 
 };

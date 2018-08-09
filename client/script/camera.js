@@ -45,6 +45,17 @@ window.CAMERA = {
 
         }
 
+    },
+
+    getBoundary: () => {
+
+        return {
+            x1: Math.abs(LAYER.world.x),
+            y1: Math.abs(LAYER.world.y),
+            x2: Math.abs(LAYER.world.x) + Math.floor(window.innerWidth / CAMERA.scale),
+            y2: Math.abs(LAYER.world.y) + Math.floor(window.innerHeight / CAMERA.scale)
+        }
+
     }
 
 };

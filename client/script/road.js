@@ -25,6 +25,20 @@ window.ROAD = {
 
             }
 
+            GAME.application.ticker.add(() => {
+
+                let boundary = CAMERA.getBoundary();
+
+                boundary.x1 -= 250;
+                boundary.y1 -= 250;
+
+                LAYER.road.children.forEach(item => item.visible = (
+                    boundary.x1 <= item.x && item.x <= boundary.x2 &&
+                    boundary.y1 <= item.y && item.y <= boundary.y2
+                ));
+
+            });
+
             callback();
 
         });

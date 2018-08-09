@@ -4,7 +4,10 @@ window.RAIN = {
 
         let power = WS.data.rain ? WS.data.rain.power : 0.1;
         let wind = WS.data.rain ? WS.data.rain.wind : 0;
-        let count = Math.floor(window.innerWidth * window.innerHeight / 1024 * power);
+        let count = Math.floor(
+            (window.innerWidth / CAMERA.scale) *
+            (window.innerHeight / CAMERA.scale) / 1000 * power
+        );
 
         while (LAYER.rain.children.length !== count) {
 
@@ -31,22 +34,17 @@ window.RAIN = {
 
         }
 
-        let dx = Math.floor(window.innerWidth / 2) + 100;
-        let dy = Math.floor(window.innerHeight / 2) + 100;
+        let boundary = CAMERA.getBoundary();
 
-        let cx = USER.target ? USER.target.sprite.x : Math.floor(CONFIG.world.width / 2);
-        let cy = USER.target ? USER.target.sprite.y : Math.floor(CONFIG.world.height / 2);
-
-        let x1 = cx - dx;
-        let x2 = cx + dx;
-
-        let y1 = cy - dy;
-        let y2 = cy + dy;
+        boundary.x1 -= 16;
+        boundary.y1 -= 16;
+        boundary.x2 += 16;
+        boundary.y2 += 16;
 
         LAYER.rain.children.forEach(drop => {
 
-            let x = TOOL.getRandomInt(x1, x2);
-            let y = TOOL.getRandomInt(y1, y2);
+            let x = TOOL.getRandomInt(boundary.x1, boundary.x2);
+            let y = TOOL.getRandomInt(boundary.y1, boundary.y2);
 
             drop.texture = TEXTURE.rain.get(wind);
             drop.position.set(x, y);
